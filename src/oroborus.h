@@ -192,7 +192,7 @@ struct _Client
 	long win_state;
 	long win_layer;
 	long win_workspace;
-	int ignore_unmap, focus, non_focusing;
+	int ignore_unmap, focus, non_focusing, not_warp_to_next;
 	Client *next;
 	Client *prev;
 	Client *transientFor;

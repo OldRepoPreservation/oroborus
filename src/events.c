@@ -428,6 +428,7 @@ void
 handleDestroyNotify (XDestroyWindowEvent * ev)
 {
 	Client *c;
+	int not_warp_to_next;
 
 #ifdef DEBUG
 	printf ("entering handleDestroyNotify\n");
@@ -436,9 +437,15 @@ handleDestroyNotify (XDestroyWindowEvent * ev)
 	c = clientGetFromWindow (ev->window, WINDOW);
 	if (c)
 		{
+			not_warp_to_next = c->not_warp_to_next;
 			clientUnframe (c, False);
 			if (clients)
-				clientSetFocus (clientGetNext (clients->prev, 0), True);
+				{
+					c = clientGetTopMost(WIN_LAYER_NORMAL);
+					clientSetFocus (c, True);
+					if (!not_warp_to_next)
+						clientWarpMouse (c);
+				}
 			else
 				clientSetFocus (NULL, True);
 		}
@@ -448,6 +455,7 @@ void
 handleUnmapNotify (XUnmapEvent * ev)
 {
 	Client *c;
+	int not_warp_to_next;
 
 #ifdef DEBUG
 	printf ("entering handleUnmapNotify\n");
@@ -456,13 +464,19 @@ handleUnmapNotify (XUnmapEvent * ev)
 	c = clientGetFromWindow (ev->window, WINDOW);
 	if (c)
 		{
+			not_warp_to_next = c->not_warp_to_next;
 			if (c->ignore_unmap)
 				c->ignore_unmap--;
 			else
 				{
 					clientUnframe (c, False);
 					if (clients)
-						clientSetFocus (clientGetNext (clients->prev, 0), True);
+						{
+							c = clientGetTopMost(WIN_LAYER_NORMAL);
+							clientSetFocus (c, True);
+							if (!not_warp_to_next)
+								clientWarpMouse (c);
+						}
 					else
 						clientSetFocus (NULL, True);
 				}

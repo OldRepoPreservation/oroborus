@@ -519,6 +519,8 @@ clientFrame (Window w)
 
 	c->ignore_unmap = attr.map_state == IsViewable ? 1 : 0;
 	c->focus = False;
+	c->not_warp_to_next = False;
+
 	getWindowName (dpy, c->window, &c->name);
 
 	mwm_hints = getMotifHints (c->window);
@@ -1777,7 +1779,10 @@ clientButtonPress (Client * c, Window w, XButtonEvent * bev)
 					if (bev->button == Button3)
 						clientKill (c);
 					else
-						clientClose (c);
+						{
+							c->not_warp_to_next = True;
+							clientClose (c);
+						}
 					break;
 				case MAXIMIZE_BUTTON:
 					if (bev->button == Button1)

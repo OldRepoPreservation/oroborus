@@ -11,8 +11,10 @@ oroborus (2.0.11-2) unstable; urgency=low
   * Added the BeOS theme, which was created by Juergen Becker.
   * Fixed the layer which GNOME2 panels use.
   * Fixed autheader error messages.
+  * Fixed Window in Window handling.
+    Closes: #168314
 
- -- Stefan Pfetzing <dreamind@dreamind.de>  Wed,  5 Feb 2003 15:14:30 +0100
+ -- Stefan Pfetzing <dreamind@dreamind.de>  Mon, 10 Feb 2003 03:23:53 +0100
 
 oroborus (2.0.11-1) unstable; urgency=low
 
