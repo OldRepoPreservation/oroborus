@@ -618,42 +618,81 @@ handleEvent (XEvent * ev)
   switch (ev->type)
     {
     case KeyPress:
+#ifdef DEBUG
+      printf("KeyPress\n");
+#endif
       handleKeyPress ((XKeyEvent *) ev);
       break;
     case ButtonPress:
+#ifdef DEBUG
+      printf("ButtonPress\n");
+#endif
       handleButtonPress ((XButtonEvent *) ev);
       break;
     case ButtonRelease:
+#ifdef DEBUG
+      printf("ButtonRelease\n");
+#endif
       handleButtonRelease ((XButtonEvent *) ev);
       break;
     case DestroyNotify:
+#ifdef DEBUG
+      printf("DestroyNotify\n");
+#endif
       handleDestroyNotify ((XDestroyWindowEvent *) ev);
       break;
     case UnmapNotify:
+#ifdef DEBUG
+      printf("UnmapNotify\n");
+#endif
       handleUnmapNotify ((XUnmapEvent *) ev);
       break;
     case MapRequest:
+#ifdef DEBUG
+      printf("MapRequest\n");
+#endif
       handleMapRequest ((XMapRequestEvent *) ev);
       break;
     case ConfigureRequest:
+#ifdef DEBUG
+      printf("ConfigureRequest\n");
+#endif
       handleConfigureRequest ((XConfigureRequestEvent *) ev);
       break;
     case EnterNotify:
+#ifdef DEBUG
+      printf("EnterNotify\n");
+#endif
       handleEnterNotify ((XCrossingEvent *) ev);
       break;
     case FocusIn:
+#ifdef DEBUG
+      printf("FocusIn\n");
+#endif
       handleFocusIn ((XFocusChangeEvent *) ev);
       break;
     case FocusOut:
+#ifdef DEBUG
+      printf("FocusOut\n");
+#endif
       handleFocusOut ((XFocusChangeEvent *) ev);
       break;
     case PropertyNotify:
+#ifdef DEBUG
+      printf("PropertyNotify\n");
+#endif
       handlePropertyNotify ((XPropertyEvent *) ev);
       break;
     case ClientMessage:
+#ifdef DEBUG
+      printf("clientMessage\n");
+#endif
       handleClientMessage ((XClientMessageEvent *) ev);
       break;
     default:
+#ifdef DEBUG
+      printf("default\n");
+#endif
       if (shape && ev->type == shape_event)
 	handleShape ((XShapeEvent *) ev);
     }
