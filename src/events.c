@@ -626,7 +626,11 @@ handleClientMessage (XClientMessageEvent * ev)
       else if (ev->message_type == win_workspace && ev->format == 32)
 	clientSetWorkspace (c, ev->data.l[0]);
       else if (ev->message_type == net_atoms[NET_ACTIVE_WINDOW] && ev->format == 32)
-	clientSetFocus(c, True);
+	{
+	  if (getWMState (c2->window) == IconicState)
+	    clientShow (c2, False);
+	  clientSetFocus(c, True);
+	  setWMState (c->window, NormalState);
     }
   else
     {
