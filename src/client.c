@@ -279,6 +279,10 @@ clientGetTopMost (int layer, int real)
 
 #ifdef DEBUG
 	printf ("entering clientGetTopMost\n");
+	if (!real)
+		printf("not getting the real top.\n");
+	else
+		printf("getting the real top.\n");
 #endif
 
 	XQueryTree (dpy, root, &w1, &w2, &wins, &count);
@@ -367,7 +371,7 @@ clientConfigure (Client * c, XWindowChanges * wc, int mask)
 			switch (wc->stack_mode)
 				{
 				case Above:
-					if (strcmp (c->name,"MPlayer") == 0)
+					if (c->above)
 						sibling = clientGetTopMost (c->win_layer, 1); // get the real top
 					else
 						sibling = clientGetTopMost (c->win_layer, 0);
@@ -448,6 +452,10 @@ clientFrame (Window w)
 	XGetWMNormalHints (dpy, w, c->size, &dummy);
 	XGetWindowAttributes (dpy, w, &attr);
 	c->window = w;
+	if (typeAbove(c->window))
+		c->above = 1;
+	else
+		c->above = 0;
 	c->x = c->old_x = attr.x;
 	c->y = c->old_y = attr.y;
 	c->width = c->old_width = attr.width;
@@ -887,6 +895,17 @@ clientToggleShaded (Client * c)
 	wc.width = c->width;
 	wc.height = c->height;
 	clientConfigure (c, &wc, CWWidth | CWHeight);
+}
+
+void
+clientToggleAbove (Client * c)
+{
+#ifdef DEBUG
+	printf ("entering clientToggleAbove\n");
+	printf ("toggling client (%#lx)\n", c->window);
+#endif
+
+	(c->above) ? (c->above = 0) : (c->above = 1);
 }
 
 void

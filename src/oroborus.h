@@ -180,6 +180,7 @@ struct _Client
 	char *name;
 	XSizeHints *size;
 	int has_border;
+	int above;
 	long win_hints;
 	long win_state;
 	long win_layer;
@@ -313,6 +314,7 @@ void clientSetState (Client *, CARD32, CARD32);
 void clientToggleShaded (Client *);
 void clientToggleSticky (Client *);
 void clientToggleMaximized (Client *, int);
+void clientToggleAbove (Client *);
 void clientSetFocus (Client *, int);
 Client *clientGetFocus ();
 Client *clientGettopMost(int, int);

@@ -673,6 +673,9 @@ handleClientMessage (XClientMessageEvent * ev)
 											|| ev->data.l[2] ==
 											net_atoms[NET_WM_STATE_MAXIMIZED_VERT]))
 								clientToggleMaximized (c, WIN_STATE_MAXIMIZED);
+							if (ev->data.l[1] == net_atoms[NET_WM_STATE_ABOVE]
+									|| ev->data.l[2] == net_atoms[NET_WM_STATE_ABOVE])
+								clientToggleAbove(c);
 							break;
 						}
 				}

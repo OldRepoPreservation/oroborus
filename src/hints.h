@@ -68,7 +68,7 @@ enum
 	NET_WM_STATE_SKIP_TASKBAR,
 	NET_WM_STATE_SKIP_PAGER,
 	NET_WM_STATE_HIDDEN,
-//	NET_WM_STATE_FULLSCREEN,
+	NET_WM_STATE_ABOVE,
 	NET_WM_NAME,
 	NET_WM_DESKTOP,
 	NET_NUMBER_OF_DESKTOPS,
@@ -81,7 +81,7 @@ enum
 	NET_WM_STRUT
 };
 
-#define NET_ATOM_COUNT 30
+#define NET_ATOM_COUNT 31
 
 typedef struct
 {
@@ -117,6 +117,7 @@ void getNetWMStrut (Window, CARD32*, CARD32*);
 void delNetWMStrut (CARD32*, CARD32*);
 int typeDesktop (Window);
 int typeDock (Window);
+int typeAbove (Window);
 int typeEWMH (Window, char *);
 void setNetWorkarea (CARD32 *, int);
 void *getPropData (Window, Atom, Atom, unsigned long *);
