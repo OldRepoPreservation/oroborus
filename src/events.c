@@ -383,8 +383,8 @@ handleButtonPress (XButtonEvent * ev)
 					clientResize (c, (XEvent *) ev);
 				}
 			else if (((win != c->window && ev->button == Button3 && state == 0) ||
-							 (ev->button == Button3
-								&& state == keys[KEY_WINDOW_OPS].modifier))
+								(ev->button == Button3
+								 && state == keys[KEY_WINDOW_OPS].modifier))
 							 && !typeDesktop (c->window))
 				clientLower (c);
 			else if (win != c->window && ev->button == Button1 && state == Mod1Mask)
@@ -441,7 +441,7 @@ handleDestroyNotify (XDestroyWindowEvent * ev)
 			clientUnframe (c, False);
 			if (clients)
 				{
-					c = clientGetTopMost(WIN_LAYER_NORMAL);
+					c = clientGetTopMost (WIN_LAYER_NORMAL);
 					clientSetFocus (c, True);
 					if (!(not_warp_to_next || c->non_focusing))
 						clientWarpMouse (c);
@@ -472,7 +472,7 @@ handleUnmapNotify (XUnmapEvent * ev)
 					clientUnframe (c, False);
 					if (clients)
 						{
-							c = clientGetTopMost(WIN_LAYER_NORMAL);
+							c = clientGetTopMost (WIN_LAYER_NORMAL);
 							clientSetFocus (c, True);
 							if (!(not_warp_to_next || c->non_focusing))
 								clientWarpMouse (c);
@@ -602,8 +602,8 @@ handlePropertyNotify (XPropertyEvent * ev)
 				getGnomeHint (c->window, win_hints, &c->win_hints);
 			else if (ev->atom == net_atoms[NET_WM_STRUT])
 				{
-					delNetWMStrut(margins, c->margins);
-					getNetWMStrut(c->window, margins, c->margins);
+					delNetWMStrut (margins, c->margins);
+					getNetWMStrut (c->window, margins, c->margins);
 				}
 			else if (ev->atom == win_layer)
 				{
@@ -651,8 +651,8 @@ handleClientMessage (XClientMessageEvent * ev)
 				{
 					setGnomeHint (c->window, ev->data.l[0], win_hints);
 					clientSetLayer (c, ev->data.l[0]);
-					if(ev->data.l[0] == 6)
-							clientToggleAbove(c);
+					if (ev->data.l[0] == 6)
+						clientToggleAbove (c);
 					clientRaise (c);
 				}
 			else if (ev->message_type == win_state && ev->format == 32)
@@ -690,7 +690,7 @@ handleClientMessage (XClientMessageEvent * ev)
 								clientToggleMaximized (c, WIN_STATE_MAXIMIZED);
 							if (ev->data.l[1] == net_atoms[NET_WM_STATE_ABOVE]
 									|| ev->data.l[2] == net_atoms[NET_WM_STATE_ABOVE])
-								clientToggleAbove(c);
+								clientToggleAbove (c);
 							break;
 						}
 				}
@@ -849,7 +849,7 @@ eventLoop ()
 						clientRaise (clientGetFocus ());
 					raise_counter = -1;
 				}
-			poll_ice_msgs();
+			poll_ice_msgs ();
 			usleep (1000);
 		}
 

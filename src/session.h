@@ -21,9 +21,9 @@
 #ifndef __SESSION_H__
 #define __SESSION_H__
 
-void session_init (char* argv0, char* id);
-void poll_ice_msgs(void);
-void add_ice_fd (fd_set *rd_fds, int *max_fd);
+void session_init (char *argv0, char *id);
+void poll_ice_msgs (void);
+void add_ice_fd (fd_set * rd_fds, int *max_fd);
 
 #endif /* __SESSION_H_ */
 

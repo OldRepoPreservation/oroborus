@@ -251,7 +251,7 @@ setNetWmName (Window w, Atom a, char *value)
 #endif
 
 	XChangeProperty (dpy, w, a, XA_STRING, 8, PropModeReplace,
-									 (unsigned char *) value, strlen(value));
+									 (unsigned char *) value, strlen (value));
 }
 
 void
@@ -277,12 +277,13 @@ getEWMHState (Window w, long *value)
 		{
 			for (i = 0; i < items; i++)
 				{
-					char* currentName = XGetAtomName (dpy, data[i]);
-					char* configuredName = XGetAtomName (dpy, net_atoms[NET_WM_STATE_STICKY]);
-					if (equals(currentName,configuredName))
+					char *currentName = XGetAtomName (dpy, data[i]);
+					char *configuredName =
+						XGetAtomName (dpy, net_atoms[NET_WM_STATE_STICKY]);
+					if (equals (currentName, configuredName))
 						*value |= WIN_STATE_STICKY;
-					XFree(currentName);
-					XFree(configuredName);
+					XFree (currentName);
+					XFree (configuredName);
 				}
 			XFree (data);
 		}
@@ -319,7 +320,7 @@ getGnomeDesktopMargins (CARD32 * margins)
 }
 
 void
-getNetWMStrut (Window win, CARD32* margins, CARD32* window_margins)
+getNetWMStrut (Window win, CARD32 * margins, CARD32 * window_margins)
 {
 	unsigned long items_read;
 	CARD32 *data = NULL;
@@ -328,8 +329,7 @@ getNetWMStrut (Window win, CARD32* margins, CARD32* window_margins)
 	printf ("entering getGnomeDesktopMargins\n");
 #endif
 
-	data =
-		getPropData (win, net_atoms[NET_WM_STRUT], XA_CARDINAL, &items_read);
+	data = getPropData (win, net_atoms[NET_WM_STRUT], XA_CARDINAL, &items_read);
 	if (data && items_read >= 4)
 		{
 			window_margins[0] = data[0];
@@ -352,7 +352,7 @@ getNetWMStrut (Window win, CARD32* margins, CARD32* window_margins)
 }
 
 void
-delNetWMStrut (CARD32* margins, CARD32* data)
+delNetWMStrut (CARD32 * margins, CARD32 * data)
 {
 #ifdef DEBUG
 	printf ("entering delNetWMStrut\n");
@@ -471,12 +471,12 @@ getPropData (Window w, Atom prop, Atom type, unsigned long *items_ret)
 													&after_ret, &prop_data);
 			if (prop_data && *items_ret)
 				{
-					free(items_ret);
+					free (items_ret);
 					return prop_data;
 				}
 			else
 				{
-					free(items_ret);
+					free (items_ret);
 					return NULL;
 				}
 		}

@@ -381,7 +381,7 @@ char *alloca ();
 # undef bindtextdomain
 # define bindtextdomain(Domain, Directory)	/* empty */
 # undef textdomain
-# define textdomain(Domain)									/* empty */
+# define textdomain(Domain)			/* empty */
 # define _(Text) Text
 #endif
 

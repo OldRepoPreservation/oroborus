@@ -458,7 +458,7 @@ clientFrame (Window w)
 	XGetWMNormalHints (dpy, w, c->size, &dummy);
 	XGetWindowAttributes (dpy, w, &attr);
 	c->window = w;
-	if (typeAbove(c->window))
+	if (typeAbove (c->window))
 		c->above = True;
 	else
 		c->above = False;
@@ -469,7 +469,7 @@ clientFrame (Window w)
 	c->border_width = attr.border_width;
 	for (i = 0; i < BUTTON_COUNT; i++)
 		c->button_pressed[i] = False;
-	getNetWMStrut(w, margins, c->margins);
+	getNetWMStrut (w, margins, c->margins);
 	if (!getGnomeHint (w, win_hints, &c->win_hints))
 		c->win_hints = 0;
 	if (!getGnomeHint (w, win_state, &c->win_state))
@@ -599,7 +599,8 @@ clientFrame (Window w)
 	if (getWMState (c->window) != IconicState)
 		{
 			clientShow (c, True);
-			if (focus_new && (!(c->win_hints & WIN_HINTS_SKIP_FOCUS) || !c->non_focusing))
+			if (focus_new
+					&& (!(c->win_hints & WIN_HINTS_SKIP_FOCUS) || !c->non_focusing))
 				{
 					clientSetFocus (c, True);
 				}
@@ -620,7 +621,7 @@ clientUnframe (Client * c, int remap)
 	printf ("unframing client (%#lx)\n", c->window);
 #endif
 
-	delNetWMStrut(margins, c->margins);
+	delNetWMStrut (margins, c->margins);
 	clientGravitate (c, REMOVE);
 	clientUngrabKeys (c);
 	XSetWindowBorderWidth (dpy, c->window, c->border_width);
@@ -787,9 +788,9 @@ clientRaise (Client * c)
 	printf ("entering clientRaise\n");
 #endif
 
-	if(!c)
+	if (!c)
 		return;
-	
+
 	if (c->win_hints & WIN_HINTS_SKIP_FOCUS || c->non_focusing)
 		{
 #ifdef DEBUG
@@ -1048,7 +1049,7 @@ clientSetFocus (Client * c, int sort)
 						if (tmp->focus)
 							{
 								tmp->focus = False;
-								frameDraw(tmp);
+								frameDraw (tmp);
 							}
 					}
 			c->focus = True;
@@ -1063,7 +1064,7 @@ clientSetFocus (Client * c, int sort)
 						if (tmp->focus)
 							{
 								tmp->focus = False;
-								frameDraw(tmp);
+								frameDraw (tmp);
 							}
 					}
 		}
@@ -1073,7 +1074,7 @@ Client *
 clientGetFocus ()
 {
 	Client *c;
-//	Window w;
+//  Window w;
 	int i;
 
 #ifdef DEBUG
@@ -1083,8 +1084,8 @@ clientGetFocus ()
 	for (c = clients, i = 0; i < client_count; c = c->next, i++)
 		if (c->focus && c->win_workspace == workspace)
 			return c;
-//	XGetInputFocus (dpy, &w, &dummy);
-//	return clientGetFromWindow (w, WINDOW);
+//  XGetInputFocus (dpy, &w, &dummy);
+//  return clientGetFromWindow (w, WINDOW);
 	return NULL;
 }
 
@@ -1219,7 +1220,7 @@ clientMove (Client * c, XEvent * e)
 									new_ws = workspace - 1;
 									switch_ws = 1;
 									XWarpPointer (dpy, None, root, 0, 0, 0, 0,
-												  XDisplayWidth (dpy, screen) - 11, msy);
+																XDisplayWidth (dpy, screen) - 11, msy);
 									ev.xmotion.x_root = XDisplayWidth (dpy, screen) - 11;
 								}
 							else if (msx == XDisplayWidth (dpy, screen) - 1 &&
@@ -1359,10 +1360,11 @@ clientMove (Client * c, XEvent * e)
 							wc.y = c->y;
 							clientConfigure (c, &wc, CWX | CWY);
 						}
-					if(switch_ws) {
-						workspaceSwitch (new_ws, c);
-						clientRaise(c);
-					}
+					if (switch_ws)
+						{
+							workspaceSwitch (new_ws, c);
+							clientRaise (c);
+						}
 				}
 			else if (!use_keys && ev.type == ButtonRelease)
 				moving = False;
@@ -1839,9 +1841,9 @@ clientInBorderlessList (Client * c)
 	printf ("entering clientInBorderlessList\n");
 #endif
 
-	class_res = XAllocClassHint();
+	class_res = XAllocClassHint ();
 
-	if(!class_res)
+	if (!class_res)
 		return False;
 
 	if (XGetClassHint (dpy, c->window, class_res) && class_res->res_name)
@@ -1883,4 +1885,3 @@ clientInBorderlessList (Client * c)
 /***This must remain at the end of the file.****************************************************
  * vi:set sw=2 ts=2 cindent cinoptions={1s,>2s,^-1s,n-1s foldmethod=marker foldmarker=«««,»»»: *
  ***********************************************************************************************/
-

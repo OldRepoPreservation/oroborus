@@ -42,8 +42,8 @@ workspaceSwitch (int new_ws, Client * c2)
 	f = clientGetFocus ();
 	if (f)
 		f->focus = True;
-	else if(!f && !c2)
-		f = clientGetNext(clients, 0);
+	else if (!f && !c2)
+		f = clientGetNext (clients, 0);
 
 
 	if (c2)
@@ -78,7 +78,7 @@ workspaceSwitch (int new_ws, Client * c2)
 	if (c2)
 		f = c2;
 	clientSetFocus (f, True);
-	clientRaise(f);
+	clientRaise (f);
 }
 
 void
