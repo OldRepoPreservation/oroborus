@@ -13,8 +13,10 @@ oroborus (2.0.11-2) unstable; urgency=low
   * Fixed autheader error messages.
   * Fixed Window in Window handling.
     Closes: #168314
+  * Make Mod2 - Mod5 work again.
+    Closes: #176053
 
- -- Stefan Pfetzing <dreamind@dreamind.de>  Mon, 10 Feb 2003 03:23:53 +0100
+ -- Stefan Pfetzing <dreamind@dreamind.de>  Mon, 10 Feb 2003 04:33:38 +0100
 
 oroborus (2.0.11-1) unstable; urgency=low
 

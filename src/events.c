@@ -36,7 +36,7 @@ handleKeyPress (XKeyEvent * ev)
 #endif
 
 	c = clientGetFocus ();
-	state = ev->state & (Mod1Mask | ControlMask | ShiftMask);
+	state = ev->state & (Mod1Mask | Mod2Mask | Mod3Mask | Mod4Mask | Mod5Mask | ControlMask | ShiftMask);
 	for (key = 0; key < KEY_COUNT; key++)
 		if (keys[key].keycode == ev->keycode && keys[key].modifier == state)
 			break;
@@ -312,12 +312,12 @@ handleButtonPress (XButtonEvent * ev)
 
 	while (XCheckTypedEvent (dpy, ButtonPress, (XEvent *) ev));
 
-	state = ev->state & (Mod1Mask | ShiftMask | ControlMask);
+	state = ev->state & (Mod1Mask | Mod2Mask | Mod3Mask | Mod4Mask | Mod5Mask | ShiftMask | ControlMask);
 
 	c = clientGetFromWindow (ev->window, FRAME);
 	if (c)
 		{
-			state = ev->state & (Mod1Mask | ShiftMask | ControlMask);
+			state = ev->state & (Mod1Mask | Mod2Mask | Mod3Mask | Mod4Mask | Mod5Mask | ShiftMask | ControlMask);
 			win = getMouseWindow (dpy, c->frame);
 
 			clientSetFocus (c, True);
@@ -443,7 +443,7 @@ handleDestroyNotify (XDestroyWindowEvent * ev)
 				{
 					c = clientGetTopMost(WIN_LAYER_NORMAL);
 					clientSetFocus (c, True);
-					if (!not_warp_to_next)
+					if (!(not_warp_to_next || c->non_focusing))
 						clientWarpMouse (c);
 				}
 			else
@@ -474,7 +474,7 @@ handleUnmapNotify (XUnmapEvent * ev)
 						{
 							c = clientGetTopMost(WIN_LAYER_NORMAL);
 							clientSetFocus (c, True);
-							if (!not_warp_to_next)
+							if (!(not_warp_to_next || c->non_focusing))
 								clientWarpMouse (c);
 						}
 					else

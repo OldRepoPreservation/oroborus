@@ -25,6 +25,7 @@ clean:
 	rm -f build-stamp configure-stamp
 	-$(MAKE) distclean
 	dh_clean
+	test -f Makefile.cvs && $(MAKE) -f Makefile.cvs clean
 
 install: DH_OPTIONS=
 install: build
