@@ -30,6 +30,6 @@ void sendClientMessage (Display *, Window, Atom, long, int);
 
 #endif /* __MISC_H */
 
-/***This must remain at the end of the file.****************************************************
- * vi:set sw=2 ts=2 cindent cinoptions={1s,>2s,^-1s,n-1s foldmethod=marker foldmarker=«««,»»»: *
- ***********************************************************************************************/
+/***This must remain at the end of the file.***********************************************
+ * vi:set sw=2 cindent cinoptions={1s,>2s,^-1s,n-1s foldmethod=marker foldmarker=«««,»»»: *
+ ******************************************************************************************/

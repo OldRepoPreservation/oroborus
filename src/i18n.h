@@ -27,11 +27,11 @@
 
 typedef struct
 {
-	XFontStruct *font;
-	XFontSet fontset;
-	int height;
-	int ascent;
-	int descent;
+  XFontStruct *font;
+  XFontSet fontset;
+  int height;
+  int ascent;
+  int descent;
 }
 MyFont;
 
@@ -44,6 +44,6 @@ void getWindowName (Display *, Window, char **);
 
 #endif /* __I18N_H */
 
-/***This must remain at the end of the file.****************************************************
- * vi:set sw=2 ts=2 cindent cinoptions={1s,>2s,^-1s,n-1s foldmethod=marker foldmarker=«««,»»»: *
- ***********************************************************************************************/
+/***This must remain at the end of the file.***********************************************
+ * vi:set sw=2 cindent cinoptions={1s,>2s,^-1s,n-1s foldmethod=marker foldmarker=«««,»»»: *
+ ******************************************************************************************/
