@@ -1,7 +1,7 @@
 oroborus (2.0.11-2) unstable; urgency=low
 
-  * *argh* corrected configure.in, seems I have to finally do some script
-    for this, so this won't happen again.
+  * *argh* corrected configure.in, this won't happen again, configure.in
+    now determines the version and package name from debian/rules.
   * fixed the startup initialization of some root hints (needed for the
     GNOME2 desktop switcher).
   * fixed the position of the root (nautilus) window, which sometimes
@@ -12,7 +12,7 @@ oroborus (2.0.11-2) unstable; urgency=low
   * Fixed the layer which GNOME2 panels use.
   * Fixed autheader error messages.
 
- -- Stefan Pfetzing <dreamind@dreamind.de>  Sun,  2 Feb 2003 22:05:20 +0100
+ -- Stefan Pfetzing <dreamind@dreamind.de>  Wed,  5 Feb 2003 15:14:30 +0100
 
 oroborus (2.0.11-1) unstable; urgency=low
 
