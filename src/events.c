@@ -586,6 +586,11 @@ handlePropertyNotify (XPropertyEvent * ev)
 				}
 			else if (ev->atom == win_hints)
 				getGnomeHint (c->window, win_hints, &c->win_hints);
+			else if (ev->atom == net_atoms[NET_WM_STRUT])
+				{
+					delNetWMStrut(margins, c->margins);
+					getNetWMStrut(c->window, margins, c->margins);
+				}
 			else if (ev->atom == win_layer)
 				{
 					getGnomeHint (c->window, win_layer, &dummy);

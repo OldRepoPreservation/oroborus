@@ -408,6 +408,7 @@ typeEWMH (Window w, char *type)
 {
 	unsigned long *data;
 	unsigned long items = 0;
+	unsigned long item = 0;
 	int ret = 0;
 
 #ifdef DEBUG
@@ -415,17 +416,20 @@ typeEWMH (Window w, char *type)
 #endif
 
 	data = getPropData (w, net_atoms[NET_WM_WINDOW_TYPE], XA_ATOM, &items);
-	if (data)
+	printf("items: %d\n",items);
+	while (data && items && item < items && !ret)
 		{
 			char *name;
-			name = XGetAtomName (dpy, *data);
+			name = XGetAtomName (dpy, data[item]);
 #ifdef DEBUG
 			printf ("%s\n", name);
 #endif
 			ret = equals (name, type);
 			XFree (name);
-			XFree (data);
+			item++;
 		}
+	if (data)
+		XFree (data);
 
 	return ret;
 }
