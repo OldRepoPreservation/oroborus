@@ -108,8 +108,8 @@ initNETHints ()
 		XInternAtom (dpy, "_NET_WM_STATE_SKIP_PAGER", False);
 	net_atoms[NET_WM_STATE_HIDDEN] =
 		XInternAtom (dpy, "_NET_WM_STATE_HIDDEN", False);
-	net_atoms[NET_WM_STATE_FULLSCREEN] =
-		XInternAtom (dpy, "_NET_WM_STATE_FULLSCREEN", False);
+//	net_atoms[NET_WM_STATE_FULLSCREEN] =
+//		XInternAtom (dpy, "_NET_WM_STATE_FULLSCREEN", False);
 	net_atoms[NET_WM_NAME] = XInternAtom (dpy, "_NET_WM_NAME", False);
 	net_atoms[NET_WM_DESKTOP] = XInternAtom (dpy, "_NET_WM_DESKTOP", False);
 	net_atoms[NET_NUMBER_OF_DESKTOPS] =
