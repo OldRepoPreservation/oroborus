@@ -101,6 +101,9 @@ move_bottom_left_key=Control+Mod1+k
 move_bottom_right_key=Control+Mod1+l
 quit_key=Control+Mod1+q
 
+# Modifiers for window operations with the mouse
+window_ops_modifiers=none+Control+Mod1
+
 # double_click_action=shade/hide/maximize/none
 double_click_action=shade
 

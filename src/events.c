@@ -290,9 +290,7 @@ handleButtonPress (XButtonEvent * ev)
       else if (((win == c->title || win == c->sides[SIDE_BOTTOM] ||
 		 win == c->sides[SIDE_LEFT] || win == c->sides[SIDE_RIGHT]) &&
 		ev->button == Button1 && state == 0) || (ev->button == Button1
-							 && state ==
-							 (Mod1Mask |
-							  ControlMask)))
+							 && state == keys[KEY_WINDOW_OPS].modifier))
 	{
 	  clientRaise (c);
 	  if (ev->time - last_button_time <= 250 && last_button_time != 0)
@@ -331,13 +329,13 @@ handleButtonPress (XButtonEvent * ev)
 	  clientRaise (c);
 	  clientToggleSticky (c);
 	}
-      else if (ev->button == Button2 && state == (Mod1Mask | ControlMask))
+      else if (ev->button == Button2 && state == keys[KEY_WINDOW_OPS].modifier)
 	{
 	  clientRaise (c);
 	  clientResize (c, (XEvent *) ev);
 	}
       else if ((win != c->window && ev->button == Button3 && state == 0) ||
-	       (ev->button == Button3 && state == (Mod1Mask | ControlMask)))
+	       (ev->button == Button3 && state == keys[KEY_WINDOW_OPS].modifier))
 	clientLower (c);
       else if (win != c->window && ev->button == Button1 && state == Mod1Mask)
 	clientSetLayer (c, c->win_layer + 1);

@@ -135,7 +135,8 @@
 #define KEY_BOTTOM_LEFT     44
 #define KEY_BOTTOM_RIGHT    45
 #define KEY_QUIT			46
-#define KEY_COUNT			47
+#define KEY_WINDOW_OPS      43
+#define KEY_COUNT			48
 
 #define ALIGN_LEFT			0
 #define ALIGN_RIGHT			1
