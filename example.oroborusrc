@@ -95,10 +95,10 @@ resize_window_up_key=Shift+Mod1+Up
 resize_window_down_key=Shift+Mod1+Down
 resize_window_left_key=Shift+Mod1+Left
 resize_window_right_key=Shift+Mod1+Right
-move_top_left_key=Control+Mod1+i
-move_top_right_key=Control+Mod1+o
-move_bottom_left_key=Control+Mod1+k
-move_bottom_right_key=Control+Mod1+l
+move_top_left_key=Shift+Control+Mod1+i
+move_top_right_key=Shift+Control+Mod1+o
+move_bottom_left_key=Shift+Control+Mod1+k
+move_bottom_right_key=Shift+Control+Mod1+l
 quit_key=Control+Mod1+q
 
 # Modifiers for window operations with the mouse
