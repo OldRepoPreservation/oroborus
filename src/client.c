@@ -41,8 +41,8 @@ clientInitPosition (Client * c)
   if (!(c->size->flags & (PPosition | USPosition)))
     {
       getMouseXY (dpy, root, &mx, &my);
-      c->x = mx - c->width / 2;
-      c->y = my - c->height / 2;
+      c->x = mx - (c->width / 2) + margins[MARGIN_LEFT];
+      c->y = my - (c->height / 2) + margins[MARGIN_TOP];
 
       if (window_placement == PLACEMENT_ROOT)
 	{
@@ -444,6 +444,8 @@ clientFrame (Window w)
   PropMwmHints *mwm_hints;
   Window transientWindow;
   int i;
+  char *className;
+  XClassHint *class_res;
 
 #ifdef DEBUG
   printf ("entering clientFrame\n");
@@ -451,6 +453,7 @@ clientFrame (Window w)
 #endif
 
   c = malloc (sizeof (*c));
+  class_res = malloc(sizeof (XClassHint));
   if (!c)
     return;
 
@@ -481,7 +484,13 @@ clientFrame (Window w)
       setGnomeHint (dpy, w, win_workspace, workspace_count - 1);
       c->win_workspace = workspace_count - 1;
     }
-  c->has_border = True;
+
+  XGetClassHint(dpy, c->window, class_res);
+  if (class_res->res_name && ! strcmp (class_res->res_name,"X-Chat"))
+    c->has_border = False;
+  else
+    c->has_border = True;
+
   c->ignore_unmap = attr.map_state == IsViewable ? 1 : 0;
   c->focus = False;
   getWindowName (dpy, c->window, &c->name);
@@ -951,6 +960,7 @@ clientToggleMaximized (Client * c, int mode)
     }
   setGnomeHint (dpy, c->window, win_state, c->win_state);
   clientConfigure (c, &wc, CWX | CWY | CWWidth | CWHeight);
+  clientWarpMouse (c);
 }
 
 void
@@ -1613,9 +1623,7 @@ clientCycle (Client * c)
     {
       clientShow (c2, True);
       clientSetFocus (c2, True);
-      if (!click_to_focus)
-	XWarpPointer (dpy, None, c2->window, 0, 0, 0, 0, frameWidth (c2) / 2,
-		      frameHeight (c2) / 2);
+      clientWarpMouse (c2);
     }
 }
 
@@ -1721,4 +1729,12 @@ clientButtonPress (Client * c, Window w, XButtonEvent * bev)
 	  break;
 	}
     }
+}
+
+void
+clientWarpMouse (Client * c)
+{
+  if (!click_to_focus)
+    XWarpPointer (dpy, None, c->window, 0, 0, 0, 0,
+		  (c->width / 2), (c->height / 2));
 }

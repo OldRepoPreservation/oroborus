@@ -53,47 +53,50 @@ handleKeyPress (XKeyEvent * ev)
 	case KEY_MOVE_LEFT:
 	case KEY_MOVE_RIGHT:
 	  clientMove (c, (XEvent *) ev);
-	  if (!click_to_focus)
-	    XWarpPointer (dpy, None, c->window, 0, 0, 0, 0,
-			  frameWidth (c) / 2, frameHeight (c) / 2);
+	  clientWarpMouse (c);
 	  break;
-	    case KEY_TOP_LEFT:
-		wc.x = frameLeft(c) + margins[MARGIN_LEFT];
-		wc.y = frameTop(c) + margins[MARGIN_TOP];
-		clientConfigure (c, &wc, CWX | CWY);
-		if (!click_to_focus)
-		    XWarpPointer (dpy, None, c->window, 0, 0, 0, 0,
-				  frameWidth (c) / 2, frameHeight (c) / 2);
-		break;
-	    case KEY_TOP_RIGHT:
-		wc.x = XDisplayWidth(dpy, screen) - c->width - frameRight(c) - margins[MARGIN_RIGHT];
-		wc.y = frameTop(c) + margins[MARGIN_TOP];
-		clientConfigure (c, &wc, CWX | CWY);
-		if (!click_to_focus)
-		    XWarpPointer (dpy, None, c->window, 0, 0, 0, 0,
-				  frameWidth (c) / 2, frameHeight (c) / 2);
-		break;
-	    case KEY_BOTTOM_LEFT:
-		wc.x = frameLeft(c) + margins[MARGIN_LEFT];
-		wc.y = XDisplayHeight(dpy, screen) - c->height - frameBottom(c) - margins[MARGIN_BOTTOM];
-		clientConfigure (c, &wc, CWX | CWY);
-		if (!click_to_focus)
-		    XWarpPointer (dpy, None, c->window, 0, 0, 0, 0,
-				  frameWidth (c) / 2, frameHeight (c) / 2);
-		break;
-	    case KEY_BOTTOM_RIGHT:
-		wc.x = XDisplayWidth(dpy, screen) - c->width - frameRight(c) - margins[MARGIN_RIGHT];
-		wc.y = XDisplayHeight(dpy, screen) - c->height - frameBottom(c) - margins[MARGIN_BOTTOM];
-		clientConfigure (c, &wc, CWX | CWY);
-		if (!click_to_focus)
-		    XWarpPointer (dpy, None, c->window, 0, 0, 0, 0,
-				  frameWidth (c) / 2, frameHeight (c) / 2);
-		break;
+	case KEY_TOP_LEFT:
+	  wc.x = frameLeft (c) + margins[MARGIN_LEFT];
+	  wc.y = frameTop (c) + margins[MARGIN_TOP];
+	  clientConfigure (c, &wc, CWX | CWY);
+	  clientWarpMouse (c);
+	  break;
+	case KEY_TOP_RIGHT:
+	  wc.x =
+	    XDisplayWidth (dpy,
+			   screen) - c->width - frameRight (c) -
+	    margins[MARGIN_RIGHT];
+	  wc.y = frameTop (c) + margins[MARGIN_TOP];
+	  clientConfigure (c, &wc, CWX | CWY);
+	  clientWarpMouse (c);
+	  break;
+	case KEY_BOTTOM_LEFT:
+	  wc.x = frameLeft (c) + margins[MARGIN_LEFT];
+	  wc.y =
+	    XDisplayHeight (dpy,
+			    screen) - c->height - frameBottom (c) -
+	    margins[MARGIN_BOTTOM];
+	  clientConfigure (c, &wc, CWX | CWY);
+	  clientWarpMouse (c);
+	  break;
+	case KEY_BOTTOM_RIGHT:
+	  wc.x =
+	    XDisplayWidth (dpy,
+			   screen) - c->width - frameRight (c) -
+	    margins[MARGIN_RIGHT];
+	  wc.y =
+	    XDisplayHeight (dpy,
+			    screen) - c->height - frameBottom (c) -
+	    margins[MARGIN_BOTTOM];
+	  clientConfigure (c, &wc, CWX | CWY);
+	  clientWarpMouse (c);
+	  break;
 	case KEY_RESIZE_UP:
 	case KEY_RESIZE_DOWN:
 	case KEY_RESIZE_LEFT:
 	case KEY_RESIZE_RIGHT:
 	  clientResize (c, (XEvent *) ev);
+	  clientWarpMouse (c);
 	  break;
 	case KEY_CYCLE_WINDOWS:
 	  clientCycle (c);
@@ -290,7 +293,9 @@ handleButtonPress (XButtonEvent * ev)
       else if (((win == c->title || win == c->sides[SIDE_BOTTOM] ||
 		 win == c->sides[SIDE_LEFT] || win == c->sides[SIDE_RIGHT]) &&
 		ev->button == Button1 && state == 0) || (ev->button == Button1
-							 && state == keys[KEY_WINDOW_OPS].modifier))
+							 && state ==
+							 keys[KEY_WINDOW_OPS].
+							 modifier))
 	{
 	  clientRaise (c);
 	  if (ev->time - last_button_time <= 250 && last_button_time != 0)
@@ -329,13 +334,15 @@ handleButtonPress (XButtonEvent * ev)
 	  clientRaise (c);
 	  clientToggleSticky (c);
 	}
-      else if (ev->button == Button2 && state == keys[KEY_WINDOW_OPS].modifier)
+      else if (ev->button == Button2
+	       && state == keys[KEY_WINDOW_OPS].modifier)
 	{
 	  clientRaise (c);
 	  clientResize (c, (XEvent *) ev);
 	}
       else if ((win != c->window && ev->button == Button3 && state == 0) ||
-	       (ev->button == Button3 && state == keys[KEY_WINDOW_OPS].modifier))
+	       (ev->button == Button3
+		&& state == keys[KEY_WINDOW_OPS].modifier))
 	clientLower (c);
       else if (win != c->window && ev->button == Button1 && state == Mod1Mask)
 	clientSetLayer (c, c->win_layer + 1);
@@ -620,79 +627,79 @@ handleEvent (XEvent * ev)
     {
     case KeyPress:
 #ifdef DEBUG
-      printf("KeyPress\n");
+      printf ("KeyPress\n");
 #endif
       handleKeyPress ((XKeyEvent *) ev);
       break;
     case ButtonPress:
 #ifdef DEBUG
-      printf("ButtonPress\n");
+      printf ("ButtonPress\n");
 #endif
       handleButtonPress ((XButtonEvent *) ev);
       break;
     case ButtonRelease:
 #ifdef DEBUG
-      printf("ButtonRelease\n");
+      printf ("ButtonRelease\n");
 #endif
       handleButtonRelease ((XButtonEvent *) ev);
       break;
     case DestroyNotify:
 #ifdef DEBUG
-      printf("DestroyNotify\n");
+      printf ("DestroyNotify\n");
 #endif
       handleDestroyNotify ((XDestroyWindowEvent *) ev);
       break;
     case UnmapNotify:
 #ifdef DEBUG
-      printf("UnmapNotify\n");
+      printf ("UnmapNotify\n");
 #endif
       handleUnmapNotify ((XUnmapEvent *) ev);
       break;
     case MapRequest:
 #ifdef DEBUG
-      printf("MapRequest\n");
+      printf ("MapRequest\n");
 #endif
       handleMapRequest ((XMapRequestEvent *) ev);
       break;
     case ConfigureRequest:
 #ifdef DEBUG
-      printf("ConfigureRequest\n");
+      printf ("ConfigureRequest\n");
 #endif
       handleConfigureRequest ((XConfigureRequestEvent *) ev);
       break;
     case EnterNotify:
 #ifdef DEBUG
-      printf("EnterNotify\n");
+      printf ("EnterNotify\n");
 #endif
       handleEnterNotify ((XCrossingEvent *) ev);
       break;
     case FocusIn:
 #ifdef DEBUG
-      printf("FocusIn\n");
+      printf ("FocusIn\n");
 #endif
       handleFocusIn ((XFocusChangeEvent *) ev);
       break;
     case FocusOut:
 #ifdef DEBUG
-      printf("FocusOut\n");
+      printf ("FocusOut\n");
 #endif
       handleFocusOut ((XFocusChangeEvent *) ev);
       break;
     case PropertyNotify:
 #ifdef DEBUG
-      printf("PropertyNotify\n");
+      printf ("PropertyNotify\n");
 #endif
       handlePropertyNotify ((XPropertyEvent *) ev);
       break;
     case ClientMessage:
 #ifdef DEBUG
-      printf("clientMessage\n");
+      printf ("clientMessage\n");
 #endif
       handleClientMessage ((XClientMessageEvent *) ev);
       break;
     default:
 #ifdef DEBUG
-      printf("default\n");
+      printf ("default\n");
 #endif
       if (shape && ev->type == shape_event)
 	handleShape ((XShapeEvent *) ev);

@@ -246,6 +246,7 @@ void clientResize (Client *, XEvent *);
 Client *clientGetNext (Client *, int);
 void clientCycle (Client *);
 void clientButtonPress (Client *, Window, XButtonEvent *);
+void clientWarpMouse (Client *);
 
 void handleEvent (XEvent *);
 void eventLoop ();

@@ -5,10 +5,11 @@ oroborus (2.0.6-1) unstable; urgency=low
   * Added a Patch from Martin Hedenfalk for setting the old size on windows,
     when restarting Oroborus. This fixes wrong windowsizes, when you are
     restarting Oroborus and have some maximized windows open.
-  * Use ash for postinst.
+  * Use /bin/kill.
     Closes: #150406
+  * Fixed some of the mouse warping.
 
- -- Stefan Pfetzing <dreamind@dreamind.de>  Wed, 19 Jun 2002 03:41:44 +0200
+ -- Stefan Pfetzing <dreamind@dreamind.de>  Sat, 22 Jun 2002 19:01:26 +0200
 
 oroborus (2.0.5-1) unstable; urgency=low
 
