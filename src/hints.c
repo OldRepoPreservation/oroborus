@@ -265,10 +265,12 @@ getEWMHState (Window w, long *value)
 		{
 			for (i = 0; i < items; i++)
 				{
-					if (equals
-							(XGetAtomName (dpy, data[i]),
-							 XGetAtomName (dpy, net_atoms[NET_WM_STATE_STICKY])))
+					char* currentName = XGetAtomName (dpy, data[i]);
+					char* configuredName = XGetAtomName (dpy, net_atoms[NET_WM_STATE_STICKY]);
+					if (equals(currentName,configuredName))
 						*value |= WIN_STATE_STICKY;
+					XFree(currentName);
+					XFree(configuredName);
 				}
 			XFree (data);
 		}
@@ -371,6 +373,7 @@ typeEWMH (Window w, char *type)
 			printf ("%s\n", name);
 #endif
 			ret = equals (name, type);
+			XFree (name);
 			XFree (data);
 		}
 
@@ -388,19 +391,35 @@ getPropData (Window w, Atom prop, Atom type, unsigned long *items_ret)
 #ifdef DEBUG
 	printf ("entering getPropData\n");
 #endif
+	prop_data = NULL;
+
 	if (items_ret == NULL)
-		items_ret = (unsigned long *) xmalloc (sizeof (unsigned long));
-
-	prop_data = 0;
-
-	XGetWindowProperty (dpy, w, prop, 0, 0x7fffffff, False,
-											type, &type_ret, &format_ret, items_ret,
-											&after_ret, &prop_data);
-
-	if (prop_data && *items_ret)
-		return prop_data;
+		{
+			items_ret = (unsigned long *) xmalloc (sizeof (unsigned long));
+			XGetWindowProperty (dpy, w, prop, 0, 0x7fffffff, False,
+													type, &type_ret, &format_ret, items_ret,
+													&after_ret, &prop_data);
+			if (prop_data && *items_ret)
+				{
+					free(items_ret);
+					return prop_data;
+				}
+			else
+				{
+					free(items_ret);
+					return NULL;
+				}
+		}
 	else
-		return NULL;
+		{
+			XGetWindowProperty (dpy, w, prop, 0, 0x7fffffff, False,
+													type, &type_ret, &format_ret, items_ret,
+													&after_ret, &prop_data);
+			if (prop_data && *items_ret)
+				return prop_data;
+			else
+				return NULL;
+		}
 }
 
 void

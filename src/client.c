@@ -1725,14 +1725,17 @@ clientInBorderlessList (Client * c)
 	printf ("entering clientInBorderlessList\n");
 #endif
 
-	class_res = xmalloc (sizeof (XClassHint));
+	class_res = XAllocClassHint();
 
-	class_res->res_name = NULL;
+	if(!class_res)
+		return False;
 
 	if (XGetClassHint (dpy, c->window, class_res) && class_res->res_name)
 		win_class_name = class_res->res_name;
 	else
 		{
+			XFree (class_res->res_name);
+			XFree (class_res->res_class);
 			XFree (class_res);
 			return False;
 		}
@@ -1747,6 +1750,8 @@ clientInBorderlessList (Client * c)
 		{
 			if (strcasecmp (tok, win_class_name) == 0)
 				{
+					XFree (class_res->res_name);
+					XFree (class_res->res_class);
 					XFree (class_res);
 					free (buf);
 					return True;
@@ -1754,6 +1759,8 @@ clientInBorderlessList (Client * c)
 			tok = strtok (NULL, ";");
 		}
 
+	XFree (class_res->res_name);
+	XFree (class_res->res_class);
 	XFree (class_res);
 	free (buf);
 	return False;

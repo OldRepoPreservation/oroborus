@@ -1,8 +1,9 @@
 oroborus (2.0.8-1) unstable; urgency=low
 
   * Don't raise or shade the "desktop" window. (for example nautilus2)
+  * Some malloc() fixes, thanks to ccmalloc (apt-cache show ccmalloc).
 
- -- Stefan Pfetzing <dreamind@dreamind.de>  Mon,  5 Aug 2002 01:30:30 +0200
+ -- Stefan Pfetzing <dreamind@dreamind.de>  Wed, 14 Aug 2002 06:17:32 +0200
 
 oroborus (2.0.7-1) unstable; urgency=low
 
