@@ -625,12 +625,30 @@ handleClientMessage (XClientMessageEvent * ev)
 	clientSetLayer (c, ev->data.l[0]);
       else if (ev->message_type == win_workspace && ev->format == 32)
 	clientSetWorkspace (c, ev->data.l[0]);
-      else if (ev->message_type == net_atoms[NET_ACTIVE_WINDOW] && ev->format == 32)
+      else if (ev->message_type == net_atoms[NET_ACTIVE_WINDOW]
+	       && ev->format == 32)
 	{
 	  if (getWMState (c->window) == IconicState)
 	    clientShow (c, False);
-	  clientSetFocus(c, True);
+	  clientSetFocus (c, True);
 	  setWMState (c->window, NormalState);
+	}
+      else if (ev->message_type == net_atoms[NET_WM_STATE]
+	       && ev->format == 32)
+	{
+	  switch (ev->data.l[0])
+	    {
+	    case NET_WM_STATE_ADD:
+	    case NET_WM_STATE_REMOVE:
+	    case NET_WM_STATE_TOGGLE:
+	      if ((ev->data.l[1] == net_atoms[NET_WM_STATE_MAXIMIZED_HORZ]
+		   || ev->data.l[1] == net_atoms[NET_WM_STATE_MAXIMIZED_VERT])
+		  && (ev->data.l[2] == net_atoms[NET_WM_STATE_MAXIMIZED_HORZ]
+		      || ev->data.l[2] ==
+		      net_atoms[NET_WM_STATE_MAXIMIZED_VERT]))
+		clientToggleMaximized (c, WIN_STATE_MAXIMIZED);
+	      break;
+	    }
 	}
     }
   else

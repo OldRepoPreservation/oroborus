@@ -92,6 +92,12 @@
 #define CLOSE_BUTTON			3
 #define BUTTON_COUNT			4
 
+enum
+{
+  NET_WM_STATE_REMOVE,		/* remove/unset property */
+  NET_WM_STATE_ADD,		/* add/set property */
+  NET_WM_STATE_TOGGLE		/* toggle property  */
+};
 
 enum
 {
