@@ -9,7 +9,9 @@ Things to do
   *not started yet*
 
 * Implement *all* needed things from EWMH, mostly for Gnome2.
-  *started*
+  (currently Gnome panels work again, *and* Oroborus registers itself with
+  the Gnome session)
+  *working on*
 
 * implement a remote controlling application
   (like esh from enlightenment)
@@ -30,3 +32,9 @@ Things to do
 
 * Cleanup *all* of Oroborus to make it more flexible.
   *started*
+
+* Switch to an object orientated language, perhaps Java.
+  *not started yet*
+
+* Implement libxft2 support for the window decoration. (mostly for UTF-8 support).
+  *not started yet*
