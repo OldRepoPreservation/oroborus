@@ -303,6 +303,7 @@ loadSettings ()
     {
       workspace_count = abs (atoi (getValue ("workspace_count", rc)));
       setGnomeHint (root, win_workspace_count, workspace_count);
+      setGnomeHint (root, net_atoms[NET_NUMBER_OF_DESKTOPS], workspace_count);
     }
   wrap_workspaces = !strcmp ("true", getValue ("wrap_workspaces", rc));
 

@@ -111,12 +111,18 @@ initNETHints ()
   net_atoms[NET_WM_STATE_FULLSCREEN] =
     XInternAtom (dpy, "_NET_WM_STATE_FULLSCREEN", False);
   net_atoms[NET_WM_NAME] = XInternAtom (dpy, "_NET_WM_NAME", False);
+  net_atoms[NET_WM_DESKTOP] = XInternAtom (dpy, "_NET_WM_DESKTOP", False);
   net_atoms[NET_NUMBER_OF_DESKTOPS] =
     XInternAtom (dpy, "_NET_NUMBER_OF_DESKTOPS", False);
   net_atoms[NET_CURRENT_DESKTOP] =
     XInternAtom (dpy, "_NET_CURRENT_DESKTOP", False);
   net_atoms[NET_ACTIVE_WINDOW] =
     XInternAtom (dpy, "_NET_ACTIVE_WINDOW", False);
+  net_atoms[NET_SUPPORTING_WM_CHECK] =
+    XInternAtom (dpy, "_NET_SUPPORTING_WM_CHECK", False);
+  net_atoms[NET_WORKAREA] = XInternAtom (dpy, "_NET_WORKAREA", False);
+  net_atoms[NET_WM_WORKAREA] = XInternAtom (dpy, "_NET_WM_WORKAREA", False);
+  net_atoms[NET_CLOSE_WINDOW] = XInternAtom (dpy, "_NET_CLOSE_WINDOW", False);
   XChangeProperty (dpy, root, XInternAtom (dpy, "_NET_SUPPORTED", False),
 		   XA_ATOM, 32, PropModeReplace, (unsigned char *) net_atoms,
 		   NET_ATOM_COUNT);
@@ -237,6 +243,17 @@ setGnomeHint (Window w, Atom a, long value)
 }
 
 void
+setSupportingWmCheck(Window w, Window w2)
+{
+#ifdef DEBUG
+  printf ("entering setSupportingWmCheck\n");
+#endif
+
+  XChangeProperty (dpy, w, net_atoms[NET_SUPPORTING_WM_CHECK], XA_WINDOW, 32, PropModeReplace,
+		   (unsigned char *) &w2, 1);
+}
+
+void
 getEWMHState (Window w, long *value)
 {
   unsigned long *data;
@@ -285,6 +302,38 @@ getGnomeDesktopMargins (CARD32 * margins)
       margins[2] = 0;
       margins[3] = 0;
     }
+}
+
+void
+setNetWorkarea (CARD32 * margins, int workspaces)
+{
+  struct workarea
+    {
+      CARD32 left,top,right,bottom;
+    } *workarea;
+  int i;
+
+  if (workspaces <= 0)
+    return;
+
+  workarea = xcalloc (workspaces, sizeof (struct workarea));
+
+  for (i = 0; i < workspaces; i++)
+    {
+      workarea[i].left = margins[0];
+      workarea[i].top = margins[1];
+      workarea[i].right = XDisplayWidth (dpy, XDefaultScreen (dpy)) - margins[1];
+      workarea[i].bottom = XDisplayHeight (dpy, XDefaultScreen (dpy)) - margins[3];
+    }
+
+  XChangeProperty (dpy, XDefaultRootWindow (dpy),
+		   net_atoms[NET_WORKAREA], XA_CARDINAL, 32,
+		   PropModeReplace, (unsigned char *) workarea,
+		   4 * workspaces);
+  XChangeProperty (dpy, XDefaultRootWindow (dpy), net_atoms[NET_WM_WORKAREA],
+		   XA_CARDINAL, 32, PropModeReplace,
+		   (unsigned char *) workarea, 4 * workspaces);
+  free(workarea);
 }
 
 int
@@ -358,8 +407,9 @@ setFocusHint (Window w)
   printf ("entering setFocusHint\n");
 #endif
 
-  XChangeProperty (dpy, XDefaultRootWindow(dpy), net_atoms[NET_ACTIVE_WINDOW], XA_WINDOW, 32, PropModeReplace,
-		   (unsigned char *) &w, 1);
+  XChangeProperty (dpy, XDefaultRootWindow (dpy),
+		   net_atoms[NET_ACTIVE_WINDOW], XA_WINDOW, 32,
+		   PropModeReplace, (unsigned char *) &w, 1);
 }
 
 int

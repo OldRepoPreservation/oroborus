@@ -220,6 +220,8 @@ initialize (int argc, char **argv)
   gnome_win = XCreateSimpleWindow (dpy, root, -1000, -1000, 5, 5, 0, 0, 0);
   setGnomeHint (root, win_supporting_wm_check, gnome_win);
   setGnomeHint (gnome_win, win_supporting_wm_check, gnome_win);
+  setSupportingWmCheck (root, gnome_win);
+  setSupportingWmCheck (gnome_win, gnome_win);
   setGnomeHint (root, win_desktop_button_proxy, gnome_win);
   setGnomeHint (gnome_win, win_desktop_button_proxy, gnome_win);
   getGnomeHint (root, win_workspace, &workspace);
@@ -240,6 +242,9 @@ initialize (int argc, char **argv)
   init_keyboard (dpy);
 
   loadSettings ();
+
+  setNetWorkarea (margins, workspace_count); 
+
   clientFrameAll ();
 
   XMapWindow (dpy, gnome_win);

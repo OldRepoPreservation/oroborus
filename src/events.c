@@ -138,9 +138,11 @@ handleKeyPress (XKeyEvent * ev)
 	  break;
 	case KEY_ADD_WORKSPACE:
 	  workspaceSetCount (workspace_count + 1);
+	  setNetWorkarea (margins, workspace_count);
 	  break;
 	case KEY_DEL_WORKSPACE:
 	  workspaceSetCount (workspace_count - 1);
+	  setNetWorkarea (margins, workspace_count);
 	  break;
 	case KEY_STICK_WINDOW:
 	  clientToggleSticky (c);
@@ -248,9 +250,11 @@ handleKeyPress (XKeyEvent * ev)
 	  break;
 	case KEY_ADD_WORKSPACE:
 	  workspaceSetCount (workspace_count + 1);
+	  setNetWorkarea (margins, workspace_count);
 	  break;
 	case KEY_DEL_WORKSPACE:
 	  workspaceSetCount (workspace_count - 1);
+	  setNetWorkarea (margins, workspace_count);
 	  break;
 	case KEY_WORKSPACE_1:
 	  workspaceSwitch (0, NULL);
@@ -596,9 +600,13 @@ handlePropertyNotify (XPropertyEvent * ev)
 	{
 	  getGnomeHint (root, win_workspace_count, &dummy);
 	  workspaceSetCount (dummy);
+	  setNetWorkarea (margins, workspace_count);
 	}
       else if (ev->atom == gnome_panel_desktop_area)
-	getGnomeDesktopMargins (margins);
+	{
+	  getGnomeDesktopMargins (margins);
+	  setNetWorkarea (margins, workspace_count);
+	}
     }
 }
 
@@ -626,7 +634,10 @@ handleClientMessage (XClientMessageEvent * ev)
 	clientSetState (c, ev->data.l[0], ev->data.l[1]);
       else if (ev->message_type == win_layer && ev->format == 32)
 	clientSetLayer (c, ev->data.l[0]);
-      else if (ev->message_type == win_workspace && ev->format == 32)
+      else
+	if ((ev->message_type == win_workspace
+	     || ev->message_type == net_atoms[NET_WM_DESKTOP])
+	    && ev->format == 32)
 	clientSetWorkspace (c, ev->data.l[0]);
       else if (ev->message_type == net_atoms[NET_ACTIVE_WINDOW]
 	       && ev->format == 32)
@@ -634,8 +645,12 @@ handleClientMessage (XClientMessageEvent * ev)
 	  if (getWMState (c->window) == IconicState)
 	    clientShow (c, False);
 	  clientSetFocus (c, True);
+	  clientRaise (c);
 	  setWMState (c->window, NormalState);
 	}
+      else if (ev->message_type == net_atoms[NET_CLOSE_WINDOW]
+	       && ev->format == 32)
+	clientClose (c);
       else if (ev->message_type == net_atoms[NET_WM_STATE]
 	       && ev->format == 32)
 	{
@@ -656,10 +671,19 @@ handleClientMessage (XClientMessageEvent * ev)
     }
   else
     {
-      if (ev->message_type == win_workspace && ev->format == 32)
+      if ((ev->message_type == win_workspace
+	   || ev->message_type == net_atoms[NET_WM_DESKTOP]
+	   || ev->message_type == net_atoms[NET_CURRENT_DESKTOP])
+	  && ev->format == 32)
 	workspaceSwitch (ev->data.l[0], NULL);
-      else if (ev->message_type == win_workspace_count && ev->format == 32)
-	workspaceSetCount (ev->data.l[0]);
+      else
+	if ((ev->message_type == win_workspace_count
+	     || ev->message_type == net_atoms[NET_NUMBER_OF_DESKTOPS])
+	    && ev->format == 32)
+	{
+	  workspaceSetCount (ev->data.l[0]);
+	  setNetWorkarea (margins, workspace_count);
+	}
     }
 }
 

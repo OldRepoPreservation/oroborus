@@ -45,6 +45,7 @@ workspaceSwitch (int new_ws, Client * c2)
   if (c2)
     {
       setGnomeHint (c2->window, win_workspace, new_ws);
+      setGnomeHint (c2->window, net_atoms[NET_WM_DESKTOP], new_ws);
       c2->win_workspace = new_ws;
     }
 

@@ -70,12 +70,17 @@ enum
   NET_WM_STATE_HIDDEN,
   NET_WM_STATE_FULLSCREEN,
   NET_WM_NAME,
+  NET_WM_DESKTOP,
   NET_NUMBER_OF_DESKTOPS,
   NET_CURRENT_DESKTOP,
-  NET_ACTIVE_WINDOW
+  NET_ACTIVE_WINDOW,
+  NET_SUPPORTING_WM_CHECK,
+  NET_WM_WORKAREA,
+  NET_WORKAREA,
+  NET_CLOSE_WINDOW
 };
 
-#define NET_ATOM_COUNT 25
+#define NET_ATOM_COUNT 30
 
 typedef struct
 {
@@ -105,10 +110,12 @@ void initMotifHints ();
 PropMwmHints *getMotifHints (Window);
 int getGnomeHint (Window, Atom, long *);
 void setGnomeHint (Window, Atom, long);
+void setSupportingWmCheck (Window, Window);
 void getGnomeDesktopMargins (CARD32 *);
 int typeDesktop (Window);
 int typeDock (Window);
 int typeEWMH (Window, char *);
+void setNetWorkarea(CARD32 *, int);
 void *getPropData (Window, Atom, Atom, unsigned long *);
 void getEWMHState (Window, long *);
 void setFocusHint (Window);

@@ -443,11 +443,13 @@ clientFrame (Window w)
   if (!getGnomeHint (w, win_workspace, &c->win_workspace))
     {
       setGnomeHint (w, win_workspace, workspace);
+      setGnomeHint (w, net_atoms[NET_WM_DESKTOP], workspace);
       c->win_workspace = workspace;
     }
   if (c->win_workspace > workspace_count - 1)
     {
       setGnomeHint (w, win_workspace, workspace_count - 1);
+      setGnomeHint (w, net_atoms[NET_WM_DESKTOP], workspace_count -1);
       c->win_workspace = workspace_count - 1;
     }
 
@@ -808,6 +810,7 @@ clientSetWorkspace (Client * c, int ws)
     return;
 
   setGnomeHint (c->window, win_workspace, ws);
+  setGnomeHint (c->window, net_atoms[NET_WM_DESKTOP], ws);
   c->win_workspace = ws;
   if (getWMState (c->window) != IconicState)
     {
