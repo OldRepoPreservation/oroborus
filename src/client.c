@@ -459,6 +459,7 @@ clientFrame (Window w)
     {
       c->win_hints = c->win_hints | WIN_HINTS_SKIP_FOCUS;
       c->has_border = False;
+      c->win_layer = WIN_LAYER_DESKTOP;
     }
 
   c->ignore_unmap = attr.map_state == IsViewable ? 1 : 0;
@@ -552,9 +553,6 @@ clientFrame (Window w)
     }
   else
     setWMState (dpy, c->window, IconicState);
-
-  if (typeDesktop(dpy, c->window))
-    clientLower(c);
 
 #ifdef DEBUG
   printf ("client_count=%d\n", client_count);
