@@ -150,3 +150,5 @@ raise_on_click=true
 # seperated by semicolons.
 borderless_windows=X-Chat
 
+# seitch to the next workspace, when moving a window to the desktop border?
+cycle_workspaces=true

@@ -252,6 +252,7 @@ MyPixmap sides[3][2], corners[4][2], buttons[4][3], title[5][2];
 char button_layout[6];
 int double_click_action;
 int box_move, box_resize;
+int cycle_workspaces;
 int click_to_focus, focus_new, raise_on_focus, raise_delay, raise_on_click;
 int window_placement, snap_to_border, snap_to_windows, snap_width;
 int workspace_count = -1, wrap_workspaces;
@@ -286,6 +287,7 @@ extern MyPixmap sides[3][2], corners[4][2], buttons[4][3], title[5][2];
 extern char button_layout[6];
 extern int double_click_action;
 extern int box_move, box_resize;
+extern int cycle_workspaces;
 extern int click_to_focus, focus_new, raise_on_focus, raise_delay,
   raise_on_click;
 extern int window_placement, snap_to_border, snap_to_windows, snap_width;

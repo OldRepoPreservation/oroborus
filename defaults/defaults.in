@@ -85,4 +85,4 @@ move_top_right_key=Shift+Control+Mod1+o
 move_bottom_left_key=Shift+Control+Mod1+k
 move_bottom_right_key=Shift+Control+Mod1+l
 borderless_windows=no_window_defined
-
+cycle_workspaces=true

@@ -1240,7 +1240,7 @@ clientMove (Client * c, XEvent * e)
 	  if (box_move)
 	    clientDrawOutline (c);
 
-	  if (workspace_count > 1)
+	  if (workspace_count > 1 && cycle_workspaces)
 	    {
 	      int msx, msy;
 

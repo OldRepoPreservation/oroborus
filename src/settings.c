@@ -63,6 +63,7 @@ loadSettings ()
     {"snap_width", NULL},
     {"workspace_count", NULL},
     {"wrap_workspaces", NULL},
+    {"cycle_workspaces", NULL},
     {"close_window_key", NULL},
     {"hide_window_key", NULL},
     {"maximize_window_key", NULL},
@@ -313,6 +314,8 @@ loadSettings ()
       setGnomeHint (root, net_atoms[NET_NUMBER_OF_DESKTOPS], workspace_count);
     }
   wrap_workspaces = !strcmp ("true", getValue ("wrap_workspaces", rc));
+
+  cycle_workspaces = !strcmp ("true", getValue ("cycle_workspaces", rc));
 
   parseKeyString (dpy, &keys[KEY_MOVE_UP],
 		  getValue ("move_window_up_key", rc));
