@@ -418,6 +418,7 @@ void clientFrame(Window w)
     XWindowChanges wc;
     long dummy;
     PropMwmHints *mwm_hints;
+    Window transientWindow;
     int i;
 
 #ifdef DEBUG
@@ -523,6 +524,10 @@ void clientFrame(Window w)
         c->next = c;
         c->prev = c;
     }
+    
+    XGetTransientForHint(dpy, c->window, &transientWindow);
+    c->transientFor = clientGetFromWindow(transientWindow, WINDOW);
+
     client_count++;
     clientAddToList(c);
     clientGrabKeys(c);

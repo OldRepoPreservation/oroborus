@@ -166,6 +166,7 @@ struct _Client
     int ignore_unmap, focus;
     Client *next;
     Client *prev;
+    Client *transientFor;
 };
 
 /*
