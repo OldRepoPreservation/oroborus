@@ -631,6 +631,7 @@ handleClientMessage (XClientMessageEvent * ev)
 	    clientShow (c, False);
 	  clientSetFocus(c, True);
 	  setWMState (c->window, NormalState);
+	}
     }
   else
     {
