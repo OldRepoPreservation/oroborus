@@ -43,8 +43,8 @@
 #define WIN_LAYER_DESKTOP		0
 #define WIN_LAYER_BELOW			2
 #define WIN_LAYER_NORMAL		4
+#define WIN_LAYER_DOCK			5
 #define WIN_LAYER_ONTOP			6
-#define WIN_LAYER_DOCK			8
 
 enum
 {

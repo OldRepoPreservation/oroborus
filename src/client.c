@@ -302,7 +302,7 @@ clientGetTopMost (int layer, int real)
 				}
 			else
 				{
-					if (c && attr.map_state == IsViewable && !typeDock(c->window))
+					if (c && attr.map_state == IsViewable) //&& !typeDock(c->window))
 						{
 							if (c->win_layer <= layer)
 								top = c;
@@ -334,7 +334,7 @@ clientGetBottomMost (int layer)
 			XGetWindowAttributes (dpy, wins[i], &attr);
 			c = clientGetFromWindow (wins[i], FRAME);
 			if (c && attr.map_state == IsViewable
-					&& !((c->win_hints & WIN_HINTS_SKIP_FOCUS)&! typeDock(c->window)))
+					&& !((c->win_hints & WIN_HINTS_SKIP_FOCUS))) //&! typeDock(c->window)))
 				{
 					if (c->win_layer >= layer)
 						break;
@@ -503,6 +503,7 @@ clientFrame (Window w)
 	if (typeDock (c->window))
 		{
 			c->win_hints = c->win_hints | WIN_HINTS_SKIP_FOCUS;
+			c->win_layer = WIN_LAYER_DOCK;
 		}
 
 	c->ignore_unmap = attr.map_state == IsViewable ? 1 : 0;
