@@ -41,20 +41,20 @@ clientInitPosition (Client * c)
   if (!(c->size->flags & (PPosition | USPosition)))
     {
       getMouseXY (dpy, root, &mx, &my);
-      c->x = mx - (c->width / 2) + margins[MARGIN_LEFT];
-      c->y = my - (c->height / 2) + margins[MARGIN_TOP];
+      c->x = mx - (frameWidth(c) / 2);
+      c->y = my - (frameHeight(c) / 2);
 
       if (window_placement == PLACEMENT_ROOT)
 	{
-	  c->x = (max_x - min_x) / 2 - (c->width / 2) + frameLeft (c);
-	  c->y = (max_y - min_y) / 2 - (c->height / 2) + frameTop (c);
+	  c->x = (max_x - min_x) / 2 - (frameWidth(c) / 2);
+	  c->y = (max_y - min_y) / 2 - (frameHeight(c) / 2);
 	}
     }
 
-  if (c->x > max_x - c->width)
-    c->x = max_x - c->width;
-  if (c->y > max_y - c->height)
-    c->y = max_y - c->height;
+  if (c->x > max_x - frameWidth(c))
+    c->x = max_x - frameWidth(c);
+  if (c->y > max_y - frameHeight(c))
+    c->y = max_y - frameHeight(c);
   if (c->x < min_x)
     c->x = min_x;
   if (c->y < min_y)
@@ -1705,7 +1705,10 @@ clientWarpMouse (Client * c)
 {
   if (!c)
     return;
-  if (!click_to_focus)
+  else if (!click_to_focus && c->win_state & WIN_STATE_SHADED)
     XWarpPointer (dpy, None, c->window, 0, 0, 0, 0,
-		  (c->width / 2), (c->height / 2));
+		  (frameWidth(c) / 2), (frameHeight(c)/ 2)*-1);
+  else if (!click_to_focus)
+    XWarpPointer (dpy, None, c->window, 0, 0, 0, 0,
+		  (frameWidth(c) / 2), (frameHeight(c)/ 2));
 }
