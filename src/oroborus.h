@@ -194,7 +194,7 @@ static struct option const long_options[] = {
 	{"verbose", no_argument, 0, 'v'},
 	{"help", no_argument, 0, 'h'},
 	{"version", no_argument, 0, 'V'},
-	{"file", required_argument, 0, 'f'},
+	{"file", required_argument, 0, 'r'},
 	{"display", required_argument, 0, 'd'},
 	{NULL, 0, NULL, 0}
 };

@@ -1,3 +1,11 @@
+oroborus (2.0.9-1) unstable; urgency=low
+
+  * Whoops, wrong parameter in the getopt string.
+    Now things like --file and -r are working again.
+  * Updated the manpage.
+
+ -- Stefan Pfetzing <dreamind@dreamind.de>  Wed, 28 Aug 2002 09:46:00 +0200
+
 oroborus (2.0.8-1) unstable; urgency=low
 
   * Don't raise or shade the "desktop" window. (for example nautilus2)

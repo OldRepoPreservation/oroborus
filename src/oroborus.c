@@ -108,7 +108,7 @@ lightweight themeable window manager for X.\n"), progname);
 						"  -v, --verbose              print more information\n"
 						"  -h, --help                 display this help and exit\n"
 						"  -V, --version              output version information and exit\n"
-						"  --display                  use an alternative display instead of,\n"
+						"  --display=DISPLAY          use an alternative display instead of,\n"
 						"                             $DISPLAY\n"));
 	exit (status);
 }
@@ -121,7 +121,7 @@ decode_switches (int argc, char **argv)
 	while ((c = getopt_long (argc, argv, "v"	/* verbose */
 													 "h"	/* help */
 													 "V"	/* version */
-													 "f:"	/* file */
+													 "r:"	/* file */
 													 "d:",	/* display */
 													 long_options, (int *) 0)) != EOF)
 		{
@@ -133,7 +133,7 @@ decode_switches (int argc, char **argv)
 				case 'v':							/* --verbose */
 					want_verbose = 1;
 					break;
-				case 'f':							/* --file */
+				case 'r':							/* --file */
 					rcfile = optarg;
 					break;
 				case 'V':
