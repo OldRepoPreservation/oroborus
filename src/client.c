@@ -298,6 +298,12 @@ clientSetHeight (Client * c, int h1)
 Client *
 clientGetTopMost (int layer)
 {
+	return clientGetTopMostShaded (layer, 0);
+}
+
+Client *
+clientGetTopMostShaded (int layer, int non_shaded)
+{
 	Window w1, w2, *wins;
 	unsigned int i, count;
 	XWindowAttributes attr;
@@ -314,8 +320,13 @@ clientGetTopMost (int layer)
 			c = clientGetFromWindow (wins[i], FRAME);
 			if (c && attr.map_state == IsViewable)
 				{
-					if (c->win_layer <= layer)
-						top = c;
+					if ((c->win_layer <= layer))
+						{
+							if (non_shaded && !(c->win_state & WIN_STATE_SHADED))
+								top = c;
+							else if (!non_shaded)
+								top = c;
+						}
 					else
 						break;
 				}

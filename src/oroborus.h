@@ -328,6 +328,7 @@ void clientToggleAbove (Client *);
 void clientSetFocus (Client *, int);
 Client *clientGetFocus ();
 Client *clientGetTopMost (int);
+Client *clientGetTopMostShaded (int, int);
 void clientMove (Client *, XEvent *);
 void clientResize (Client *, XEvent *);
 Client *clientGetNext (Client *, int);
