@@ -157,6 +157,10 @@ clientAddToList (Client * c)
       new[i] = c->window;
       XChangeProperty (dpy, root, win_client_list, XA_CARDINAL, 32,
 		       PropModeReplace, (unsigned char *) new, client_count);
+      XChangeProperty (dpy, root, net_client_list, XA_CARDINAL, 32,
+		       PropModeReplace, (unsigned char *) new, client_count);
+      XChangeProperty (dpy, root, net_client_list_stacking, XA_CARDINAL, 32,
+		       PropModeReplace, (unsigned char *) new, client_count);
       if (client_list)
 	free (client_list);
       client_list = new;
@@ -180,6 +184,12 @@ clientRemoveFromList (Client * c)
 	if (client_list[i] != c->window)
 	  new[j++] = client_list[i];
       XChangeProperty (dpy, root, win_client_list, XA_CARDINAL, 32,
+		       PropModeReplace, (unsigned char *) new,
+		       client_count - 1);
+      XChangeProperty (dpy, root, net_client_list, XA_CARDINAL, 32,
+		       PropModeReplace, (unsigned char *) new,
+		       client_count - 1);
+      XChangeProperty (dpy, root, net_client_list_stacking, XA_CARDINAL, 32,
 		       PropModeReplace, (unsigned char *) new,
 		       client_count - 1);
       if (client_list)

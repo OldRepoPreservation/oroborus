@@ -32,6 +32,8 @@ Atom motif_wm_hints;
 Atom win_hints, win_state, win_client_list, win_layer, win_workspace,
   win_workspace_count, win_desktop_button_proxy, win_supporting_wm_check,
   gnome_panel_desktop_area;
+Atom net_wm_window_type, net_client_list, net_client_list_stacking,
+  net_supported[2];
 
 void
 initICCCMHints (Display * dpy)
@@ -44,7 +46,24 @@ initICCCMHints (Display * dpy)
   wm_change_state = XInternAtom (dpy, "WM_CHANGE_STATE", False);
   wm_delete_window = XInternAtom (dpy, "WM_DELETE_WINDOW", False);
   wm_protocols = XInternAtom (dpy, "WM_PROTOCOLS", False);
-  wm_window_type = XInternAtom (dpy, "_NET_WM_WINDOW_TYPE", False);
+}
+
+void
+initNETHints (Display * dpy)
+{
+  Window root;
+#ifdef DEBUG
+  printf ("entering initNETHints\n");
+#endif
+
+  root = XDefaultRootWindow (dpy);
+
+  net_client_list = XInternAtom (dpy, "_NET_CLIENT_LIST", False);
+  net_client_list_stacking = XInternAtom (dpy, "_NET_CLIENT_LIST_STACKING", False);
+  net_wm_window_type = XInternAtom (dpy, "_NET_WM_WINDOW_TYPE", False);
+  net_supported[0] = net_client_list;
+  net_supported[1] = net_client_list_stacking;
+  XChangeProperty (dpy, root,XInternAtom(dpy, "_NET_SUPPORTED", False),XA_ATOM, 32, PropModeReplace, (unsigned char *)net_supported, 2);
 }
 
 long
@@ -223,7 +242,7 @@ typeDesktop (Display * dpy, Window w)
   printf ("entering typeDesktop\n");
 #endif
 
-  data = getPropData (dpy, w, wm_window_type, XA_ATOM);
+  data = getPropData (dpy, w, net_wm_window_type, XA_ATOM);
   if (data)
     {
       char *name;

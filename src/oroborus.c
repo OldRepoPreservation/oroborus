@@ -212,6 +212,7 @@ initialize (int argc, char **argv)
   shape = XShapeQueryExtension (dpy, &shape_event, &dummy);
 
   initICCCMHints (dpy);
+  initNETHints (dpy);
   initMotifHints (dpy);
   initGnomeHints (dpy);
   gnome_win = XCreateSimpleWindow (dpy, root, -1000, -1000, 5, 5, 0, 0, 0);

@@ -57,13 +57,15 @@ typedef struct
 PropMwmHints;
 
 extern Atom wm_state, wm_change_state, wm_delete_window, wm_protocols;
-Atom wm_window_type;
 extern Atom motif_wm_hints;
 extern Atom win_hints, win_state, win_client_list, win_layer, win_workspace,
   win_workspace_count, win_desktop_button_proxy, win_supporting_wm_check,
   gnome_panel_desktop_area;
+extern Atom net_wm_window_type, net_client_list, net_client_list_stacking,
+  net_supported[2];
 
 void initICCCMHints (Display *);
+void initNETHints (Display * dpy);
 long getWMState (Display *, Window);
 void setWMState (Display *, Window, long state);
 void initMotifHints (Display *);
