@@ -2,7 +2,7 @@ Source: oroborus
 Section: x11
 Priority: optional
 Maintainer: Stefan Pfetzing <dreamind@dreamind.de>
-Build-Depends: debhelper (>= 2), xlibs-dev
+Build-Depends: debhelper (>= 2), xlibs-dev, gcc-3.2
 Standards-Version: 3.5.2
 
 Package: oroborus

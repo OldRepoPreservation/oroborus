@@ -9,7 +9,7 @@ all:
 	aclocal
 	autoconf
 	autoheader
-	automake
+	automake-1.4
 
 generate-tags:
 	find -iname '*.c' -print0 -o -iname '*.h' -print0 | xargs -0 ctags -f functions

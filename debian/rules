@@ -6,13 +6,13 @@ export DH_COMPAT=2
 configure: configure-stamp
 configure-stamp:
 	dh_testdir
-	./configure --prefix=/usr --mandir=/usr/share/man
+	CC=gcc-3.2 ./configure --prefix=/usr --mandir=/usr/share/man
 	touch configure-stamp
 
 build: configure-stamp build-stamp
 build-stamp:
 	dh_testdir
-	$(MAKE)
+	$(MAKE) CC=gcc-3.2
 	touch build-stamp
 
 clean:

@@ -37,5 +37,5 @@ theme_DATA = bottom-active.xpm \
 	top-left-active.xpm \
 	top-left-inactive.xpm \
 	top-right-active.xpm \
-	top-right-inactive.xpm \
+	top-right-inactive.xpm
 EXTRA_DIST = $(theme_DATA)
