@@ -31,7 +31,7 @@ clientInitPosition (Client * c)
 #endif
 
 	clientGravitate (c, APPLY);
-	if (typeDock(c->window) || typeDesktop(c->window))
+	if (typeDock(c->window) || typeDesktop(c->window) || c->above)
 		{
 			min_x = 0;
 			min_y = 0;
@@ -453,9 +453,9 @@ clientFrame (Window w)
 	XGetWindowAttributes (dpy, w, &attr);
 	c->window = w;
 	if (typeAbove(c->window))
-		c->above = 1;
+		c->above = True;
 	else
-		c->above = 0;
+		c->above = False;
 	c->x = c->old_x = attr.x;
 	c->y = c->old_y = attr.y;
 	c->width = c->old_width = attr.width;
@@ -485,7 +485,10 @@ clientFrame (Window w)
 		}
 
 	if (clientInBorderlessList (c))
-		c->has_border = False;
+		{
+			c->has_border = False;
+			c->above = True;
+		}
 	else
 		c->has_border = True;
 
@@ -905,7 +908,7 @@ clientToggleAbove (Client * c)
 	printf ("toggling client (%#lx)\n", c->window);
 #endif
 
-	(c->above) ? (c->above = 0) : (c->above = 1);
+	(c->above) ? (c->above = False) : (c->above = True);
 }
 
 void
@@ -1820,11 +1823,6 @@ clientInBorderlessList (Client * c)
 	return False;
 }
 
-/**This must remain at the end of the file.**********
- * vim600:set sw=2 ts=2:                            *
- * vim600:set cindent cinoptions={1s,>2s,^-1s,n-1s: *
- * vim600:set foldmethod=marker:                    *
- ****************************************************/
 /***This must remain at the end of the file.*****
  * vi:set sw=2 ts=2:                            *
  * vi:set cindent cinoptions={1s,>2s,^-1s,n-1s: *

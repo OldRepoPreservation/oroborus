@@ -636,6 +636,8 @@ handleClientMessage (XClientMessageEvent * ev)
 			else if (ev->message_type == win_layer && ev->format == 32)
 				{
 					setGnomeHint (c->window, ev->data.l[0], win_hints);
+					if(ev->data.l[0] == 6)
+							clientToggleAbove(c);
 					clientRaise (c);
 				}
 			else if (ev->message_type == win_state && ev->format == 32)
