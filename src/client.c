@@ -471,8 +471,6 @@ clientFrame (Window w)
 	if (clientInBorderlessList (c))
 		{
 			c->has_border = False;
-			c->above = True;
-			c->win_layer = WIN_LAYER_ONTOP;
 		}
 	else
 		c->has_border = True;

@@ -636,14 +636,13 @@ handleClientMessage (XClientMessageEvent * ev)
 			else if (ev->message_type == win_layer && ev->format == 32)
 				{
 					setGnomeHint (c->window, ev->data.l[0], win_hints);
+					clientSetLayer (c, ev->data.l[0]);
 					if(ev->data.l[0] == 6)
 							clientToggleAbove(c);
 					clientRaise (c);
 				}
 			else if (ev->message_type == win_state && ev->format == 32)
 				clientSetState (c, ev->data.l[0], ev->data.l[1]);
-			else if (ev->message_type == win_layer && ev->format == 32)
-				clientSetLayer (c, ev->data.l[0]);
 			else
 				if ((ev->message_type == win_workspace
 						 || ev->message_type == net_atoms[NET_WM_DESKTOP])
