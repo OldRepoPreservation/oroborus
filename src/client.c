@@ -458,10 +458,10 @@ clientFrame (Window w)
   XGetWMNormalHints (dpy, w, c->size, &dummy);
   XGetWindowAttributes (dpy, w, &attr);
   c->window = w;
-  c->x = attr.x;
-  c->y = attr.y;
-  c->width = attr.width;
-  c->height = attr.height;
+  c->x = c->old_x = attr.x;
+  c->y = c->old_y = attr.y;
+  c->width = c->old_width = attr.width;
+  c->height = c->old_height = attr.height;
   c->border_width = attr.border_width;
   for (i = 0; i < BUTTON_COUNT; i++)
     c->button_pressed[i] = False;
