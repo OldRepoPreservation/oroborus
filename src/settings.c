@@ -132,7 +132,10 @@ loadSettings ()
 			exit (1);
 		}
 
-	parseRc (".oroborusrc", getenv ("HOME"), rc);
+	if (rcfile)
+		parseRc (rcfile, NULL, rc);
+	else
+		parseRc (".oroborusrc", getenv ("HOME"), rc);
 
 	scheme = getValue ("scheme", rc);
 	parseRc (scheme, NULL, rc);
@@ -140,7 +143,10 @@ loadSettings ()
 	theme = getValue ("theme", rc);
 	parseRc ("themerc", theme, rc);
 
-	parseRc (".oroborusrc", getenv ("HOME"), rc);
+	if (rcfile)
+		parseRc (rcfile, NULL, rc);
+	else
+		parseRc (".oroborusrc", getenv ("HOME"), rc);
 
 	if (!getFont (dpy, &title_font, getValue ("font", rc)))
 		{
@@ -488,8 +494,10 @@ reloadSettings ()
 		}
 }
 
-/**This must remain at the end of the file.**********
- * vim600:set sw=2 ts=2:                            *
- * vim600:set cindent cinoptions={1s,>2s,^-1s,n-1s: *
- * vim600:set foldmethod=marker:                    *
- ****************************************************/
+/***This must remain at the end of the file.*****
+ * vi:set sw=2 ts=2:                            *
+ * vi:set cindent cinoptions={1s,>2s,^-1s,n-1s: *
+ * vi:set foldmethod=marker:                    *
+ * vi:set foldmarker=«««,»»»:                   *
+ ************************************************/
+

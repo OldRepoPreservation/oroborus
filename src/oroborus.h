@@ -226,7 +226,7 @@ int shape, shape_event;
 Cursor resize_cursor[4], move_cursor, root_cursor;
 
 int want_verbose = 0;
-char *rcfile = "";
+char *rcfile = NULL;
 
 Client *clients = NULL;
 CARD32 *client_list = NULL;

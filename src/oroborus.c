@@ -259,8 +259,10 @@ main (int argc, char **argv)
 	return 0;
 }
 
-/**This must remain at the end of the file.**********
- * vim600:set sw=2 ts=2:                            *
- * vim600:set cindent cinoptions={1s,>2s,^-1s,n-1s: *
- * vim600:set foldmarker={{{,}}} foldmethod=marker: * 
- ****************************************************/
+/***This must remain at the end of the file.*****
+ * vi:set sw=2 ts=2:                            *
+ * vi:set cindent cinoptions={1s,>2s,^-1s,n-1s: *
+ * vi:set foldmethod=marker:                    *
+ * vi:set foldmarker=«««,»»»:                   *
+ ************************************************/
+
