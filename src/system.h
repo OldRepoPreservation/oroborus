@@ -135,7 +135,7 @@ off_t lseek ();
 #include <sys/sysmacros.h>
 #define HAVE_MAJOR
 #endif
-#ifdef major			/* Might be defined in sys/types.h.  */
+#ifdef major										/* Might be defined in sys/types.h.  */
 #define HAVE_MAJOR
 #endif
 
@@ -155,8 +155,8 @@ off_t lseek ();
 #ifndef HAVE_STRUCT_UTIMBUF
 struct utimbuf
 {
-  long actime;
-  long modtime;
+	long actime;
+	long modtime;
 };
 #endif
 
@@ -182,7 +182,7 @@ extern int errno;
 #define getopt system_getopt
 #include <stdlib.h>
 #undef getopt
-#else /* not STDC_HEADERS */
+#else	/* not STDC_HEADERS */
 char *getenv ();
 #endif /* STDC_HEADERS */
 
@@ -219,7 +219,7 @@ char *getenv ();
 #ifdef HAVE_DIRENT_H
 # include <dirent.h>
 # define NLENGTH(direct) (strlen((direct)->d_name))
-#else /* not HAVE_DIRENT_H */
+#else	/* not HAVE_DIRENT_H */
 # define dirent direct
 # define NLENGTH(direct) ((direct)->d_namlen)
 # ifdef HAVE_SYS_NDIR_H
@@ -245,7 +245,7 @@ char *getenv ();
 #ifndef DEV_BSIZE
 #ifdef BSIZE
 #define DEV_BSIZE BSIZE
-#else /* !BSIZE */
+#else	/* !BSIZE */
 #define DEV_BSIZE 4096
 #endif /* !BSIZE */
 #endif /* !DEV_BSIZE */
@@ -261,7 +261,7 @@ char *getenv ();
 # else /* !_POSIX_SOURCE && BSIZE */
 #  define ST_NBLOCKS(statbuf) (st_blocks ((statbuf).st_size))
 # endif	/* !_POSIX_SOURCE && BSIZE */
-#else /* HAVE_ST_BLOCKS */
+#else	/* HAVE_ST_BLOCKS */
 /* Some systems, like Sequents, return st_blksize of 0 on pipes. */
 # define ST_BLKSIZE(statbuf) ((statbuf).st_blksize > 0 \
 			       ? (statbuf).st_blksize : DEV_BSIZE)
@@ -278,7 +278,7 @@ char *getenv ();
 #    define ST_NBLOCKS(statbuf) ((statbuf).st_blocks * ST_BLKSIZE(statbuf)/512)
 #   else /* not AIX PS/2 nor CRAY */
 #    define ST_NBLOCKS(statbuf) ((statbuf).st_blocks)
-#   endif /* not _CRAY */
+#   endif	/* not _CRAY */
 #  endif /* not AIX PS/2 */
 # endif	/* !hpux */
 #endif /* HAVE_ST_BLOCKS */
@@ -381,14 +381,14 @@ char *alloca ();
 # undef bindtextdomain
 # define bindtextdomain(Domain, Directory)	/* empty */
 # undef textdomain
-# define textdomain(Domain)	/* empty */
+# define textdomain(Domain)									/* empty */
 # define _(Text) Text
 #endif
 
 #define STREQ(a,b) (strcmp((a), (b)) == 0)
 
 /**This must remain at the end of the file.**********
- * vim600:set sw=2 ts=8:                            *
+ * vim600:set sw=2 ts=2:                            *
  * vim600:set cindent cinoptions={1s,>2s,^-1s,n-1s: *
  * vim600:set foldmethod=marker:                    *
  ****************************************************/

@@ -73,44 +73,44 @@ void error ();
 
 static VOID *
 fixup_null_alloc (n)
-     size_t n;
+		 size_t n;
 {
-  VOID *p;
+	VOID *p;
 
-  p = 0;
-  if (n == 0)
-    p = malloc ((size_t) 1);
-  if (p == 0)
-    error (xmalloc_exit_failure, 0, _("Memory exhausted"));
-  return p;
+	p = 0;
+	if (n == 0)
+		p = malloc ((size_t) 1);
+	if (p == 0)
+		error (xmalloc_exit_failure, 0, _("Memory exhausted"));
+	return p;
 }
 
 /* Allocate N bytes of memory dynamically, with error checking.  */
 
 VOID *
 xmalloc (n)
-     size_t n;
+		 size_t n;
 {
-  VOID *p;
+	VOID *p;
 
-  p = malloc (n);
-  if (p == 0)
-    p = fixup_null_alloc (n);
-  return p;
+	p = malloc (n);
+	if (p == 0)
+		p = fixup_null_alloc (n);
+	return p;
 }
 
 /* Allocate memory for N elements of S bytes, with error checking.  */
 
 VOID *
 xcalloc (n, s)
-     size_t n, s;
+		 size_t n, s;
 {
-  VOID *p;
+	VOID *p;
 
-  p = calloc (n, s);
-  if (p == 0)
-    p = fixup_null_alloc (n);
-  return p;
+	p = calloc (n, s);
+	if (p == 0)
+		p = fixup_null_alloc (n);
+	return p;
 }
 
 /* Change the size of an allocated block of memory P to N bytes,
@@ -119,32 +119,32 @@ xcalloc (n, s)
 
 VOID *
 xrealloc (p, n)
-     VOID *p;
-     size_t n;
+		 VOID *p;
+		 size_t n;
 {
-  if (p == 0)
-    return xmalloc (n);
-  p = realloc (p, n);
-  if (p == 0)
-    p = fixup_null_alloc (n);
-  return p;
+	if (p == 0)
+		return xmalloc (n);
+	p = realloc (p, n);
+	if (p == 0)
+		p = fixup_null_alloc (n);
+	return p;
 }
 
 /* Make a copy of a string in a newly allocated block of memory. */
 
 char *
 xstrdup (str)
-     char *str;
+		 char *str;
 {
-  VOID *p;
+	VOID *p;
 
-  p = xmalloc (strlen (str) + 1);
-  strcpy (p, str);
-  return p;
+	p = xmalloc (strlen (str) + 1);
+	strcpy (p, str);
+	return p;
 }
 
 /**This must remain at the end of the file.**********
- * vim600:set sw=2 ts=8:                            *
+ * vim600:set sw=2 ts=2:                            *
  * vim600:set cindent cinoptions={1s,>2s,^-1s,n-1s: *
  * vim600:set foldmethod=marker:                    *
  ****************************************************/

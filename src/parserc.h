@@ -24,7 +24,7 @@
 #define __PARSERC_H
 
 #define OPTION				0
-#define VALUE				1
+#define VALUE					1
 
 int parseRc (char *, char *, char *[][2]);
 int checkRc (char *[][2]);
@@ -34,7 +34,7 @@ void freeRc (char *[][2]);
 #endif /* __PARSERC_H */
 
 /**This must remain at the end of the file.**********
- * vim600:set sw=2 ts=8:                            *
+ * vim600:set sw=2 ts=2:                            *
  * vim600:set cindent cinoptions={1s,>2s,^-1s,n-1s: *
  * vim600:set foldmethod=marker:                    *
  ****************************************************/

@@ -35,234 +35,234 @@
 int
 handleXError (Display * dpy, XErrorEvent * err)
 {
-  switch (err->error_code)
-    {
-    case BadAccess:
-      if (err->resourceid == root)
-	{
-	  fprintf (stderr, "%s: Another window manager is running\n",
-		   progname);
-	  exit (1);
-	}
-    }
-  return 0;
+	switch (err->error_code)
+		{
+		case BadAccess:
+			if (err->resourceid == root)
+				{
+					fprintf (stderr, "%s: Another window manager is running\n",
+									 progname);
+					exit (1);
+				}
+		}
+	return 0;
 }
 
 void
 cleanUp ()
 {
-  int i;
+	int i;
 
 #ifdef DEBUG
-  printf ("entering cleanUp\n");
+	printf ("entering cleanUp\n");
 #endif
 
-  clientUnframeAll ();
-  unloadSettings ();
-  XFreeCursor (dpy, root_cursor);
-  XFreeCursor (dpy, move_cursor);
-  for (i = 0; i < 4; i++)
-    XFreeCursor (dpy, resize_cursor[i]);
-  XSetInputFocus (dpy, root, RevertToPointerRoot, CurrentTime);
-  XCloseDisplay (dpy);
+	clientUnframeAll ();
+	unloadSettings ();
+	XFreeCursor (dpy, root_cursor);
+	XFreeCursor (dpy, move_cursor);
+	for (i = 0; i < 4; i++)
+		XFreeCursor (dpy, resize_cursor[i]);
+	XSetInputFocus (dpy, root, RevertToPointerRoot, CurrentTime);
+	XCloseDisplay (dpy);
 }
 
 void
 handleSignal (int sig)
 {
-  int *status = NULL;
+	int *status = NULL;
 #ifdef DEBUG
-  printf ("entering handleSignal\n");
+	printf ("entering handleSignal\n");
 #endif
 
-  switch (sig)
-    {
-    case SIGINT:
-    case SIGTERM:
-      quit = True;
-      break;
-    case SIGSEGV:
-      fprintf (stderr, "%s: Segmentation fault\n", progname);
-      cleanUp ();
-      exit (1);
-      break;
-    case SIGHUP:
-      reload = True;
-      break;
-    case SIGCHLD:
-      printf ("waiting for a child\n");
-      waitpid (-1, status, WNOHANG);
-      break;
-    }
+	switch (sig)
+		{
+		case SIGINT:
+		case SIGTERM:
+			quit = True;
+			break;
+		case SIGSEGV:
+			fprintf (stderr, "%s: Segmentation fault\n", progname);
+			cleanUp ();
+			exit (1);
+			break;
+		case SIGHUP:
+			reload = True;
+			break;
+		case SIGCHLD:
+			printf ("waiting for a child\n");
+			waitpid (-1, status, WNOHANG);
+			break;
+		}
 }
 
 void
 usage (int status)
 {
-  printf (_("%s - \
+	printf (_("%s - \
 lightweight themeable window manager for X.\n"), progname);
-  printf (_("Usage: %s [OPTION]... \n"), progname);
-  printf (_("Options:\n"
-	    "  -r, --file=FILE            use an alternative rcfile\n"
-	    "                             instead of $HOME/.oroborusrc\n"
-	    "  -v, --verbose              print more information\n"
-	    "  -h, --help                 display this help and exit\n"
-	    "  -V, --version              output version information and exit\n"
-	    "  --display                  use an alternative display instead of,\n"
-	    "                             $DISPLAY\n"));
-  exit (status);
+	printf (_("Usage: %s [OPTION]... \n"), progname);
+	printf (_("Options:\n"
+						"  -r, --file=FILE            use an alternative rcfile\n"
+						"                             instead of $HOME/.oroborusrc\n"
+						"  -v, --verbose              print more information\n"
+						"  -h, --help                 display this help and exit\n"
+						"  -V, --version              output version information and exit\n"
+						"  --display                  use an alternative display instead of,\n"
+						"                             $DISPLAY\n"));
+	exit (status);
 }
 
 int
 decode_switches (int argc, char **argv)
 {
-  int c;
+	int c;
 
-  while ((c = getopt_long (argc, argv, "v"	/* verbose */
-			   "h"	/* help */
-			   "V"	/* version */
-			   "f:"	/* file */
-			   "d:",	/* display */
-			   long_options, (int *) 0)) != EOF)
-    {
-      switch (c)
-	{
-	case 'd':		/* --quit-menu */
-	  display = optarg;
-	  break;
-	case 'v':		/* --verbose */
-	  want_verbose = 1;
-	  break;
-	case 'f':		/* --file */
-	  rcfile = optarg;
-	  break;
-	case 'V':
-	  printf ("%s %s\n", PACKAGE, VERSION);
-	  exit (0);
-	case 'h':
-	  usage (0);
-	default:
-	  usage (EXIT_FAILURE);
-	}
-    }
-  return optind;
+	while ((c = getopt_long (argc, argv, "v"	/* verbose */
+													 "h"	/* help */
+													 "V"	/* version */
+													 "f:"	/* file */
+													 "d:",	/* display */
+													 long_options, (int *) 0)) != EOF)
+		{
+			switch (c)
+				{
+				case 'd':							/* --quit-menu */
+					display = optarg;
+					break;
+				case 'v':							/* --verbose */
+					want_verbose = 1;
+					break;
+				case 'f':							/* --file */
+					rcfile = optarg;
+					break;
+				case 'V':
+					printf ("%s %s\n", PACKAGE, VERSION);
+					exit (0);
+				case 'h':
+					usage (0);
+				default:
+					usage (EXIT_FAILURE);
+				}
+		}
+	return optind;
 }
 
 void
 initialize (int argc, char **argv)
 {
-  struct sigaction act;
-  char *locale = "";
-  int dummy;
+	struct sigaction act;
+	char *locale = "";
+	int dummy;
 
 #ifdef DEBUG
-  printf ("entering initialize\n");
+	printf ("entering initialize\n");
 #endif
 
-  progname = argv[0];
+	progname = argv[0];
 
-  decode_switches (argc, argv);
+	decode_switches (argc, argv);
 
-  printf
-    ("\nOroborus\n(c) 2001 Ken Lynch\n(c) 2002 Stefan Pfetzing\nDistributed under the terms and conditions of the GPL\n\n");
+	printf
+		("\nOroborus\n(c) 2001 Ken Lynch\n(c) 2002 Stefan Pfetzing\nDistributed under the terms and conditions of the GPL\n\n");
 
-  locale = setlocale (LC_ALL, "");
+	locale = setlocale (LC_ALL, "");
 
-  stat_argv = argv;
+	stat_argv = argv;
 
-  if (!locale || !strcmp (locale, "C") || !strcmp (locale, "POSIX") ||
-      !XSupportsLocale ())
-    use_fontset = False;
-  else
-    use_fontset = True;
+	if (!locale || !strcmp (locale, "C") || !strcmp (locale, "POSIX") ||
+			!XSupportsLocale ())
+		use_fontset = False;
+	else
+		use_fontset = True;
 
-  dpy = XOpenDisplay (display);
-  if (!dpy)
-    {
-      fprintf (stderr, "%s: failed to open display %s!\n", progname,
-	       display ? display : getenv ("DISPLAY"));
-      exit (1);
-    }
+	dpy = XOpenDisplay (display);
+	if (!dpy)
+		{
+			fprintf (stderr, "%s: failed to open display %s!\n", progname,
+							 display ? display : getenv ("DISPLAY"));
+			exit (1);
+		}
 
-  act.sa_handler = handleSignal;
-  act.sa_flags = 0;
-  if (sigaction (SIGINT, &act, NULL))
-    fprintf (stderr, "%s: Warning, could not install SIGINT Handler!\n",
-	     progname);
-  if (sigaction (SIGTERM, &act, NULL))
-    fprintf (stderr, "%s: Warning, could not install SIGTERM Handler!\n",
-	     progname);
-  if (sigaction (SIGHUP, &act, NULL))
-    fprintf (stderr, "%s: Warning, could not install SIGHUP Handler!\n",
-	     progname);
-  if (sigaction (SIGSEGV, &act, NULL))
-    fprintf (stderr, "%s: Warning, could not install SIGSEGV Handler!\n",
-	     progname);
-  if (sigaction (SIGCHLD, &act, NULL))
-    fprintf (stderr, "%s: Warning, could not install SIGCHLD Handler!\n",
-	     progname);
+	act.sa_handler = handleSignal;
+	act.sa_flags = 0;
+	if (sigaction (SIGINT, &act, NULL))
+		fprintf (stderr, "%s: Warning, could not install SIGINT Handler!\n",
+						 progname);
+	if (sigaction (SIGTERM, &act, NULL))
+		fprintf (stderr, "%s: Warning, could not install SIGTERM Handler!\n",
+						 progname);
+	if (sigaction (SIGHUP, &act, NULL))
+		fprintf (stderr, "%s: Warning, could not install SIGHUP Handler!\n",
+						 progname);
+	if (sigaction (SIGSEGV, &act, NULL))
+		fprintf (stderr, "%s: Warning, could not install SIGSEGV Handler!\n",
+						 progname);
+	if (sigaction (SIGCHLD, &act, NULL))
+		fprintf (stderr, "%s: Warning, could not install SIGCHLD Handler!\n",
+						 progname);
 
-  root = XDefaultRootWindow (dpy);
-  screen = XDefaultScreen (dpy);
-  depth = DefaultDepth (dpy, screen);
-  cmap = DefaultColormap (dpy, screen);
+	root = XDefaultRootWindow (dpy);
+	screen = XDefaultScreen (dpy);
+	depth = DefaultDepth (dpy, screen);
+	cmap = DefaultColormap (dpy, screen);
 
-  XSetErrorHandler (handleXError);
-  XSelectInput (dpy, root,
-		SubstructureNotifyMask | SubstructureRedirectMask |
-		ButtonPressMask | ButtonReleaseMask | FocusChangeMask |
-		PropertyChangeMask);
+	XSetErrorHandler (handleXError);
+	XSelectInput (dpy, root,
+								SubstructureNotifyMask | SubstructureRedirectMask |
+								ButtonPressMask | ButtonReleaseMask | FocusChangeMask |
+								PropertyChangeMask);
 
-  shape = XShapeQueryExtension (dpy, &shape_event, &dummy);
+	shape = XShapeQueryExtension (dpy, &shape_event, &dummy);
 
-  initHints (dpy);
-  gnome_win = XCreateSimpleWindow (dpy, root, -1000, -1000, 5, 5, 0, 0, 0);
-  setGnomeHint (root, win_supporting_wm_check, gnome_win);
-  setGnomeHint (gnome_win, win_supporting_wm_check, gnome_win);
-  setSupportingWmCheck (root, gnome_win);
-  setSupportingWmCheck (gnome_win, gnome_win);
-  setGnomeHint (root, win_desktop_button_proxy, gnome_win);
-  setGnomeHint (gnome_win, win_desktop_button_proxy, gnome_win);
-  getGnomeHint (root, win_workspace, &workspace);
-  getGnomeDesktopMargins (margins);
+	initHints (dpy);
+	gnome_win = XCreateSimpleWindow (dpy, root, -1000, -1000, 5, 5, 0, 0, 0);
+	setGnomeHint (root, win_supporting_wm_check, gnome_win);
+	setGnomeHint (gnome_win, win_supporting_wm_check, gnome_win);
+	setSupportingWmCheck (root, gnome_win);
+	setSupportingWmCheck (gnome_win, gnome_win);
+	setGnomeHint (root, win_desktop_button_proxy, gnome_win);
+	setGnomeHint (gnome_win, win_desktop_button_proxy, gnome_win);
+	getGnomeHint (root, win_workspace, &workspace);
+	getGnomeDesktopMargins (margins);
 
-  root_cursor = XCreateFontCursor (dpy, XC_left_ptr);
-  move_cursor = XCreateFontCursor (dpy, XC_fleur);
-  resize_cursor[CORNER_TOP_LEFT] =
-    XCreateFontCursor (dpy, XC_top_left_corner);
-  resize_cursor[CORNER_TOP_RIGHT] =
-    XCreateFontCursor (dpy, XC_top_right_corner);
-  resize_cursor[CORNER_BOTTOM_LEFT] =
-    XCreateFontCursor (dpy, XC_bottom_left_corner);
-  resize_cursor[CORNER_BOTTOM_RIGHT] =
-    XCreateFontCursor (dpy, XC_bottom_right_corner);
-  XDefineCursor (dpy, root, root_cursor);
+	root_cursor = XCreateFontCursor (dpy, XC_left_ptr);
+	move_cursor = XCreateFontCursor (dpy, XC_fleur);
+	resize_cursor[CORNER_TOP_LEFT] =
+		XCreateFontCursor (dpy, XC_top_left_corner);
+	resize_cursor[CORNER_TOP_RIGHT] =
+		XCreateFontCursor (dpy, XC_top_right_corner);
+	resize_cursor[CORNER_BOTTOM_LEFT] =
+		XCreateFontCursor (dpy, XC_bottom_left_corner);
+	resize_cursor[CORNER_BOTTOM_RIGHT] =
+		XCreateFontCursor (dpy, XC_bottom_right_corner);
+	XDefineCursor (dpy, root, root_cursor);
 
-  init_keyboard (dpy);
+	init_keyboard (dpy);
 
-  loadSettings ();
+	loadSettings ();
 
-  setNetWorkarea (margins, workspace_count);
+	setNetWorkarea (margins, workspace_count);
 
-  clientFrameAll ();
+	clientFrameAll ();
 
-  XMapWindow (dpy, gnome_win);
-  XSetInputFocus (dpy, gnome_win, RevertToNone, CurrentTime);
+	XMapWindow (dpy, gnome_win);
+	XSetInputFocus (dpy, gnome_win, RevertToNone, CurrentTime);
 }
 
 int
 main (int argc, char **argv)
 {
-  initialize (argc, argv);
-  eventLoop ();
-  cleanUp ();
-  return 0;
+	initialize (argc, argv);
+	eventLoop ();
+	cleanUp ();
+	return 0;
 }
 
 /* vim600:set foldmarker={{{,}}} foldmethod=marker: */
 
 /**This must remain at the end of the file.**********
- * vim600:set sw=2 ts=8:                            *
+ * vim600:set sw=2 ts=2:                            *
  * vim600:set cindent cinoptions={1s,>2s,^-1s,n-1s: *
  * vim600:set foldmethod=marker:                    *
  ****************************************************/

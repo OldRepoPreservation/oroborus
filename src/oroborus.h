@@ -94,61 +94,61 @@
 
 enum
 {
-  NET_WM_STATE_REMOVE,		/* remove/unset property */
-  NET_WM_STATE_ADD,		/* add/set property */
-  NET_WM_STATE_TOGGLE		/* toggle property  */
+	NET_WM_STATE_REMOVE,					/* remove/unset property */
+	NET_WM_STATE_ADD,							/* add/set property */
+	NET_WM_STATE_TOGGLE						/* toggle property  */
 };
 
 enum
 {
-  KEY_MOVE_UP,
-  KEY_MOVE_DOWN,
-  KEY_MOVE_LEFT,
-  KEY_MOVE_RIGHT,
-  KEY_RESIZE_UP,
-  KEY_RESIZE_DOWN,
-  KEY_RESIZE_LEFT,
-  KEY_RESIZE_RIGHT,
-  KEY_CYCLE_WINDOWS,
-  KEY_CLOSE_WINDOW,
-  KEY_HIDE_WINDOW,
-  KEY_MAXIMIZE_WINDOW,
-  KEY_MAXIMIZE_VERT,
-  KEY_MAXIMIZE_HORIZ,
-  KEY_SHADE_WINDOW,
-  KEY_RAISE_WINDOW_LAYER,
-  KEY_LOWER_WINDOW_LAYER,
-  KEY_NEXT_WORKSPACE,
-  KEY_PREV_WORKSPACE,
-  KEY_ADD_WORKSPACE,
-  KEY_DEL_WORKSPACE,
-  KEY_STICK_WINDOW,
-  KEY_WORKSPACE_1,
-  KEY_WORKSPACE_2,
-  KEY_WORKSPACE_3,
-  KEY_WORKSPACE_4,
-  KEY_WORKSPACE_5,
-  KEY_WORKSPACE_6,
-  KEY_WORKSPACE_7,
-  KEY_WORKSPACE_8,
-  KEY_WORKSPACE_9,
-  KEY_MOVE_NEXT_WORKSPACE,
-  KEY_MOVE_PREV_WORKSPACE,
-  KEY_MOVE_WORKSPACE_1,
-  KEY_MOVE_WORKSPACE_2,
-  KEY_MOVE_WORKSPACE_3,
-  KEY_MOVE_WORKSPACE_4,
-  KEY_MOVE_WORKSPACE_5,
-  KEY_MOVE_WORKSPACE_6,
-  KEY_MOVE_WORKSPACE_7,
-  KEY_MOVE_WORKSPACE_8,
-  KEY_MOVE_WORKSPACE_9,
-  KEY_TOP_LEFT,
-  KEY_TOP_RIGHT,
-  KEY_BOTTOM_LEFT,
-  KEY_BOTTOM_RIGHT,
-  KEY_QUIT,
-  KEY_WINDOW_OPS
+	KEY_MOVE_UP,
+	KEY_MOVE_DOWN,
+	KEY_MOVE_LEFT,
+	KEY_MOVE_RIGHT,
+	KEY_RESIZE_UP,
+	KEY_RESIZE_DOWN,
+	KEY_RESIZE_LEFT,
+	KEY_RESIZE_RIGHT,
+	KEY_CYCLE_WINDOWS,
+	KEY_CLOSE_WINDOW,
+	KEY_HIDE_WINDOW,
+	KEY_MAXIMIZE_WINDOW,
+	KEY_MAXIMIZE_VERT,
+	KEY_MAXIMIZE_HORIZ,
+	KEY_SHADE_WINDOW,
+	KEY_RAISE_WINDOW_LAYER,
+	KEY_LOWER_WINDOW_LAYER,
+	KEY_NEXT_WORKSPACE,
+	KEY_PREV_WORKSPACE,
+	KEY_ADD_WORKSPACE,
+	KEY_DEL_WORKSPACE,
+	KEY_STICK_WINDOW,
+	KEY_WORKSPACE_1,
+	KEY_WORKSPACE_2,
+	KEY_WORKSPACE_3,
+	KEY_WORKSPACE_4,
+	KEY_WORKSPACE_5,
+	KEY_WORKSPACE_6,
+	KEY_WORKSPACE_7,
+	KEY_WORKSPACE_8,
+	KEY_WORKSPACE_9,
+	KEY_MOVE_NEXT_WORKSPACE,
+	KEY_MOVE_PREV_WORKSPACE,
+	KEY_MOVE_WORKSPACE_1,
+	KEY_MOVE_WORKSPACE_2,
+	KEY_MOVE_WORKSPACE_3,
+	KEY_MOVE_WORKSPACE_4,
+	KEY_MOVE_WORKSPACE_5,
+	KEY_MOVE_WORKSPACE_6,
+	KEY_MOVE_WORKSPACE_7,
+	KEY_MOVE_WORKSPACE_8,
+	KEY_MOVE_WORKSPACE_9,
+	KEY_TOP_LEFT,
+	KEY_TOP_RIGHT,
+	KEY_BOTTOM_LEFT,
+	KEY_BOTTOM_RIGHT,
+	KEY_QUIT,
+	KEY_WINDOW_OPS
 };
 
 #define KEY_COUNT			48
@@ -172,31 +172,31 @@ typedef struct _Client Client;
 
 struct _Client
 {
-  Window window, frame, title, sides[3], corners[4], buttons[BUTTON_COUNT];
-  int x, y, width, height, border_width;
-  int old_x, old_y, old_width, old_height;
-  int button_pressed[BUTTON_COUNT];
-  char *name;
-  XSizeHints *size;
-  int has_border;
-  long win_hints;
-  long win_state;
-  long win_layer;
-  long win_workspace;
-  int ignore_unmap, focus;
-  Client *next;
-  Client *prev;
-  Client *transientFor;
+	Window window, frame, title, sides[3], corners[4], buttons[BUTTON_COUNT];
+	int x, y, width, height, border_width;
+	int old_x, old_y, old_width, old_height;
+	int button_pressed[BUTTON_COUNT];
+	char *name;
+	XSizeHints *size;
+	int has_border;
+	long win_hints;
+	long win_state;
+	long win_layer;
+	long win_workspace;
+	int ignore_unmap, focus;
+	Client *next;
+	Client *prev;
+	Client *transientFor;
 };
 
 /* the structure of all long options for getopt */
 static struct option const long_options[] = {
-  {"verbose", no_argument, 0, 'v'},
-  {"help", no_argument, 0, 'h'},
-  {"version", no_argument, 0, 'V'},
-  {"file", required_argument, 0, 'f'},
-  {"display", required_argument, 0, 'd'},
-  {NULL, 0, NULL, 0}
+	{"verbose", no_argument, 0, 'v'},
+	{"help", no_argument, 0, 'h'},
+	{"version", no_argument, 0, 'V'},
+	{"file", required_argument, 0, 'f'},
+	{"display", required_argument, 0, 'd'},
+	{NULL, 0, NULL, 0}
 };
 
 /*
@@ -275,7 +275,7 @@ extern char button_layout[6];
 extern int double_click_action;
 extern int box_move, box_resize;
 extern int click_to_focus, focus_new, raise_on_focus, raise_delay,
-  raise_on_click;
+	raise_on_click;
 extern int window_placement, snap_to_border, snap_to_windows, snap_width;
 extern int workspace_count, wrap_workspaces;
 extern int button_state[4];
@@ -345,7 +345,7 @@ void workspaceSetCount (int);
 #endif /* __OROBORUS_H */
 
 /**This must remain at the end of the file.**********
- * vim600:set sw=2 ts=8:                            *
+ * vim600:set sw=2 ts=2:                            *
  * vim600:set cindent cinoptions={1s,>2s,^-1s,n-1s: *
  * vim600:set foldmethod=marker:                    *
  ****************************************************/
