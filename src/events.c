@@ -441,7 +441,7 @@ handleDestroyNotify (XDestroyWindowEvent * ev)
 			clientUnframe (c, False);
 			if (clients)
 				{
-					c = clientGetTopMost (WIN_LAYER_NORMAL);
+					c = clientGetNext (clients, 0);
 					clientSetFocus (c, True);
 					if (!(not_warp_to_next || c->non_focusing))
 						clientWarpMouse (c);
@@ -472,7 +472,7 @@ handleUnmapNotify (XUnmapEvent * ev)
 					clientUnframe (c, False);
 					if (clients)
 						{
-							c = clientGetTopMost (WIN_LAYER_NORMAL);
+							c = clientGetNext (clients, 0);
 							clientSetFocus (c, True);
 							if (!(not_warp_to_next || c->non_focusing))
 								clientWarpMouse (c);

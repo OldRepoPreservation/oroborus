@@ -343,7 +343,7 @@ clientGetBottomMost (int layer)
 			XGetWindowAttributes (dpy, wins[i], &attr);
 			c = clientGetFromWindow (wins[i], FRAME);
 			if (c && attr.map_state == IsViewable
-					&& !((c->win_hints & WIN_HINTS_SKIP_FOCUS)))
+					&& !(c->win_hints & WIN_HINTS_SKIP_FOCUS))
 				{
 					if (c->win_layer >= layer)
 						break;
@@ -1593,6 +1593,26 @@ clientGetNext (Client * c, int mask)
 
 	if (c)
 		{
+			for (c2 = c->next, i = 0; i < client_count; c2 = c2->next, i++)
+				{
+					okay = True;
+					if (c2->win_hints & WIN_HINTS_SKIP_FOCUS &&
+							!(mask & INCLUDE_SKIP_FOCUS))
+						okay = False;
+					if (getWMState (c2->window) == IconicState &&
+							!(mask & INCLUDE_HIDDEN))
+						okay = False;
+					if (c2->win_workspace != workspace &&
+							!(mask & INCLUDE_ALL_WORKSPACES))
+						okay = False;
+					if ((c2->win_state & WIN_STATE_SHADED) &&
+							!(mask & INCLUDE_HIDDEN))
+						okay = False;
+					if (c2->non_focusing)
+						okay = False;
+					if (okay)
+						return c2;
+				}
 			for (c2 = c->next, i = 0; i < client_count; c2 = c2->next, i++)
 				{
 					okay = True;
