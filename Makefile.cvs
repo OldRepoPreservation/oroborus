@@ -1,0 +1,11 @@
+default: all
+clean:
+	find -name Makefile.in | xargs rm
+	rm configure
+	rm aclocal.m4
+	rm src/stamp-h.in
+all:
+	aclocal
+	autoconf
+	autoheader
+	automake

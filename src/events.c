@@ -127,9 +127,11 @@ handleKeyPress (XKeyEvent * ev)
 	  break;
 	case KEY_NEXT_WORKSPACE:
 	  workspaceSwitch (workspace + 1, NULL);
+	  clientWarpMouse (clientGetFocus());
 	  break;
 	case KEY_PREV_WORKSPACE:
 	  workspaceSwitch (workspace - 1, NULL);
+	  clientWarpMouse (clientGetFocus());
 	  break;
 	case KEY_ADD_WORKSPACE:
 	  workspaceSetCount (workspace_count + 1);
@@ -142,63 +144,83 @@ handleKeyPress (XKeyEvent * ev)
 	  break;
 	case KEY_WORKSPACE_1:
 	  workspaceSwitch (0, NULL);
+	  clientWarpMouse (clientGetFocus());
 	  break;
 	case KEY_WORKSPACE_2:
 	  workspaceSwitch (1, NULL);
+	  clientWarpMouse (clientGetFocus());
 	  break;
 	case KEY_WORKSPACE_3:
 	  workspaceSwitch (2, NULL);
+	  clientWarpMouse (clientGetFocus());
 	  break;
 	case KEY_WORKSPACE_4:
 	  workspaceSwitch (3, NULL);
+	  clientWarpMouse (clientGetFocus());
 	  break;
 	case KEY_WORKSPACE_5:
 	  workspaceSwitch (4, NULL);
+	  clientWarpMouse (clientGetFocus());
 	  break;
 	case KEY_WORKSPACE_6:
 	  workspaceSwitch (5, NULL);
+	  clientWarpMouse (clientGetFocus());
 	  break;
 	case KEY_WORKSPACE_7:
 	  workspaceSwitch (6, NULL);
+	  clientWarpMouse (clientGetFocus());
 	  break;
 	case KEY_WORKSPACE_8:
 	  workspaceSwitch (7, NULL);
+	  clientWarpMouse (clientGetFocus());
 	  break;
 	case KEY_WORKSPACE_9:
 	  workspaceSwitch (8, NULL);
+	  clientWarpMouse (clientGetFocus());
 	  break;
 	case KEY_MOVE_NEXT_WORKSPACE:
 	  workspaceSwitch (workspace + 1, c);
+	  clientWarpMouse (clientGetFocus());
 	  break;
 	case KEY_MOVE_PREV_WORKSPACE:
 	  workspaceSwitch (workspace - 1, c);
+	  clientWarpMouse (clientGetFocus());
 	  break;
 	case KEY_MOVE_WORKSPACE_1:
 	  workspaceSwitch (0, c);
+	  clientWarpMouse (clientGetFocus());
 	  break;
 	case KEY_MOVE_WORKSPACE_2:
 	  workspaceSwitch (1, c);
+	  clientWarpMouse (clientGetFocus());
 	  break;
 	case KEY_MOVE_WORKSPACE_3:
 	  workspaceSwitch (2, c);
+	  clientWarpMouse (clientGetFocus());
 	  break;
 	case KEY_MOVE_WORKSPACE_4:
 	  workspaceSwitch (3, c);
+	  clientWarpMouse (clientGetFocus());
 	  break;
 	case KEY_MOVE_WORKSPACE_5:
 	  workspaceSwitch (4, c);
+	  clientWarpMouse (clientGetFocus());
 	  break;
 	case KEY_MOVE_WORKSPACE_6:
 	  workspaceSwitch (5, c);
+	  clientWarpMouse (clientGetFocus());
 	  break;
 	case KEY_MOVE_WORKSPACE_7:
 	  workspaceSwitch (6, c);
+	  clientWarpMouse (clientGetFocus());
 	  break;
 	case KEY_MOVE_WORKSPACE_8:
 	  workspaceSwitch (7, c);
+	  clientWarpMouse (clientGetFocus());
 	  break;
 	case KEY_MOVE_WORKSPACE_9:
 	  workspaceSwitch (8, c);
+	  clientWarpMouse (clientGetFocus());
 	  break;
 	}
     }
@@ -215,9 +237,11 @@ handleKeyPress (XKeyEvent * ev)
 	  break;
 	case KEY_NEXT_WORKSPACE:
 	  workspaceSwitch (workspace + 1, NULL);
+	  clientWarpMouse (clientGetFocus());
 	  break;
 	case KEY_PREV_WORKSPACE:
 	  workspaceSwitch (workspace - 1, NULL);
+	  clientWarpMouse (clientGetFocus());
 	  break;
 	case KEY_ADD_WORKSPACE:
 	  workspaceSetCount (workspace_count + 1);
@@ -227,30 +251,39 @@ handleKeyPress (XKeyEvent * ev)
 	  break;
 	case KEY_WORKSPACE_1:
 	  workspaceSwitch (0, NULL);
+	  clientWarpMouse (clientGetFocus());
 	  break;
 	case KEY_WORKSPACE_2:
 	  workspaceSwitch (1, NULL);
+	  clientWarpMouse (clientGetFocus());
 	  break;
 	case KEY_WORKSPACE_3:
 	  workspaceSwitch (2, NULL);
+	  clientWarpMouse (clientGetFocus());
 	  break;
 	case KEY_WORKSPACE_4:
 	  workspaceSwitch (3, NULL);
+	  clientWarpMouse (clientGetFocus());
 	  break;
 	case KEY_WORKSPACE_5:
 	  workspaceSwitch (4, NULL);
+	  clientWarpMouse (clientGetFocus());
 	  break;
 	case KEY_WORKSPACE_6:
 	  workspaceSwitch (5, NULL);
+	  clientWarpMouse (clientGetFocus());
 	  break;
 	case KEY_WORKSPACE_7:
 	  workspaceSwitch (6, NULL);
+	  clientWarpMouse (clientGetFocus());
 	  break;
 	case KEY_WORKSPACE_8:
 	  workspaceSwitch (7, NULL);
+	  clientWarpMouse (clientGetFocus());
 	  break;
 	case KEY_WORKSPACE_9:
 	  workspaceSwitch (8, NULL);
+	  clientWarpMouse (clientGetFocus());
 	  break;
 	}
     }

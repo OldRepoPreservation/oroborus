@@ -73,7 +73,6 @@ workspaceSwitch (int new_ws, Client * c2)
   if (c2)
     f = c2;
   clientSetFocus (f, True);
-  clientWarpMouse (f);
 }
 
 void
