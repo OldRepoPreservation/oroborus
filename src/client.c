@@ -715,6 +715,8 @@ void clientKill(Client * c)
 void clientRaise(Client * c)
 {
     XWindowChanges wc;
+    Client *c2;
+    int i;
 
 #ifdef DEBUG
     printf("entering clientRaise\n");
@@ -734,6 +736,10 @@ void clientRaise(Client * c)
 
     wc.stack_mode = Above;
     clientConfigure(c, &wc, CWStackMode);
+    
+    for (c2 = clients, i = 0; i < client_count; c2 = c2->next, i++)
+      if (c2->transientFor == c)
+	clientRaise(c2);
 }
 
 void clientLower(Client * c)

@@ -1,15 +1,17 @@
 Things to do
 ============
 
-* Write new documentation
+* Write new documentation.
   Write a Manpage -> DONE
   Example file needs update.
+  Doxygen needs to be written.
 
 * Reimplement Xinerama support
 
 * Make transient windows stay stacked above their parents
-  (half way fixed, at least oroborus now correctpy handles
-   NET_WM_WINDOW_TYPE_DESKTOP)
+  *** FIXED ***
+  Well I still have to switch to XRestackWindows but currently
+  this is working.
 
 * implement a popup funtion to warn the user
 
