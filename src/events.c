@@ -437,7 +437,7 @@ handleDestroyNotify (XDestroyWindowEvent * ev)
   c = clientGetFromWindow (ev->window, WINDOW);
   if (c)
     {
-      not_warp_to_next = c->not_warp_to_next;
+      not_warp_to_next = c->not_warp_to_next || c->transientFor;
       clientUnframe (c, False);
       if (clients)
 	{
@@ -467,7 +467,7 @@ handleUnmapNotify (XUnmapEvent * ev)
   c = clientGetFromWindow (ev->window, WINDOW);
   if (c)
     {
-      not_warp_to_next = c->not_warp_to_next;
+      not_warp_to_next = c->not_warp_to_next || c->transientFor;
       if (c->ignore_unmap)
 	c->ignore_unmap--;
       else
