@@ -9,10 +9,6 @@ Things to do
   Well I still have to switch to XRestackWindows but currently
   this is working.
 
-* Handle old ROX-Filer correctly.
-
-* Handle GMC correctly.
-
 * implement a popup funtion to warn the user
 
 * implement a remote controlling application

@@ -8,6 +8,7 @@ oroborus (2.0.6-1) unstable; urgency=low
   * Use /bin/kill.
     Closes: #150406
   * Fixed some of the mouse warping.
+  * Fixed Icon handling of Rox, Gmc and possibly Nautilus.
 
  -- Stefan Pfetzing <dreamind@dreamind.de>  Sat, 22 Jun 2002 19:01:26 +0200
 

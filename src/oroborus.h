@@ -88,54 +88,58 @@
 #define CLOSE_BUTTON			3
 #define BUTTON_COUNT			4
 
-#define KEY_MOVE_UP			0
-#define KEY_MOVE_DOWN			1
-#define KEY_MOVE_LEFT			2
-#define KEY_MOVE_RIGHT			3
-#define KEY_RESIZE_UP			4
-#define KEY_RESIZE_DOWN			5
-#define KEY_RESIZE_LEFT			6
-#define KEY_RESIZE_RIGHT		7
-#define KEY_CYCLE_WINDOWS		8
-#define KEY_CLOSE_WINDOW		9
-#define KEY_HIDE_WINDOW			10
-#define KEY_MAXIMIZE_WINDOW		11
-#define KEY_MAXIMIZE_VERT		12
-#define KEY_MAXIMIZE_HORIZ		13
-#define KEY_SHADE_WINDOW		14
-#define KEY_RAISE_WINDOW_LAYER		15
-#define KEY_LOWER_WINDOW_LAYER		16
-#define KEY_NEXT_WORKSPACE		17
-#define KEY_PREV_WORKSPACE		18
-#define KEY_ADD_WORKSPACE		19
-#define KEY_DEL_WORKSPACE		20
-#define KEY_STICK_WINDOW		21
-#define KEY_WORKSPACE_1		        22
-#define KEY_WORKSPACE_2 	        23
-#define KEY_WORKSPACE_3        		24
-#define KEY_WORKSPACE_4        		25
-#define KEY_WORKSPACE_5        		26
-#define KEY_WORKSPACE_6        		27
-#define KEY_WORKSPACE_7        		28
-#define KEY_WORKSPACE_8        		29
-#define KEY_WORKSPACE_9        		30
-#define KEY_MOVE_NEXT_WORKSPACE		31
-#define KEY_MOVE_PREV_WORKSPACE		32
-#define KEY_MOVE_WORKSPACE_1		33
-#define KEY_MOVE_WORKSPACE_2		34
-#define KEY_MOVE_WORKSPACE_3		35
-#define KEY_MOVE_WORKSPACE_4		36
-#define KEY_MOVE_WORKSPACE_5		37
-#define KEY_MOVE_WORKSPACE_6        	38
-#define KEY_MOVE_WORKSPACE_7        	39
-#define KEY_MOVE_WORKSPACE_8        	40
-#define KEY_MOVE_WORKSPACE_9        	41
-#define KEY_TOP_LEFT        42
-#define KEY_TOP_RIGHT       43
-#define KEY_BOTTOM_LEFT     44
-#define KEY_BOTTOM_RIGHT    45
-#define KEY_QUIT			46
-#define KEY_WINDOW_OPS      47
+enum
+{
+  KEY_MOVE_UP,
+  KEY_MOVE_DOWN,
+  KEY_MOVE_LEFT,
+  KEY_MOVE_RIGHT,
+  KEY_RESIZE_UP,
+  KEY_RESIZE_DOWN,
+  KEY_RESIZE_LEFT,
+  KEY_RESIZE_RIGHT,
+  KEY_CYCLE_WINDOWS,
+  KEY_CLOSE_WINDOW,
+  KEY_HIDE_WINDOW,
+  KEY_MAXIMIZE_WINDOW,
+  KEY_MAXIMIZE_VERT,
+  KEY_MAXIMIZE_HORIZ,
+  KEY_SHADE_WINDOW,
+  KEY_RAISE_WINDOW_LAYER,
+  KEY_LOWER_WINDOW_LAYER,
+  KEY_NEXT_WORKSPACE,
+  KEY_PREV_WORKSPACE,
+  KEY_ADD_WORKSPACE,
+  KEY_DEL_WORKSPACE,
+  KEY_STICK_WINDOW,
+  KEY_WORKSPACE_1,
+  KEY_WORKSPACE_2,
+  KEY_WORKSPACE_3,
+  KEY_WORKSPACE_4,
+  KEY_WORKSPACE_5,
+  KEY_WORKSPACE_6,
+  KEY_WORKSPACE_7,
+  KEY_WORKSPACE_8,
+  KEY_WORKSPACE_9,
+  KEY_MOVE_NEXT_WORKSPACE,
+  KEY_MOVE_PREV_WORKSPACE,
+  KEY_MOVE_WORKSPACE_1,
+  KEY_MOVE_WORKSPACE_2,
+  KEY_MOVE_WORKSPACE_3,
+  KEY_MOVE_WORKSPACE_4,
+  KEY_MOVE_WORKSPACE_5,
+  KEY_MOVE_WORKSPACE_6,
+  KEY_MOVE_WORKSPACE_7,
+  KEY_MOVE_WORKSPACE_8,
+  KEY_MOVE_WORKSPACE_9,
+  KEY_TOP_LEFT,
+  KEY_TOP_RIGHT,
+  KEY_BOTTOM_LEFT,
+  KEY_BOTTOM_RIGHT,
+  KEY_QUIT,
+  KEY_WINDOW_OPS
+};
+
 #define KEY_COUNT			48
 
 #define ALIGN_LEFT			0
@@ -206,7 +210,8 @@ extern int button_state[4];
 extern GC box_gc;
 extern int double_click_action;
 extern int box_resize, box_move;
-extern int click_to_focus, focus_new, raise_on_focus, raise_delay, raise_on_click;
+extern int click_to_focus, focus_new, raise_on_focus, raise_delay,
+  raise_on_click;
 extern int window_placement, snap_to_border, snap_to_windows, snap_width;
 extern int workspace_count, wrap_workspaces;
 

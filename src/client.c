@@ -64,58 +64,14 @@ clientInitPosition (Client * c)
 void
 clientGrabKeys (Client * c)
 {
+  int i;
 #ifdef DEBUG
   printf ("entering clientGrabKeys\n");
   printf ("grabbing keys for client (%#lx)\n", c->window);
 #endif
 
-  grabKey (dpy, &keys[KEY_MOVE_UP], c->window);
-  grabKey (dpy, &keys[KEY_MOVE_DOWN], c->window);
-  grabKey (dpy, &keys[KEY_MOVE_LEFT], c->window);
-  grabKey (dpy, &keys[KEY_MOVE_RIGHT], c->window);
-  grabKey (dpy, &keys[KEY_TOP_LEFT], c->window);
-  grabKey (dpy, &keys[KEY_TOP_RIGHT], c->window);
-  grabKey (dpy, &keys[KEY_BOTTOM_LEFT], c->window);
-  grabKey (dpy, &keys[KEY_BOTTOM_RIGHT], c->window);
-  grabKey (dpy, &keys[KEY_RESIZE_UP], c->window);
-  grabKey (dpy, &keys[KEY_RESIZE_DOWN], c->window);
-  grabKey (dpy, &keys[KEY_RESIZE_LEFT], c->window);
-  grabKey (dpy, &keys[KEY_RESIZE_RIGHT], c->window);
-  grabKey (dpy, &keys[KEY_CLOSE_WINDOW], c->window);
-  grabKey (dpy, &keys[KEY_HIDE_WINDOW], c->window);
-  grabKey (dpy, &keys[KEY_MAXIMIZE_WINDOW], c->window);
-  grabKey (dpy, &keys[KEY_MAXIMIZE_VERT], c->window);
-  grabKey (dpy, &keys[KEY_MAXIMIZE_HORIZ], c->window);
-  grabKey (dpy, &keys[KEY_SHADE_WINDOW], c->window);
-  grabKey (dpy, &keys[KEY_CYCLE_WINDOWS], c->window);
-  grabKey (dpy, &keys[KEY_LOWER_WINDOW_LAYER], c->window);
-  grabKey (dpy, &keys[KEY_RAISE_WINDOW_LAYER], c->window);
-  grabKey (dpy, &keys[KEY_NEXT_WORKSPACE], c->window);
-  grabKey (dpy, &keys[KEY_PREV_WORKSPACE], c->window);
-  grabKey (dpy, &keys[KEY_ADD_WORKSPACE], c->window);
-  grabKey (dpy, &keys[KEY_DEL_WORKSPACE], c->window);
-  grabKey (dpy, &keys[KEY_STICK_WINDOW], c->window);
-  grabKey (dpy, &keys[KEY_WORKSPACE_1], c->window);
-  grabKey (dpy, &keys[KEY_WORKSPACE_2], c->window);
-  grabKey (dpy, &keys[KEY_WORKSPACE_3], c->window);
-  grabKey (dpy, &keys[KEY_WORKSPACE_4], c->window);
-  grabKey (dpy, &keys[KEY_WORKSPACE_5], c->window);
-  grabKey (dpy, &keys[KEY_WORKSPACE_6], c->window);
-  grabKey (dpy, &keys[KEY_WORKSPACE_7], c->window);
-  grabKey (dpy, &keys[KEY_WORKSPACE_8], c->window);
-  grabKey (dpy, &keys[KEY_WORKSPACE_9], c->window);
-  grabKey (dpy, &keys[KEY_MOVE_NEXT_WORKSPACE], c->window);
-  grabKey (dpy, &keys[KEY_MOVE_PREV_WORKSPACE], c->window);
-  grabKey (dpy, &keys[KEY_MOVE_WORKSPACE_1], c->window);
-  grabKey (dpy, &keys[KEY_MOVE_WORKSPACE_2], c->window);
-  grabKey (dpy, &keys[KEY_MOVE_WORKSPACE_3], c->window);
-  grabKey (dpy, &keys[KEY_MOVE_WORKSPACE_4], c->window);
-  grabKey (dpy, &keys[KEY_MOVE_WORKSPACE_5], c->window);
-  grabKey (dpy, &keys[KEY_MOVE_WORKSPACE_6], c->window);
-  grabKey (dpy, &keys[KEY_MOVE_WORKSPACE_7], c->window);
-  grabKey (dpy, &keys[KEY_MOVE_WORKSPACE_8], c->window);
-  grabKey (dpy, &keys[KEY_MOVE_WORKSPACE_9], c->window);
-  grabKey (dpy, &keys[KEY_QUIT], c->window);
+  for (i = 0; i < KEY_COUNT; i++)
+    grabKey (dpy, &keys[i], c->window);
 }
 
 void
@@ -341,7 +297,8 @@ clientGetBottomMost (int layer)
     {
       XGetWindowAttributes (dpy, wins[i], &attr);
       c = clientGetFromWindow (wins[i], FRAME);
-      if (c && attr.map_state == IsViewable && !typeDesktop (dpy, c->window))
+      if (c && attr.map_state == IsViewable
+	  && !(c->win_hints & WIN_HINTS_SKIP_FOCUS))
 	{
 	  if (c->win_layer >= layer)
 	    break;
@@ -453,7 +410,7 @@ clientFrame (Window w)
 #endif
 
   c = malloc (sizeof (*c));
-  class_res = malloc(sizeof (XClassHint));
+  class_res = malloc (sizeof (XClassHint));
   if (!c)
     return;
 
@@ -485,8 +442,13 @@ clientFrame (Window w)
       c->win_workspace = workspace_count - 1;
     }
 
-  XGetClassHint(dpy, c->window, class_res);
-  if (class_res->res_name && ! strcmp (class_res->res_name,"X-Chat"))
+  if (typeDesktop (dpy, c->window))
+    {
+      c->win_hints = c->win_hints | WIN_HINTS_SKIP_FOCUS;
+    }
+
+  XGetClassHint (dpy, c->window, class_res);
+  if (class_res->res_name && !strcmp (class_res->res_name, "X-Chat"))
     c->has_border = False;
   else
     c->has_border = True;
@@ -575,11 +537,7 @@ clientFrame (Window w)
   if (getWMState (dpy, c->window) != IconicState)
     {
       clientShow (c, True);
-#ifdef DEBUG
-      printf ("strcmp no. 1\n");
-#endif
-      if (focus_new && !(c->win_hints & WIN_HINTS_SKIP_FOCUS)
-	  && !typeDesktop (dpy, c->window))
+      if (focus_new && !(c->win_hints & WIN_HINTS_SKIP_FOCUS))
 	{
 	  clientSetFocus (c, True);
 	}
@@ -766,7 +724,7 @@ clientRaise (Client * c)
   printf ("entering clientRaise\n");
 #endif
 
-  if (typeDesktop (dpy, c->window))
+  if (c->win_hints & WIN_HINTS_SKIP_FOCUS)
     {
 #ifdef DEBUG
       printf ("NOT raising client (%#lx)\n", c->window);
@@ -979,9 +937,6 @@ clientSetFocus (Client * c, int sort)
   if (c)
     {
       if (c->win_hints & WIN_HINTS_SKIP_FOCUS)
-	return;
-
-      if (typeDesktop (dpy, c->window))
 	return;
 
       if (sort)
@@ -1211,7 +1166,7 @@ clientMove (Client * c, XEvent * e)
 		      if (c2->win_workspace != c->win_workspace)
 			continue;
 
-		      if (typeDesktop (dpy, c2->window))
+		      if (c2->win_hints & WIN_HINTS_SKIP_FOCUS)
 			continue;
 
 		      /* Are we touching the bottom of a window? */
@@ -1525,8 +1480,6 @@ clientGetNext (Client * c, int mask)
       for (c2 = c->next, i = 0; i < client_count; c2 = c2->next, i++)
 	{
 	  okay = True;
-	  if (typeDesktop (dpy, c->window))
-	    okay = False;
 	  if (c2->win_hints & WIN_HINTS_SKIP_FOCUS &&
 	      !(mask & INCLUDE_SKIP_FOCUS))
 	    okay = False;

@@ -30,7 +30,6 @@ install: build
 	dh_installdirs usr/bin
 
 	$(MAKE) install DESTDIR=$(CURDIR)/debian/oroborus
-	cp debian/oroborusrc debian/oroborus/usr/share/oroborus/
 
 binary-indep: build install
 # bah!
