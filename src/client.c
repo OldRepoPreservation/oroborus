@@ -31,7 +31,7 @@ clientInitPosition (Client * c)
 #endif
 
 	clientGravitate (c, APPLY);
-	if (typeDock(c->window) || typeDesktop(c->window) || c->above)
+	if (c->non_focusing || c->above)
 		{
 			min_x = 0;
 			min_y = 0;
@@ -77,6 +77,32 @@ clientGrabKeys (Client * c)
 	printf ("entering clientGrabKeys\n");
 	printf ("grabbing keys for client (%#lx)\n", c->window);
 #endif
+
+	// do not grab the keys for panels.
+	if (c->non_focusing)
+		{
+			// bind only these keys to "special" windows
+			int keynums[] = {
+				KEY_CYCLE_WINDOWS,
+				KEY_NEXT_WORKSPACE,
+				KEY_PREV_WORKSPACE,
+				KEY_ADD_WORKSPACE,
+				KEY_DEL_WORKSPACE,
+				KEY_WORKSPACE_1,
+				KEY_WORKSPACE_2,
+				KEY_WORKSPACE_3,
+				KEY_WORKSPACE_4,
+				KEY_WORKSPACE_5,
+				KEY_WORKSPACE_6,
+				KEY_WORKSPACE_7,
+				KEY_WORKSPACE_8,
+				KEY_WORKSPACE_9,
+				KEY_QUIT
+			};
+			for (i = 0; i < 15; i++)
+				grabKey (dpy, &keys[keynums[i]], c->window);
+			return;
+		}
 
 	for (i = 0; i < KEY_COUNT; i++)
 		grabKey (dpy, &keys[i], c->window);
@@ -477,17 +503,19 @@ clientFrame (Window w)
 
 	if (typeDesktop (c->window))
 		{
-			c->win_hints = c->win_hints | WIN_HINTS_SKIP_FOCUS;
 			c->win_state = c->win_state | WIN_STATE_STICKY;
+			c->non_focusing = True;
 			c->has_border = False;
 			c->win_layer = WIN_LAYER_DESKTOP;
 		}
-
-	if (typeDock (c->window))
+	else if (typeDock (c->window))
 		{
-			c->win_hints = c->win_hints | WIN_HINTS_SKIP_FOCUS;
+			c->win_state = c->win_state | WIN_STATE_STICKY;
+			c->non_focusing = True;
 			c->win_layer = WIN_LAYER_DOCK;
 		}
+	else
+		c->non_focusing = False;
 
 	c->ignore_unmap = attr.map_state == IsViewable ? 1 : 0;
 	c->focus = False;
@@ -573,7 +601,7 @@ clientFrame (Window w)
 	if (getWMState (c->window) != IconicState)
 		{
 			clientShow (c, True);
-			if (focus_new && !(c->win_hints & WIN_HINTS_SKIP_FOCUS))
+			if (focus_new && (!(c->win_hints & WIN_HINTS_SKIP_FOCUS) || !c->non_focusing))
 				{
 					clientSetFocus (c, True);
 				}
@@ -764,7 +792,7 @@ clientRaise (Client * c)
 	if(!c)
 		return;
 	
-	if (c->win_hints & WIN_HINTS_SKIP_FOCUS)
+	if (c->win_hints & WIN_HINTS_SKIP_FOCUS || c->non_focusing)
 		{
 #ifdef DEBUG
 			printf ("NOT raising client (%#lx)\n", c->window);
@@ -977,6 +1005,7 @@ void
 clientSetFocus (Client * c, int sort)
 {
 	Client *tmp;
+	int i;
 
 #ifdef DEBUG
 	printf ("entering clientSetFocus\n");
@@ -990,6 +1019,12 @@ clientSetFocus (Client * c, int sort)
 		{
 			if (c->win_hints & WIN_HINTS_SKIP_FOCUS)
 				return;
+
+			if (c->non_focusing)
+				{
+					XSetInputFocus (dpy, c->window, RevertToNone, CurrentTime);
+					return;
+				}
 
 			if (sort)
 				{
@@ -1009,6 +1044,13 @@ clientSetFocus (Client * c, int sort)
 
 			XSetInputFocus (dpy, c->window, RevertToNone, CurrentTime);
 			setFocusHint (c->window);
+			for (tmp = clients, i = 0; i < client_count; tmp = tmp->next, i++)
+				if (c != tmp && tmp->win_workspace == workspace && tmp->focus)
+					{
+						tmp->focus = False;
+						frameDraw(tmp);
+					}
+			c->focus = True;
 		}
 	else
 		{
@@ -1020,15 +1062,20 @@ clientSetFocus (Client * c, int sort)
 Client *
 clientGetFocus ()
 {
-	Window w;
-	int dummy;
+	Client *c;
+//	Window w;
+	int i;
 
 #ifdef DEBUG
 	printf ("entering clientGetFocus\n");
 #endif
 
-	XGetInputFocus (dpy, &w, &dummy);
-	return clientGetFromWindow (w, WINDOW);
+	for (c = clients, i = 0; i < client_count; c = c->next, i++)
+		if (c->focus && c->win_workspace == workspace)
+			return c;
+//	XGetInputFocus (dpy, &w, &dummy);
+//	return clientGetFromWindow (w, WINDOW);
+	return NULL;
 }
 
 void
@@ -1059,7 +1106,7 @@ clientMove (Client * c, XEvent * e)
 #endif
 
 	if ((c->win_state & WIN_STATE_MAXIMIZED) == WIN_STATE_MAXIMIZED
-			|| typeDesktop (c->window) || typeDock(c->window))
+			|| c->non_focusing)
 		return;
 
 	g1 = XGrabKeyboard (dpy, c->window, False, GrabModeAsync, GrabModeAsync,
@@ -1546,6 +1593,8 @@ clientGetNext (Client * c, int mask)
 					if (c2->win_workspace != workspace &&
 							!(mask & INCLUDE_ALL_WORKSPACES))
 						okay = False;
+					if (c2->non_focusing)
+						okay = False;
 					if (okay)
 						return c2;
 				}
@@ -1582,6 +1631,8 @@ clientCycle (Client * c)
 				XUngrabPointer (dpy, CurrentTime);
 			return;
 		}
+
+	c->focus = False;
 
 	c2 = clientGetNext (c2, INCLUDE_HIDDEN);
 	if (!c2)
@@ -1635,6 +1686,8 @@ clientCycle (Client * c)
 			clientSetFocus (c2, True);
 			clientWarpMouse (c2);
 		}
+	else
+		c->focus = True;
 }
 
 void

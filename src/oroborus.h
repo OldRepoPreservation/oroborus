@@ -34,7 +34,10 @@
 #include <unistd.h>
 #include <getopt.h>
 #include <locale.h>
+#include <signal.h>
 #include <sys/time.h>
+#include <sys/wait.h>
+#include <sys/types.h>
 #include <time.h>
 #include "misc.h"
 #include "hints.h"
@@ -189,7 +192,7 @@ struct _Client
 	long win_state;
 	long win_layer;
 	long win_workspace;
-	int ignore_unmap, focus;
+	int ignore_unmap, focus, non_focusing;
 	Client *next;
 	Client *prev;
 	Client *transientFor;

@@ -38,6 +38,7 @@ workspaceSwitch (int new_ws, Client * c2)
 	if (new_ws < 0 || new_ws > workspace_count - 1 || new_ws == workspace)
 		return;
 
+	workspace = new_ws;
 	f = clientGetFocus ();
 	if (f)
 		f->focus = True;
@@ -49,7 +50,6 @@ workspaceSwitch (int new_ws, Client * c2)
 			c2->win_workspace = new_ws;
 		}
 
-	workspace = new_ws;
 	for (c = clients, i = 0; i < client_count; c = c->next, i++)
 		{
 			if (c->win_state & WIN_STATE_STICKY)
@@ -75,6 +75,7 @@ workspaceSwitch (int new_ws, Client * c2)
 	if (c2)
 		f = c2;
 	clientSetFocus (f, True);
+	clientRaise(f);
 }
 
 void

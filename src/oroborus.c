@@ -23,13 +23,6 @@
 
 /* some includes ««« */
 #include "oroborus.h"
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <getopt.h>
-#include <signal.h>
-#include <sys/wait.h>
-#include <sys/types.h>
 /*»»»*/
 
 int
