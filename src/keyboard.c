@@ -21,6 +21,8 @@
  */
 
 #include <X11/Xlib.h>
+#include <X11/Xutil.h>
+#include <X11/keysym.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -74,8 +76,20 @@ grabKey (Display * dpy, MyKey * key, Window w)
     {
       XGrabKey (dpy, key->keycode, key->modifier, w, False, GrabModeAsync,
 		GrabModeAsync);
-      XGrabKey (dpy, key->keycode, key->modifier | LockMask, w, False,
+      XGrabKey (dpy, key->keycode, key->modifier | NumLockMask, w, False,
 		GrabModeAsync, GrabModeAsync);
+      XGrabKey (dpy, key->keycode, key->modifier | CapsLockMask, w, False,
+		GrabModeAsync, GrabModeAsync);
+      XGrabKey (dpy, key->keycode, key->modifier | ScrollLockMask, w, False,
+		GrabModeAsync, GrabModeAsync);
+      XGrabKey (dpy, key->keycode, key->modifier | NumLockMask | CapsLockMask,
+		w, False, GrabModeAsync, GrabModeAsync);
+      XGrabKey (dpy, key->keycode,
+		key->modifier | NumLockMask | ScrollLockMask, w, False,
+		GrabModeAsync, GrabModeAsync);
+      XGrabKey (dpy, key->keycode,
+		key->modifier | NumLockMask | CapsLockMask | ScrollLockMask,
+		w, False, GrabModeAsync, GrabModeAsync);
     }
 }
 
@@ -87,4 +101,33 @@ ungrabKeys (Display * dpy, Window w)
 #endif
 
   XUngrabKey (dpy, AnyKey, AnyModifier, w);
+}
+
+void
+init_keyboard (Display *dpy)
+{
+  XModifierKeymap *xmk = NULL;
+  KeyCode *map;
+  int m, k;
+
+#ifdef DEBUG
+  printf ("init_keyboard\n");
+#endif
+
+  xmk = XGetModifierMapping (dpy);
+  if (xmk)
+    {
+      map = xmk->modifiermap;
+      for (m = 0; m < 8; m++)
+	for (k = 0; k < xmk->max_keypermod; k++, map++)
+	  {
+	    if (*map == XKeysymToKeycode (dpy, XK_Num_Lock))
+	      NumLockMask = (1 << m);
+	    if (*map == XKeysymToKeycode (dpy, XK_Caps_Lock))
+	      CapsLockMask = (1 << m);
+	    if (*map == XKeysymToKeycode (dpy, XK_Scroll_Lock))
+	      ScrollLockMask = (1 << m);
+	  }
+      XFreeModifiermap (xmk);
+    }
 }

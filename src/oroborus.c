@@ -200,6 +200,8 @@ initialize (int argc, char **argv)
     XCreateFontCursor (dpy, XC_bottom_right_corner);
   XDefineCursor (dpy, root, root_cursor);
 
+  init_keyboard(dpy);
+
   loadSettings ();
   clientFrameAll ();
 

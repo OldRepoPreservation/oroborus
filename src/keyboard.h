@@ -35,5 +35,8 @@ MyKey;
 void parseKeyString (Display *, MyKey *, char *);
 void grabKey (Display *, MyKey *, Window);
 void ungrabKeys (Display *, Window);
+void init_keyboard (Display *dpy);
+
+int NumLockMask, CapsLockMask, ScrollLockMask;
 
 #endif /* __KEYBOARD_H */
