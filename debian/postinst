@@ -1,4 +1,4 @@
-#!/bin/ash
+#!/bin/sh
 
 set -e
 
@@ -13,7 +13,8 @@ x-window-manager /usr/bin/oroborus 50
 		
 # Restart all running oroboruses
 if [ "$(pidof oroborus)" ]; then
-	kill -HUP $(pidof oroborus)
+	# use /bin/kill to be sure its procps ;P
+	/bin/kill -HUP $(pidof oroborus)
 fi
 
 #DEBHELPER#
