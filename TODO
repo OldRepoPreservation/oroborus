@@ -18,3 +18,5 @@ Things to do
   (Or maybe something similar, like the config util from Martin Hedenfalk)
 
 * Add a Gui application for configuring Oroborus more comfortable.
+
+* Add a plugin interface.
