@@ -2,12 +2,21 @@ Things to do
 ============
 
 * Write new documentation
+  Write a Manpage -> DONE
+  Example file needs update.
+
 * Reimplement Xinerama support
+
 * Make transient windows stay stacked above their parents
   (half way fixed, at least oroborus now correctpy handles
    NET_WM_WINDOW_TYPE_DESKTOP)
+
 * implement a popup funtion to warn the user
+
 * implement a remote controlling application
   (like esh from enlightenment)
+
 * Add OTC to the Package (Oroborus Theme Changer)
+  (Or maybe something similar)
+
 * Add a Gui application for configuring Oroborus more comfortable.
