@@ -526,7 +526,7 @@ handleConfigureRequest (XConfigureRequestEvent * ev)
 
   if (c)
     {
-      if (! c->above)
+      if (! (c->above || c->was_above))
 	{
 	  wc.x += frameLeft(c);
 	  wc.y += frameTop(c);

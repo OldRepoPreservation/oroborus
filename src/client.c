@@ -470,9 +470,15 @@ clientFrame (Window w)
   XGetWindowAttributes (dpy, w, &attr);
   c->window = w;
   if (typeAbove (c->window))
-    c->above = True;
+    {
+      c->above = True;
+      c->was_above = True;
+    }
   else
-    c->above = False;
+    {
+      c->above = False;
+      c->was_above = False;
+    }
   c->x = c->old_x = attr.x;
   c->y = c->old_y = attr.y;
   c->width = c->old_width = attr.width;
@@ -942,6 +948,7 @@ clientToggleAbove (Client * c)
       clientSetFocus(c, 0);
     }
   setGnomeHint(c->window, win_layer, c->win_layer);
+  c->was_above = True;
 }
 
 void

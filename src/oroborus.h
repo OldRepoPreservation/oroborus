@@ -187,7 +187,7 @@ struct _Client
   char *name;
   XSizeHints *size;
   int has_border;
-  int above;
+  int above, was_above;
   long win_hints;
   long win_state;
   long win_layer;

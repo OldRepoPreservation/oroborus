@@ -6,8 +6,9 @@ oroborus (2.0.13-1) unstable; urgency=low
     raising the window. This will hopefully soon be fixed. (to a standards
     compliant way!) Everybody who is interested may contact me for a fixed
     xine debian package.
+  * Fixed some window placing problems after fullscreen mode.
 
- -- Stefan Pfetzing <dreamind@dreamind.de>  Thu, 13 Mar 2003 03:33:04 +0100
+ -- Stefan Pfetzing <dreamind@dreamind.de>  Mon, 17 Mar 2003 23:22:34 +0100
 
 oroborus (2.0.12-1) unstable; urgency=low
 
