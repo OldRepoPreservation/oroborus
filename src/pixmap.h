@@ -36,4 +36,10 @@ int loadPixmap (Display *, MyPixmap *, char *, char *, XpmColorSymbol *, int);
 void freePixmap (Display *, MyPixmap *);
 void scalePixmap (Display *, MyPixmap *, MyPixmap *, int width, int height);
 
+/* XMALLOC */
+extern void *xmalloc (size_t n);
+extern void *xcalloc (size_t n, size_t s);
+extern void *xrealloc (void * p, size_t n);
+extern char *xstrdup (char *p);
+
 #endif /* __PIXMAP_H */

@@ -19,40 +19,18 @@
  * Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  
  */
 
+#define __OROBORUS_C__
+
+/* some includes {{{1 */
 #include "oroborus.h"
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <getopt.h>
+#include <signal.h>
 #include <sys/wait.h>
 #include <sys/types.h>
-
-char *progname;
-Display *dpy;
-Window root, gnome_win;
-Colormap cmap;
-int screen;
-int depth;
-long workspace;
-CARD32 margins[4];
-int quit = False, reload = False;
-int shape, shape_event;
-Cursor resize_cursor[4], move_cursor, root_cursor;
-
-Client *clients = NULL;
-CARD32 *client_list = NULL;
-unsigned int client_count = 0;
-
-MyKey keys[KEY_COUNT];
-MyFont title_font;
-int title_alignment, full_width_title, button_spacing, button_offset;
-GC title_gc[2], box_gc;
-MyPixmap sides[3][2], corners[4][2], buttons[4][3], title[5][2];
-char button_layout[6];
-int double_click_action;
-int box_move, box_resize;
-int click_to_focus, focus_new, raise_on_focus, raise_delay, raise_on_click;
-int window_placement, snap_to_border, snap_to_windows, snap_width;
-int workspace_count = -1, wrap_workspaces;
+/* }}}1 */
 
 int
 handleXError (Display * dpy, XErrorEvent * err)
@@ -92,7 +70,7 @@ cleanUp ()
 void
 handleSignal (int sig)
 {
-  int *status;
+  int *status = NULL;
 #ifdef DEBUG
   printf ("entering handleSignal\n");
 #endif
@@ -119,10 +97,64 @@ handleSignal (int sig)
 }
 
 void
+usage (int status)
+{
+  printf (_("%s - \
+lightweight themeable window manager for X.\n"), progname);
+  printf (_("Usage: %s [OPTION]... \n"), progname);
+  printf (_("\
+Options:\n\
+  -r, --file=FILE            use an alternative rcfile\n\
+                             instead of $HOME/.oroborusrc\n\
+  -v, --verbose              print more information\n\
+  -h, --help                 display this help and exit\n\
+  -V, --version              output version information and exit\n\
+  --display                  use an alternative display instead of,
+                             $DISPLAY\n\
+"));
+  exit (status);
+}
+
+int
+decode_switches (int argc, char **argv)
+{
+  int c;
+
+  while ((c = getopt_long (argc, argv, "v"	/* verbose */
+			   "h"		/* help */
+			   "V"		/* version */
+			   "f:"		/* file */
+			   "d:",	/* display */
+			   long_options, (int *) 0)) != EOF)
+    {
+      switch (c)
+	{
+	case 'd':		/* --quit-menu */
+	  display = optarg;
+	  break;
+	case 'v':		/* --verbose */
+	  want_verbose = 1;
+	  break;
+	case 'f':		/* --file */
+	  rcfile = optarg;
+	  break;
+	case 'V':
+	  printf ("%s %s\n", PACKAGE, VERSION);
+	  exit (0);
+	case 'h':
+	  usage (0);
+	default:
+	  usage (EXIT_FAILURE);
+	}
+    }
+  return optind;
+}
+
+void
 initialize (int argc, char **argv)
 {
   struct sigaction act;
-  char *locale;
+  char *locale = "";
   int dummy;
 
 #ifdef DEBUG
@@ -131,8 +163,10 @@ initialize (int argc, char **argv)
 
   progname = argv[0];
 
+  decode_switches(argc, argv);
+
   printf
-    ("\n\nOroborus\n(c) 2001 Ken Lynch\n(c) 2002 Stefan Pfetzing\nDistributed under the terms and conditions of the GPL\n\n");
+    ("\nOroborus\n(c) 2001 Ken Lynch\n(c) 2002 Stefan Pfetzing\nDistributed under the terms and conditions of the GPL\n\n");
 
   locale = setlocale (LC_ALL, "");
 
@@ -144,25 +178,25 @@ initialize (int argc, char **argv)
   else
     use_fontset = True;
 
-  dpy = XOpenDisplay (NULL);
+  dpy = XOpenDisplay (display);
   if (!dpy)
     {
-      fprintf (stderr, "%s: failed to open display\n", progname);
+      fprintf (stderr, "%s: failed to open display %s!\n", progname, display ? display : ":0" );
       exit (1);
     }
 
   act.sa_handler = handleSignal;
   act.sa_flags = 0;
   if (sigaction (SIGINT, &act, NULL))
-    fprintf (stderr, "Warning, could not install SIGINT Handler!\n");
+    fprintf (stderr, "%s: Warning, could not install SIGINT Handler!\n", progname);
   if (sigaction (SIGTERM, &act, NULL))
-    fprintf (stderr, "Warning, could not install SIGTERM Handler!\n");
+    fprintf (stderr, "%s: Warning, could not install SIGTERM Handler!\n", progname);
   if (sigaction (SIGHUP, &act, NULL))
-    fprintf (stderr, "Warning, could not install SIGHUP Handler!\n");
+    fprintf (stderr, "%s: Warning, could not install SIGHUP Handler!\n", progname);
   if (sigaction (SIGSEGV, &act, NULL))
-    fprintf (stderr, "Warning, could not install SIGSEGV Handler!\n");
+    fprintf (stderr, "%s: Warning, could not install SIGSEGV Handler!\n", progname);
   if (sigaction (SIGCHLD, &act, NULL))
-    fprintf (stderr, "Warning, could not install SIGCHLD Handler!\n");
+    fprintf (stderr, "%s: Warning, could not install SIGCHLD Handler!\n", progname);
 
   root = XDefaultRootWindow (dpy);
   screen = XDefaultScreen (dpy);
@@ -217,3 +251,5 @@ main (int argc, char **argv)
   cleanUp ();
   return 0;
 }
+
+/* vim600:set foldmarker={{{,}}} foldmethod=marker: */

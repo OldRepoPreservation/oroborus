@@ -32,12 +32,15 @@
 #include <string.h>
 #include <signal.h>
 #include <unistd.h>
+#include <getopt.h>
+#include <locale.h>
 #include "misc.h"
 #include "hints.h"
 #include "keyboard.h"
 #include "i18n.h"
 #include "pixmap.h"
 #include "parserc.h"
+#include "system.h"
 
 /*
  *
@@ -87,6 +90,7 @@
 #define MAXIMIZE_BUTTON			2
 #define CLOSE_BUTTON			3
 #define BUTTON_COUNT			4
+
 
 enum
 {
@@ -178,23 +182,77 @@ struct _Client
   Client *transientFor;
 };
 
+/* the structure of all long options for getopt */
+static struct option const long_options[] = {
+  {"verbose", no_argument, 0, 'v'},
+  {"help", no_argument, 0, 'h'},
+  {"version", no_argument, 0, 'V'},
+  {"file", required_argument, 0, 'f'},
+  {"display", required_argument, 0, 'd'},
+  {NULL, 0, NULL, 0}
+};
+
 /*
  *
  * Global variables
  *
  */
 
+/* getopt_long return codes {{{1 */
+enum
+{ DUMMY_CODE = 129
+};
+/* }}}1 */
+
+#ifdef __OROBORUS_C__
+char *progname;
+char *display = NULL;
+Display *dpy;
+Window root, gnome_win;
+Colormap cmap;
+int screen;
+int depth;
+long workspace;
+CARD32 margins[4];
+int quit = False, reload = False;
+int shape, shape_event;
+Cursor resize_cursor[4], move_cursor, root_cursor;
+
+int want_verbose = 0;
+char *rcfile = "";
+
+Client *clients = NULL;
+CARD32 *client_list = NULL;
+unsigned int client_count = 0;
+
+MyKey keys[KEY_COUNT];
+MyFont title_font;
+int title_alignment, full_width_title, button_spacing, button_offset;
+GC title_gc[2], box_gc;
+MyPixmap sides[3][2], corners[4][2], buttons[4][3], title[5][2];
+char button_layout[6];
+int double_click_action;
+int box_move, box_resize;
+int click_to_focus, focus_new, raise_on_focus, raise_delay, raise_on_click;
+int window_placement, snap_to_border, snap_to_windows, snap_width;
+int workspace_count = -1, wrap_workspaces;
+int button_state[4];
+#else
 extern char *progname;
+extern char *display;
 extern Display *dpy;
 extern Window root, gnome_win;
+extern Colormap cmap;
 extern int screen;
 extern int depth;
-extern Colormap cmap;
 extern long workspace;
 extern CARD32 margins[4];
 extern int quit, reload;
 extern int shape, shape_event;
 extern Cursor resize_cursor[4], move_cursor, root_cursor;
+
+extern int want_verbose;
+extern char *rcfile;
 
 extern Client *clients;
 extern CARD32 *client_list;
@@ -203,17 +261,16 @@ extern unsigned int client_count;
 extern MyKey keys[KEY_COUNT];
 extern MyFont title_font;
 extern int title_alignment, full_width_title, button_spacing, button_offset;
-extern GC title_gc[2];
+extern GC title_gc[2], box_gc;
 extern MyPixmap sides[3][2], corners[4][2], buttons[4][3], title[5][2];
 extern char button_layout[6];
-extern int button_state[4];
-extern GC box_gc;
 extern int double_click_action;
-extern int box_resize, box_move;
-extern int click_to_focus, focus_new, raise_on_focus, raise_delay,
-  raise_on_click;
+extern int box_move, box_resize;
+extern int click_to_focus, focus_new, raise_on_focus, raise_delay, raise_on_click;
 extern int window_placement, snap_to_border, snap_to_windows, snap_width;
 extern int workspace_count, wrap_workspaces;
+extern int button_state[4];
+#endif
 
 char **stat_argv;
 extern char **environ;
@@ -224,6 +281,7 @@ extern char **environ;
  *
  */
 
+void cleanUp ();
 void clientGravitate (Client *, int);
 void clientConfigure (Client *, XWindowChanges *, int);
 void clientFrame (Window);
@@ -272,5 +330,11 @@ void reloadSettings ();
 
 void workspaceSwitch (int, Client *);
 void workspaceSetCount (int);
+
+/* XMALLOC */
+extern void *xmalloc (size_t n);
+extern void *xcalloc (size_t n, size_t s);
+extern void *xrealloc (void * p, size_t n);
+extern char *xstrdup (char *p);
 
 #endif /* __OROBORUS_H */

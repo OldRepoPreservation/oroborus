@@ -51,7 +51,7 @@ getFont (Display * dpy, MyFont * font, char *name)
 
   if (use_fontset)
     {
-      basename = malloc (strlen (name) + 3);
+      basename = xmalloc (strlen (name) + 3);
       if (basename)
 	sprintf (basename, "%s,*", name);
       else

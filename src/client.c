@@ -149,7 +149,7 @@ clientAddToList (Client * c)
   printf ("entering clientAddToList\n");
 #endif
 
-  new = malloc (sizeof (CARD32) * client_count);
+  new = (CARD32 *) xmalloc (sizeof (CARD32) * client_count);
   if (new)
     {
       for (i = 0; i < client_count - 1; i++)
@@ -173,7 +173,7 @@ clientRemoveFromList (Client * c)
   printf ("entering clientRemoveFromList\n");
 #endif
 
-  new = malloc (sizeof (CARD32) * client_count);
+  new = (CARD32 *) xmalloc (sizeof (CARD32) * client_count);
   if (new)
     {
       for (i = 0, j = 0; i < client_count; i++)
@@ -401,7 +401,7 @@ clientFrame (Window w)
   PropMwmHints *mwm_hints;
   Window transientWindow;
   int i;
-  char *className;
+//  char *className;
   XClassHint *class_res;
 
 #ifdef DEBUG
@@ -409,10 +409,8 @@ clientFrame (Window w)
   printf ("framing client (%#lx)\n", w);
 #endif
 
-  c = malloc (sizeof (*c));
-  class_res = malloc (sizeof (XClassHint));
-  if (!c)
-    return;
+  c = xmalloc (sizeof (*c));
+  class_res = xmalloc (sizeof (XClassHint));
 
   c->size = XAllocSizeHints ();
   XGetWMNormalHints (dpy, w, c->size, &dummy);
@@ -442,16 +440,18 @@ clientFrame (Window w)
       c->win_workspace = workspace_count - 1;
     }
 
-  if (typeDesktop (dpy, c->window))
-    {
-      c->win_hints = c->win_hints | WIN_HINTS_SKIP_FOCUS;
-    }
-
   XGetClassHint (dpy, c->window, class_res);
   if (class_res->res_name && !strcmp (class_res->res_name, "X-Chat"))
     c->has_border = False;
   else
     c->has_border = True;
+
+  if (typeDesktop (dpy, c->window))
+    {
+      c->win_hints = c->win_hints | WIN_HINTS_SKIP_FOCUS;
+      c->has_border = False;
+      clientLower(c);
+    }
 
   c->ignore_unmap = attr.map_state == IsViewable ? 1 : 0;
   c->focus = False;
@@ -1687,6 +1687,8 @@ clientButtonPress (Client * c, Window w, XButtonEvent * bev)
 void
 clientWarpMouse (Client * c)
 {
+  if (!c)
+    return;
   if (!click_to_focus)
     XWarpPointer (dpy, None, c->window, 0, 0, 0, 0,
 		  (c->width / 2), (c->height / 2));

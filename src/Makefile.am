@@ -1,6 +1,8 @@
-CFLAGS = @CFLAGS@ @X_CFLAGS@ -DDATADIR=\"$(prefix)/share/oroborus\" $(DEBUG)
+CFLAGS = @CFLAGS@ @X_CFLAGS@ -DDATADIR=\"$(prefix)/share/oroborus\" $(DEBUG) -Wall
 LIBS = @LIBS@ @X_LIBS@
-EXTRA_DIST = .indent.pro
 
 bin_PROGRAMS = oroborus
-oroborus_SOURCES = client.c frame.c i18n.c misc.c parserc.c settings.c events.c hints.c keyboard.c oroborus.c pixmap.c workspaces.c hints.h i18n.h keyboard.h misc.h oroborus.h parserc.h pixmap.h
+oroborus_SOURCES = client.c frame.c i18n.c misc.c parserc.c settings.c events.c \
+		   hints.c keyboard.c oroborus.c pixmap.c workspaces.c hints.h \
+		   i18n.h keyboard.h misc.h oroborus.h parserc.h pixmap.h \
+		   xmalloc.c getopt.c getopt1.c getopt.h

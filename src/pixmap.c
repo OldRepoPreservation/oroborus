@@ -24,7 +24,6 @@
 #include <X11/Xutil.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <malloc.h>
 #include "pixmap.h"
 
 int
@@ -102,7 +101,7 @@ scalePixmap (Display * dpy, MyPixmap * src, MyPixmap * dst, int width,
   xi_dst.cpp = xi_src.cpp;
   xi_dst.ncolors = xi_src.ncolors;
   xi_dst.colorTable = xi_src.colorTable;
-  xi_dst.data = malloc (sizeof (int) * (xi_dst.width * xi_dst.height));
+  xi_dst.data = xmalloc (sizeof (int) * (xi_dst.width * xi_dst.height));
   dst_data = xi_dst.data;
   src_data = xi_src.data;
 #ifdef DEBUG

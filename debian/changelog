@@ -9,8 +9,9 @@ oroborus (2.0.6-1) unstable; urgency=low
     Closes: #150406
   * Fixed some of the mouse warping.
   * Fixed Icon handling of Rox, Gmc and possibly Nautilus.
+  * Added getopt. 
 
- -- Stefan Pfetzing <dreamind@dreamind.de>  Sat, 22 Jun 2002 19:01:26 +0200
+ -- Stefan Pfetzing <dreamind@dreamind.de>  Sat, 29 Jun 2002 18:35:24 +0200
 
 oroborus (2.0.5-1) unstable; urgency=low
 
