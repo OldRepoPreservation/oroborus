@@ -286,7 +286,7 @@ clientGetTopMost (int layer)
 		{
 			XGetWindowAttributes (dpy, wins[i], &attr);
 			c = clientGetFromWindow (wins[i], FRAME);
-			if (c && attr.map_state == IsViewable)
+			if (c && attr.map_state == IsViewable && !typeDock(c->window))
 				{
 					if (c->win_layer <= layer)
 						top = c;
