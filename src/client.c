@@ -1001,8 +1001,7 @@ clientToggleFullscreen (Client * c)
       c->win_state |= WIN_STATE_FULLSCREEN;
       c->fs_win_layer = c->win_layer;
       clientSetLayer(c, WIN_LAYER_FULLSCREEN);
-      wc.x = 0;
-      wc.y = 0;
+      XF86VidModeGetViewPort(dpy, screen, &wc.x, &wc.y);
       wc.width = XDisplayWidth (dpy, screen);
       wc.height = XDisplayHeight (dpy, screen);
     }

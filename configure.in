@@ -30,6 +30,8 @@ AC_CHECK_LIB(X11, main,, AC_MSG_ERROR([libX11 is missing from your system: Make 
 AC_CHECK_LIB(Xext, main,, AC_MSG_ERROR([The X Window System installed on this machine does not support the shape extension]), $X_CFLAGS $X_PRE_LIBS $X_EXTRA_LIBS $X_LIBS)
 AC_CHECK_LIB(SM, main,AC_DEFINE(HAVE_X11_SM_SMLIB_H, 1, [Have X11 SM lib ?]), AC_MSG_ERROR([The X Window System installed on this machine does not support the session management extension]), $X_CFLAGS $X_PRE_LIBS $X_EXTRA_LIBS $X_LIBS)
 AC_CHECK_LIB(Xpm, main,, AC_MSG_ERROR([libXpm is missing from your system: Make sure you have both the Xpm libraries and development headers correctly installed]), $X_CFLAGS $X_PRE_LIBS $X_EXTRA_LIBS $X_LIBS)
+AC_CHECK_LIB(Xxf86vm, main,AC_DEFINE(HAVE_XF68VMLIB_H, 1, [Have XF86VM lib ?]) XF86VM_LIB=[-lXxf86vm],, $X_CFLAGS $X_PRE_LIBS $X_EXTRA_LIBS $X_LIBS)
+AC_SUBST(XF86VM_LIB)
 
 AC_CHECK_FUNCS(malloc setlocale strchr strdup strrchr strstr)
 

@@ -1,5 +1,5 @@
 AM_CFLAGS = @CFLAGS@ @X_CFLAGS@ -DDATADIR=\"$(prefix)/share/oroborus\" $(DEBUG) -Wall
-LIBS = @LIBS@ @X_LIBS@ -lSM -lICE
+LIBS = @LIBS@ @X_LIBS@ -lSM -lICE @XF86VM_LIB@
 
 bin_PROGRAMS = oroborus
 oroborus_SOURCES = client.c frame.c i18n.c misc.c parserc.c settings.c events.c \

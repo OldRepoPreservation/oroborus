@@ -32,6 +32,7 @@
 #include <X11/Xmd.h>
 #include <X11/cursorfont.h>
 #include <X11/extensions/shape.h>
+#include <X11/extensions/xf86vmode.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
