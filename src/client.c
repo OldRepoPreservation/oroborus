@@ -1025,7 +1025,7 @@ clientMove (Client * c, XEvent * e)
   printf ("moving client (%#lx)\n", c->window);
 #endif
 
-  if ((c->win_state & WIN_STATE_MAXIMIZED) == WIN_STATE_MAXIMIZED)
+  if ((c->win_state & WIN_STATE_MAXIMIZED) == WIN_STATE_MAXIMIZED || typeDesktop(c->window))
     return;
 
   g1 = XGrabKeyboard (dpy, c->window, False, GrabModeAsync, GrabModeAsync,
