@@ -1057,6 +1057,15 @@ clientSetFocus (Client * c, int sort)
 		{
 			XSetInputFocus (dpy, gnome_win, RevertToNone, CurrentTime);
 			setFocusHint (None);
+			for (tmp = clients, i = 0; i < client_count; tmp = tmp->next, i++)
+				if (c != tmp && tmp && tmp->win_workspace == workspace && tmp->focus)
+					{
+						if (tmp->focus)
+							{
+								tmp->focus = False;
+								frameDraw(tmp);
+							}
+					}
 		}
 }
 
@@ -1632,8 +1641,6 @@ clientCycle (Client * c)
 				XUngrabPointer (dpy, CurrentTime);
 			return;
 		}
-
-	c->focus = False;
 
 	c2 = clientGetNext (c2, INCLUDE_HIDDEN);
 	if (!c2)

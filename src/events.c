@@ -36,7 +36,7 @@ handleKeyPress (XKeyEvent * ev)
 #endif
 
 	c = clientGetFocus ();
-	state = ev->state & (Mod1Mask | Mod2Mask | Mod3Mask | Mod4Mask | Mod5Mask | ControlMask | ShiftMask);
+	state = ev->state & (Mod1Mask | Mod4Mask | ControlMask | ShiftMask);
 	for (key = 0; key < KEY_COUNT; key++)
 		if (keys[key].keycode == ev->keycode && keys[key].modifier == state)
 			break;
@@ -312,12 +312,12 @@ handleButtonPress (XButtonEvent * ev)
 
 	while (XCheckTypedEvent (dpy, ButtonPress, (XEvent *) ev));
 
-	state = ev->state & (Mod1Mask | Mod2Mask | Mod3Mask | Mod4Mask | Mod5Mask | ShiftMask | ControlMask);
+	state = ev->state & (Mod1Mask | Mod4Mask | ShiftMask | ControlMask);
 
 	c = clientGetFromWindow (ev->window, FRAME);
 	if (c)
 		{
-			state = ev->state & (Mod1Mask | Mod2Mask | Mod3Mask | Mod4Mask | Mod5Mask | ShiftMask | ControlMask);
+			state = ev->state & (Mod1Mask | Mod4Mask | ShiftMask | ControlMask);
 			win = getMouseWindow (dpy, c->frame);
 
 			clientSetFocus (c, True);
