@@ -305,10 +305,6 @@ clientGetTopMost (int layer)
 
 #ifdef DEBUG
 	printf ("entering clientGetTopMost\n");
-	if (!real)
-		printf("not getting the real top.\n");
-	else
-		printf("getting the real top.\n");
 #endif
 
 	XQueryTree (dpy, root, &w1, &w2, &wins, &count);
@@ -854,7 +850,7 @@ clientSetWorkspace (Client * c, int ws)
 {
 #ifdef DEBUG
 	printf ("entering clientSetWorkspace\n");
-	printf ("setting client (%#lx) to workspace %d\n", ws);
+	printf ("setting client (%#lx) to workspace %d\n", c, ws);
 #endif
 
 	if (c->win_workspace == ws)
