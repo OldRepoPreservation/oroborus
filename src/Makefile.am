@@ -1,4 +1,4 @@
-CFLAGS = @CFLAGS@ @X_CFLAGS@ -DDATADIR=\"$(prefix)/share/oroborus\" $(DEBUG) -Wall
+AM_CFLAGS = @CFLAGS@ @X_CFLAGS@ -DDATADIR=\"$(prefix)/share/oroborus\" $(DEBUG) -Wall
 LIBS = @LIBS@ @X_LIBS@ -lSM -lICE
 
 bin_PROGRAMS = oroborus
