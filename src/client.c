@@ -307,7 +307,7 @@ clientGetBottomMost (int layer)
 			XGetWindowAttributes (dpy, wins[i], &attr);
 			c = clientGetFromWindow (wins[i], FRAME);
 			if (c && attr.map_state == IsViewable
-					&& !(c->win_hints & WIN_HINTS_SKIP_FOCUS))
+					&& !((c->win_hints & WIN_HINTS_SKIP_FOCUS)&! typeDock(c->window)))
 				{
 					if (c->win_layer >= layer)
 						break;
@@ -1024,7 +1024,7 @@ clientMove (Client * c, XEvent * e)
 #endif
 
 	if ((c->win_state & WIN_STATE_MAXIMIZED) == WIN_STATE_MAXIMIZED
-			|| typeDesktop (c->window))
+			|| typeDesktop (c->window) || typeDock(c->window))
 		return;
 
 	g1 = XGrabKeyboard (dpy, c->window, False, GrabModeAsync, GrabModeAsync,

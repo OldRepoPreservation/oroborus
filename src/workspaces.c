@@ -49,8 +49,6 @@ workspaceSwitch (int new_ws, Client * c2)
 			c2->win_workspace = new_ws;
 		}
 
-	setGnomeHint (root, win_workspace, new_ws);
-	setGnomeHint (root, net_atoms[NET_CURRENT_DESKTOP], new_ws);
 	workspace = new_ws;
 	for (c = clients, i = 0; i < client_count; c = c->next, i++)
 		{
@@ -70,7 +68,9 @@ workspaceSwitch (int new_ws, Client * c2)
 						clientHide (c, False);
 				}
 		}
+
 	setGnomeHint (root, win_workspace, new_ws);
+	setGnomeHint (root, net_atoms[NET_CURRENT_DESKTOP], new_ws);
 
 	if (c2)
 		f = c2;

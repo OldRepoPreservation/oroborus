@@ -2,8 +2,12 @@ oroborus (2.0.11-2) unstable; urgency=low
 
   * *argh* corrected configure.in, seems I have to finally do some script
     for this, so this won't happen again.
+  * fixed the startup initialization of some root hints (needed for the
+    GNOME2 desktop switcher).
+  * fixed the position of the root (nautilus) window, which sometimes
+    appeared in front of the GNOME2 dock.
 
- -- Stefan Pfetzing <dreamind@dreamind.de>  Fri, 17 Jan 2003 23:59:03 +0100
+ -- Stefan Pfetzing <dreamind@dreamind.de>  Mon, 20 Jan 2003 04:43:24 +0100
 
 oroborus (2.0.11-1) unstable; urgency=low
 

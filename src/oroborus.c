@@ -244,6 +244,9 @@ initialize (int argc, char **argv)
 
 	setNetWorkarea (margins, workspace_count);
 
+	setGnomeHint (root, win_workspace, workspace);
+	setGnomeHint (root, net_atoms[NET_CURRENT_DESKTOP], workspace);
+
 	clientFrameAll ();
 
 	XMapWindow (dpy, gnome_win);
