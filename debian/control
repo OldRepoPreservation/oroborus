@@ -9,7 +9,7 @@ Package: oroborus
 Architecture: any
 Provides: x-window-manager
 Priority: optional
-Suggests: deskmenu
+Suggests: deskmenu, desklaunch, keylaunch
 Depends: ${shlibs:Depends}
 Description: A lightweight themeable windowmanager for X.
  Oroborus is a small and simple window manager which does exactly what
@@ -19,5 +19,5 @@ Description: A lightweight themeable windowmanager for X.
  or can be run as a stand-alone window manager. This package has also been
  compiled with Xinerama support.
  .
- Oroborus is small, about 40Kb at the time of this package. It has full
+ Oroborus is small, about 50Kb at the time of this package. It has full
  keyboard control and is very themeable.
