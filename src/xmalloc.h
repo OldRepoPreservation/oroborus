@@ -29,10 +29,6 @@ extern void *xrealloc (void *p, size_t n);
 extern char *xstrdup (char *p);
 #endif
 
-/***This must remain at the end of the file.*****
- * vi:set sw=2 ts=2:                            *
- * vi:set cindent cinoptions={1s,>2s,^-1s,n-1s: *
- * vi:set foldmethod=marker:                    *
- * vi:set foldmarker=«««,»»»:                   *
- ************************************************/
-
+/***This must remain at the end of the file.****************************************************
+ * vi:set sw=2 ts=2 cindent cinoptions={1s,>2s,^-1s,n-1s foldmethod=marker foldmarker=«««,»»»: *
+ ***********************************************************************************************/
