@@ -930,8 +930,17 @@ clientToggleAbove (Client * c)
   printf ("toggling client (%#lx)\n", c->window);
 #endif
 
-  (c->above) ? (c->above = False) : (c->above = True);
-  c->win_layer = WIN_LAYER_ONTOP;
+  if(c->above)
+    {
+      c->above = False;
+      c->win_layer = WIN_LAYER_NORMAL;
+    }
+  else
+    {
+      c->above = True;
+      c->win_layer = WIN_LAYER_ONTOP;
+    }
+  setGnomeHint(c->window, win_layer, c->win_layer);
 }
 
 void
