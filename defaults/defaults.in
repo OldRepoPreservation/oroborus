@@ -1,6 +1,6 @@
 theme=@prefix@/share/oroborus/themes/pillage
 scheme=@prefix@/share/oroborus/schemes/oroborus
-font=-misc-fixed-medium-r-*-*-*-100-*-*-*-*-iso8859-*
+font=-*-helvetica-medium-r-normal-*-14-*-*-*-*-*-iso8859-*
 title_alignment=center
 full_width_title=true
 button_layout=CHM|
