@@ -280,6 +280,7 @@ loadSettings ()
   focus_new = !strcmp ("true", getValue ("focus_new", rc));
   raise_on_focus = !strcmp ("true", getValue ("raise_on_focus", rc));
   raise_delay = abs (atoi (getValue ("raise_delay", rc)));
+  raise_on_click = !strcmp ("true", getValue("raise_on_click", rc));
 
   if (!strcmp ("center_root", getValue ("window_placement", rc)))
     window_placement = PLACEMENT_ROOT;

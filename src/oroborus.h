@@ -206,7 +206,7 @@ extern int button_state[4];
 extern GC box_gc;
 extern int double_click_action;
 extern int box_resize, box_move;
-extern int click_to_focus, focus_new, raise_on_focus, raise_delay;
+extern int click_to_focus, focus_new, raise_on_focus, raise_delay, raise_on_click;
 extern int window_placement, snap_to_border, snap_to_windows, snap_width;
 extern int workspace_count, wrap_workspaces;
 

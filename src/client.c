@@ -255,6 +255,8 @@ clientSetWidth (Client * c, int w1)
 
   if (c->size->flags & PResizeInc)
     {
+      if (c->size->width_inc == 0)
+	c->size->width_inc = 1;
       w2 = (w1 - c->size->min_width) / c->size->width_inc;
       w1 = c->size->min_width + (w2 * c->size->width_inc);
     }
@@ -276,6 +278,8 @@ clientSetHeight (Client * c, int h1)
 
   if (c->size->flags & PResizeInc)
     {
+      if (c->size->height_inc == 0)
+	c->size->height_inc = 1;
       h2 = (h1 - c->size->min_height) / c->size->height_inc;
       h1 = c->size->min_height + (h2 * c->size->height_inc);
     }
@@ -1319,7 +1323,7 @@ clientResize (Client * c, XEvent * e)
 #endif
 
   if ((c->win_state & WIN_STATE_SHADED) ||
-      ((c->win_state & WIN_STATE_MAXIMIZED)==WIN_STATE_MAXIMIZED))
+      ((c->win_state & WIN_STATE_MAXIMIZED) == WIN_STATE_MAXIMIZED))
     return;
 
   getMouseXY (dpy, c->frame, &mx, &my);

@@ -50,7 +50,7 @@ MyPixmap sides[3][2], corners[4][2], buttons[4][3], title[5][2];
 char button_layout[6];
 int double_click_action;
 int box_move, box_resize;
-int click_to_focus, focus_new, raise_on_focus, raise_delay;
+int click_to_focus, focus_new, raise_on_focus, raise_delay, raise_on_click;
 int window_placement, snap_to_border, snap_to_windows, snap_width;
 int workspace_count = -1, wrap_workspaces;
 

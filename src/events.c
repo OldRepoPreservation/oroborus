@@ -343,7 +343,8 @@ handleButtonPress (XButtonEvent * ev)
 	clientSetLayer (c, c->win_layer - 1);
       else
 	{
-	  clientRaise (c);
+	  if (raise_on_click)
+	    clientRaise (c);
 	  if (win == c->window)
 	    replay = True;
 	}
