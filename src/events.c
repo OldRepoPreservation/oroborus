@@ -526,8 +526,11 @@ handleConfigureRequest (XConfigureRequestEvent * ev)
 
   if (c)
     {
-      wc.x += frameLeft(c);
-      wc.y += frameTop(c);
+      if (! c->above)
+	{
+	  wc.x += frameLeft(c);
+	  wc.y += frameTop(c);
+	}
       clientConfigure (c, &wc, ev->value_mask);
     }
   else
