@@ -143,6 +143,11 @@ decode_switches (int argc, char **argv)
   return optind;
 }
 
+/**
+ * Initialize all variables.
+ * This function initializes all variables, reads the config and so on.
+ * It also displays a short informational (License, Author and so on) Line.
+ */
 void
 initialize (int argc, char **argv)
 {
@@ -252,6 +257,9 @@ initialize (int argc, char **argv)
   XSetInputFocus (dpy, gnome_win, RevertToNone, CurrentTime);
 }
 
+/** Main Oroborus Function.
+ *  The C compiler typically starts here, and all of the work is done elsewhere.
+ */
 int
 main (int argc, char **argv)
 {

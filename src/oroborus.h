@@ -19,6 +19,11 @@
  * Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  
  */
 
+/** \file oroborus.h
+ * This file contains all definitions of the main function set used by oroborus.
+ *
+ * For a more exact description, look at each functions definition. */
+
 #ifndef __OROBORUS_H
 #define __OROBORUS_H
 
@@ -177,25 +182,49 @@ enum
 
 typedef struct _Client Client;
 
+/**
+ * Client structure.
+ * This structure represents a client with all its attributes.
+ */
 struct _Client
 {
-  Window window, frame, title, sides[3], corners[4], buttons[BUTTON_COUNT];
-  int x, y, width, height, border_width;
-  int old_x, old_y, old_width, old_height;
-  CARD32 margins[4];
+  Window window,	/**< pointer to the window itself. */
+  	frame,		/**< pointer to the frame window. */
+	title, 		/**< pointer to the title window. */
+	sides[3], 	/**< pointer to the left, bottom and right side window. */
+	corners[4], 	/**< pointer to each corner window */
+	buttons[BUTTON_COUNT];
+			/**< pointer to the button windows in the title bar */
+  int	x,		/**< top left corner of the client. */
+  	y, 		/**< top left corner of the client. */
+  	width, height,	/**< dimensions of the client. */
+	border_width;	/**< the width of the border */
+  int 	old_x,		/**< remember the old position (when maximizing). */
+  	old_y,		/**< remember the old position (when maximizing). */
+  	old_width,	/**< remember the old dimensions (when maximizing). */
+	old_height;	/**< remember the old dimensions (when maximizing). */
+  CARD32 margins[4];	/**< the space, the client wants to "reserve" at the desktop border,
+			  for example the gnome panel does this. */
   int button_pressed[BUTTON_COUNT];
-  char *name;
-  XSizeHints *size;
-  int has_border;
-  int above, was_above;
-  long win_hints;
-  long win_state;
-  long win_layer;
-  long win_workspace;
-  int ignore_unmap, focus, non_focusing, not_warp_to_next;
-  Client *next;
-  Client *prev;
-  Client *transientFor;
+  			/**< to indicate if a button was pressed (and which). */
+  char *name;		/**< the clients name */
+  XSizeHints *size;	/**< client size hints, see man XSizeHints. */
+  int has_border;	/**< has the client a border (can be forced to none with the borderless list). */
+  int	above,		/**< is this client above each other client on the current workspace? */
+  	was_above;	/**< remember if the client was above each other client on the current workspace. */
+  long win_hints;	/**< the window hints specified as long value. see manpage for details. */
+  long win_state;	/**< the current window state, also specified as long value. see manpage for details. */
+  long win_layer;	/**< the current window layer. this is used to set a group of clients for example above another group of clients.
+			  for example the gnome desktop specifies a window layer which is typically below each other client. */
+  long win_workspace;	/**< the current workspace of the client */
+  int ignore_unmap,	/**< ignore the unmap request. */
+  	focus,		/**< the client has the focus. */
+	non_focusing,	/**< client is non-focusing, like it does not want the focus. */
+	not_warp_to_next;
+			/**< do not warp to the next client, (warp the mouse) when closing this client. */
+  Client *next;		/**< pointer to the next client. */
+  Client *prev;		/**< pointer to the previous client */
+  Client *transientFor;	/**< pointer to the client, for which the current client is transient, ie its a dialog or popup window. */
 };
 
 /* getopt_long return codes {{{1 */
