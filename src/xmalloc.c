@@ -37,6 +37,8 @@ VOID *realloc ();
 void free ();
 #endif
 
+# include <stdio.h>
+
 #if ENABLE_NLS
 # include <libintl.h>
 # define _(Text) gettext (Text)
@@ -44,8 +46,6 @@ void free ();
 # define textdomain(Domain)
 # define _(Text) Text
 #endif
-
-#include "error.h"
 
 #ifndef EXIT_FAILURE
 # define EXIT_FAILURE 1
@@ -65,12 +65,6 @@ char *xstrdup (char *p);
    The caller may set it to some other value.  */
 int xmalloc_exit_failure = EXIT_FAILURE;
 
-#if __STDC__ && (HAVE_VPRINTF || HAVE_DOPRNT)
-void error (int, int, const char *, ...);
-#else
-void error ();
-#endif
-
 static VOID *
 fixup_null_alloc (n)
 		 size_t n;
@@ -81,7 +75,10 @@ fixup_null_alloc (n)
 	if (n == 0)
 		p = malloc ((size_t) 1);
 	if (p == 0)
-		error (xmalloc_exit_failure, 0, _("Memory exhausted"));
+		{
+			fprintf (stderr, "%s: %s\n", PACKAGE, _("Memory exhausted"));
+			exit (xmalloc_exit_failure);
+		}
 	return p;
 }
 
