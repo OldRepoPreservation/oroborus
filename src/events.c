@@ -443,7 +443,7 @@ handleDestroyNotify (XDestroyWindowEvent * ev)
 				{
 					c = clientGetNext (clients, 0);
 					clientSetFocus (c, True);
-					if (!(not_warp_to_next || c->non_focusing))
+					if (c && !(not_warp_to_next || c->non_focusing))
 						clientWarpMouse (c);
 				}
 			else
@@ -474,7 +474,7 @@ handleUnmapNotify (XUnmapEvent * ev)
 						{
 							c = clientGetNext (clients, 0);
 							clientSetFocus (c, True);
-							if (!(not_warp_to_next || c->non_focusing))
+							if (c && !(not_warp_to_next || c->non_focusing))
 								clientWarpMouse (c);
 						}
 					else
