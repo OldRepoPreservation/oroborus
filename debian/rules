@@ -41,6 +41,7 @@ binary-arch: build install
 	dh_testroot
 	dh_installdocs
 	dh_installexamples
+	dh_installmenu
 	dh_installman $(CURDIR)/debian/oroborus.1
 	dh_installchangelogs
 	dh_strip
