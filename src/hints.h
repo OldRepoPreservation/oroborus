@@ -77,10 +77,11 @@ enum
 	NET_SUPPORTING_WM_CHECK,
 	NET_WM_WORKAREA,
 	NET_WORKAREA,
-	NET_CLOSE_WINDOW
+	NET_CLOSE_WINDOW,
+	NET_WM_STRUT
 };
 
-#define NET_ATOM_COUNT 29
+#define NET_ATOM_COUNT 30
 
 typedef struct
 {
@@ -112,6 +113,8 @@ int getGnomeHint (Window, Atom, long *);
 void setGnomeHint (Window, Atom, long);
 void setSupportingWmCheck (Window, Window);
 void getGnomeDesktopMargins (CARD32 *);
+void getNetWMStrut (Window, CARD32*, CARD32*);
+void delNetWMStrut (CARD32*, CARD32*);
 int typeDesktop (Window);
 int typeDock (Window);
 int typeEWMH (Window, char *);

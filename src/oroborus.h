@@ -175,6 +175,7 @@ struct _Client
 	Window window, frame, title, sides[3], corners[4], buttons[BUTTON_COUNT];
 	int x, y, width, height, border_width;
 	int old_x, old_y, old_width, old_height;
+	CARD32 margins[4];
 	int button_pressed[BUTTON_COUNT];
 	char *name;
 	XSizeHints *size;

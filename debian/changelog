@@ -6,8 +6,9 @@ oroborus (2.0.11-2) unstable; urgency=low
     GNOME2 desktop switcher).
   * fixed the position of the root (nautilus) window, which sometimes
     appeared in front of the GNOME2 dock.
+  * Fixed maximizing for GOME2 panels.
 
- -- Stefan Pfetzing <dreamind@dreamind.de>  Mon, 20 Jan 2003 04:43:24 +0100
+ -- Stefan Pfetzing <dreamind@dreamind.de>  Tue, 28 Jan 2003 02:26:29 +0100
 
 oroborus (2.0.11-1) unstable; urgency=low
 

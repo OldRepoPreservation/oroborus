@@ -123,6 +123,7 @@ initNETHints ()
 	net_atoms[NET_WORKAREA] = XInternAtom (dpy, "_NET_WORKAREA", False);
 	net_atoms[NET_WM_WORKAREA] = XInternAtom (dpy, "_NET_WM_WORKAREA", False);
 	net_atoms[NET_CLOSE_WINDOW] = XInternAtom (dpy, "_NET_CLOSE_WINDOW", False);
+	net_atoms[NET_WM_STRUT] = XInternAtom (dpy, "_NET_WM_STRUT", False);
 	XChangeProperty (dpy, root, XInternAtom (dpy, "_NET_SUPPORTED", False),
 									 XA_ATOM, 32, PropModeReplace, (unsigned char *) net_atoms,
 									 NET_ATOM_COUNT);
@@ -303,6 +304,55 @@ getGnomeDesktopMargins (CARD32 * margins)
 			margins[1] = 0;
 			margins[2] = 0;
 			margins[3] = 0;
+		}
+}
+
+void
+getNetWMStrut (Window win, CARD32* margins, CARD32* window_margins)
+{
+	unsigned long items_read;
+	CARD32 *data = NULL;
+
+#ifdef DEBUG
+	printf ("entering getGnomeDesktopMargins\n");
+#endif
+
+	data =
+		getPropData (win, net_atoms[NET_WM_STRUT], XA_CARDINAL, &items_read);
+	if (data && items_read >= 4)
+		{
+			window_margins[0] = data[0];
+			window_margins[1] = data[1];
+			window_margins[2] = data[2];
+			window_margins[3] = data[3];
+			margins[0] += data[0];
+			margins[1] += data[1];
+			margins[2] += data[2];
+			margins[3] += data[3];
+			XFree (data);
+		}
+	else
+		{
+			window_margins[0] = 0;
+			window_margins[1] = 0;
+			window_margins[2] = 0;
+			window_margins[3] = 0;
+		}
+}
+
+void
+delNetWMStrut (CARD32* margins, CARD32* data)
+{
+#ifdef DEBUG
+	printf ("entering delNetWMStrut\n");
+#endif
+
+	if (data[0] || data[1] || data[2] || data[3])
+		{
+			margins[0] -= data[0];
+			margins[1] -= data[1];
+			margins[2] -= data[2];
+			margins[3] -= data[3];
 		}
 }
 

@@ -31,10 +31,20 @@ clientInitPosition (Client * c)
 #endif
 
 	clientGravitate (c, APPLY);
-	min_x = margins[MARGIN_LEFT];
-	min_y = margins[MARGIN_TOP];
-	max_x = XDisplayWidth (dpy, screen) - margins[MARGIN_RIGHT];
-	max_y = XDisplayHeight (dpy, screen) - margins[MARGIN_BOTTOM];
+	if (typeDock(c->window))
+		{
+			min_x = 0;
+			min_y = 0;
+			max_x = XDisplayWidth (dpy, screen);
+			max_y = XDisplayHeight (dpy, screen);
+		}
+	else
+		{
+			min_x = margins[MARGIN_LEFT];
+			min_y = margins[MARGIN_TOP];
+			max_x = XDisplayWidth (dpy, screen) - margins[MARGIN_RIGHT];
+			max_y = XDisplayHeight (dpy, screen) - margins[MARGIN_BOTTOM];
+		}
 
 	if (!(c->size->flags & (PPosition | USPosition)))
 		{
@@ -429,6 +439,7 @@ clientFrame (Window w)
 	c->border_width = attr.border_width;
 	for (i = 0; i < BUTTON_COUNT; i++)
 		c->button_pressed[i] = False;
+	getNetWMStrut(w, margins, c->margins);
 	if (!getGnomeHint (w, win_hints, &c->win_hints))
 		c->win_hints = 0;
 	if (!getGnomeHint (w, win_state, &c->win_state))
@@ -572,6 +583,7 @@ clientUnframe (Client * c, int remap)
 	printf ("unframing client (%#lx)\n", c->window);
 #endif
 
+	delNetWMStrut(margins, c->margins);
 	clientGravitate (c, REMOVE);
 	clientUngrabKeys (c);
 	XSetWindowBorderWidth (dpy, c->window, c->border_width);
