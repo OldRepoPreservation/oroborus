@@ -1047,10 +1047,13 @@ clientSetFocus (Client * c, int sort)
 			XSetInputFocus (dpy, c->window, RevertToNone, CurrentTime);
 			setFocusHint (c->window);
 			for (tmp = clients, i = 0; i < client_count; tmp = tmp->next, i++)
-				if (c != tmp && tmp->win_workspace == workspace && tmp->focus)
+				if (c != tmp && tmp && tmp->win_workspace == workspace && tmp->focus)
 					{
-						tmp->focus = False;
-						frameDraw(tmp);
+						if (tmp->focus)
+							{
+								tmp->focus = False;
+								frameDraw(tmp);
+							}
 					}
 			c->focus = True;
 		}
@@ -1639,6 +1642,12 @@ clientCycle (Client * c)
 	c2 = clientGetNext (c2, INCLUDE_HIDDEN);
 	if (!c2)
 		cycling = False;
+	else
+		{
+			clientShow (c2, False);
+			clientRaise (c2);
+			clientSetFocus (c2, 0);
+		}
 
 #ifdef DEBUG
 	printf ("entering cycle loop\n");
@@ -1646,10 +1655,6 @@ clientCycle (Client * c)
 
 	while (cycling)
 		{
-			clientShow (c2, False);
-			clientRaise (c2);
-			clientSetFocus (c2, False);
-
 			XNextEvent (dpy, &ev);
 			if (ev.type == KeyPress)
 				{
@@ -1660,6 +1665,12 @@ clientCycle (Client * c)
 							c2 = clientGetNext (c2, INCLUDE_HIDDEN);
 							if (!c2)
 								cycling = False;
+							else
+								{
+									clientShow (c2, False);
+									clientRaise (c2);
+									clientSetFocus (c2, 0);
+								}
 						}
 					else
 						{
