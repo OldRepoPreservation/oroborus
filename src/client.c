@@ -532,7 +532,6 @@ clientFrame (Window w)
 
   c->ignore_unmap = attr.map_state == IsViewable ? 1 : 0;
   c->focus = False;
-  c->not_warp_to_next = False;
 
   getWindowName (dpy, c->window, &c->name);
 
@@ -1894,7 +1893,6 @@ clientButtonPress (Client * c, Window w, XButtonEvent * bev)
 	    clientKill (c);
 	  else
 	    {
-	      c->not_warp_to_next = True;
 	      clientClose (c);
 	    }
 	  break;

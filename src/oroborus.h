@@ -226,9 +226,7 @@ struct _Client
   long win_workspace;	/**< the current workspace of the client */
   int ignore_unmap,	/**< ignore the unmap request. */
   	focus,		/**< the client has the focus. */
-	non_focusing,	/**< client is non-focusing, like it does not want the focus. */
-	not_warp_to_next;
-			/**< do not warp to the next client, (warp the mouse) when closing this client. */
+	non_focusing;	/**< client is non-focusing, like it does not want the focus. */
   Client *next;		/**< pointer to the next client. */
   Client *prev;		/**< pointer to the previous client */
   Client *transientFor;	/**< pointer to the client, for which the current client is transient, ie its a dialog or popup window. */
