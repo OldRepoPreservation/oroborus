@@ -1,4 +1,4 @@
-oroborus (2.0.12-0) unstable; urgency=low
+oroborus (2.0.12-1) unstable; urgency=low
 
   * *argh* corrected configure.in, this won't happen again, configure.in
     now determines the version and package name from debian/rules.
@@ -16,7 +16,7 @@ oroborus (2.0.12-0) unstable; urgency=low
   * Make Mod5 work again.
     Closes: #176053
 
- -- Stefan Pfetzing <dreamind@dreamind.de>  Thu, 13 Feb 2003 21:36:30 +0100
+ -- Stefan Pfetzing <dreamind@dreamind.de>  Thu, 20 Feb 2003 19:50:43 +0100
 
 oroborus (2.0.11-1) unstable; urgency=low
 
