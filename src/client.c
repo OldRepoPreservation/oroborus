@@ -157,10 +157,11 @@ clientAddToList (Client * c)
       new[i] = c->window;
       XChangeProperty (dpy, root, win_client_list, XA_CARDINAL, 32,
 		       PropModeReplace, (unsigned char *) new, client_count);
-      XChangeProperty (dpy, root, net_client_list, XA_CARDINAL, 32,
+      XChangeProperty (dpy, root, net_atoms[NET_CLIENT_LIST], XA_WINDOW, 32,
 		       PropModeReplace, (unsigned char *) new, client_count);
-      XChangeProperty (dpy, root, net_client_list_stacking, XA_CARDINAL, 32,
-		       PropModeReplace, (unsigned char *) new, client_count);
+      XChangeProperty (dpy, root, net_atoms[NET_CLIENT_LIST_STACKING],
+		       XA_WINDOW, 32, PropModeReplace,
+		       (unsigned char *) new, client_count);
       if (client_list)
 	free (client_list);
       client_list = new;
@@ -186,12 +187,12 @@ clientRemoveFromList (Client * c)
       XChangeProperty (dpy, root, win_client_list, XA_CARDINAL, 32,
 		       PropModeReplace, (unsigned char *) new,
 		       client_count - 1);
-      XChangeProperty (dpy, root, net_client_list, XA_CARDINAL, 32,
+      XChangeProperty (dpy, root, net_atoms[NET_CLIENT_LIST], XA_WINDOW, 32,
 		       PropModeReplace, (unsigned char *) new,
 		       client_count - 1);
-      XChangeProperty (dpy, root, net_client_list_stacking, XA_CARDINAL, 32,
-		       PropModeReplace, (unsigned char *) new,
-		       client_count - 1);
+      XChangeProperty (dpy, root, net_atoms[NET_CLIENT_LIST_STACKING],
+		       XA_WINDOW, 32, PropModeReplace,
+		       (unsigned char *) new, client_count - 1);
       if (client_list)
 	free (client_list);
       client_list = new;
@@ -436,6 +437,7 @@ clientFrame (Window w)
     c->win_hints = 0;
   if (!getGnomeHint (dpy, w, win_state, &c->win_state))
     c->win_state = 0;
+  getEWMHState (dpy, w, &c->win_state);
   if (!getGnomeHint (dpy, w, win_layer, &c->win_layer))
     c->win_layer = WIN_LAYER_NORMAL;
   if (!getGnomeHint (dpy, w, win_workspace, &c->win_workspace))
@@ -458,8 +460,14 @@ clientFrame (Window w)
   if (typeDesktop (dpy, c->window))
     {
       c->win_hints = c->win_hints | WIN_HINTS_SKIP_FOCUS;
+      c->win_state = c->win_state | WIN_STATE_STICKY;
       c->has_border = False;
       c->win_layer = WIN_LAYER_DESKTOP;
+    }
+
+  if (typeDock (dpy, c->window))
+    {
+      c->win_hints = c->win_hints | WIN_HINTS_SKIP_FOCUS;
     }
 
   c->ignore_unmap = attr.map_state == IsViewable ? 1 : 0;

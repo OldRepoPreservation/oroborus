@@ -32,8 +32,7 @@ Atom motif_wm_hints;
 Atom win_hints, win_state, win_client_list, win_layer, win_workspace,
   win_workspace_count, win_desktop_button_proxy, win_supporting_wm_check,
   gnome_panel_desktop_area;
-Atom net_wm_window_type, net_client_list, net_client_list_stacking,
-  net_supported[2];
+Atom net_atoms[NET_ATOM_COUNT];
 
 void
 initICCCMHints (Display * dpy)
@@ -58,12 +57,52 @@ initNETHints (Display * dpy)
 
   root = XDefaultRootWindow (dpy);
 
-  net_client_list = XInternAtom (dpy, "_NET_CLIENT_LIST", False);
-  net_client_list_stacking = XInternAtom (dpy, "_NET_CLIENT_LIST_STACKING", False);
-  net_wm_window_type = XInternAtom (dpy, "_NET_WM_WINDOW_TYPE", False);
-  net_supported[0] = net_client_list;
-  net_supported[1] = net_client_list_stacking;
-  XChangeProperty (dpy, root,XInternAtom(dpy, "_NET_SUPPORTED", False),XA_ATOM, 32, PropModeReplace, (unsigned char *)net_supported, 2);
+  net_atoms[NET_CLIENT_LIST] = XInternAtom (dpy, "_NET_CLIENT_LIST", False);
+  net_atoms[NET_CLIENT_LIST_STACKING] =
+    XInternAtom (dpy, "_NET_CLIENT_LIST_STACKING", False);
+  net_atoms[NET_WM_WINDOW_TYPE] =
+    XInternAtom (dpy, "_NET_WM_WINDOW_TYPE", False);
+  net_atoms[NET_WM_WINDOW_TYPE_DESKTOP] =
+    XInternAtom (dpy, "_NET_WM_WINDOW_TYPE_DESKTOP", False);
+  net_atoms[NET_WM_WINDOW_TYPE_DOCK] =
+    XInternAtom (dpy, "_NET_WM_WINDOW_TYPE_DOCK", False);
+  net_atoms[NET_WM_WINDOW_TYPE_TOOLBAR] =
+    XInternAtom (dpy, "_NET_WM_WINDOW_TYPE_TOOLBAR", False);
+  net_atoms[NET_WM_WINDOW_TYPE_MENU] =
+    XInternAtom (dpy, "_NET_WM_WINDOW_TYPE_MENU", False);
+  net_atoms[NET_WM_WINDOW_TYPE_UTILITY] =
+    XInternAtom (dpy, "_NET_WM_WINDOW_TYPE_UTILITY", False);
+  net_atoms[NET_WM_WINDOW_TYPE_SPLASH] =
+    XInternAtom (dpy, "_NET_WM_WINDOW_TYPE_SPLASH", False);
+  net_atoms[NET_WM_WINDOW_TYPE_DIALOG] =
+    XInternAtom (dpy, "_NET_WM_WINDOW_TYPE_DIALOG", False);
+  net_atoms[NET_WM_WINDOW_TYPE_NORMAL] =
+    XInternAtom (dpy, "_NET_WM_WINDOW_TYPE_NORMAL", False);
+  net_atoms[NET_WM_STATE] = XInternAtom (dpy, "_NET_WM_STATE", False);
+  net_atoms[NET_WM_STATE_MODAL] =
+    XInternAtom (dpy, "_NET_WM_STATE_MODAL", False);
+  net_atoms[NET_WM_STATE_STICKY] =
+    XInternAtom (dpy, "_NET_WM_STATE_STICKY", False);
+  net_atoms[NET_WM_STATE_MAXIMIZED_VERT] =
+    XInternAtom (dpy, "_NET_WM_STATE_MAXIMIZED_VERT", False);
+  net_atoms[NET_WM_STATE_MAXIMIZED_HORZ] =
+    XInternAtom (dpy, "_NET_WM_STATE_MAXIMIZED_HORZ", False);
+  net_atoms[NET_WM_STATE_SHADED] =
+    XInternAtom (dpy, "_NET_WM_STATE_SHADED", False);
+  net_atoms[NET_WM_STATE_SKIP_TASKBAR] =
+    XInternAtom (dpy, "_NET_WM_STATE_SKIP_TASKBAR", False);
+  net_atoms[NET_WM_STATE_SKIP_PAGER] =
+    XInternAtom (dpy, "_NET_WM_STATE_SKIP_PAGER", False);
+  net_atoms[NET_WM_STATE_HIDDEN] =
+    XInternAtom (dpy, "_NET_WM_STATE_HIDDEN", False);
+  net_atoms[NET_WM_STATE_FULLSCREEN] =
+    XInternAtom (dpy, "_NET_WM_STATE_FULLSCREEN", False);
+  net_atoms[NET_WM_NAME] = XInternAtom (dpy, "_NET_WM_NAME", False);
+  net_atoms[NET_NUMBER_OF_DESKTOPS] = XInternAtom (dpy, "_NET_NUMBER_OF_DESKTOPS", False);
+  net_atoms[NET_CURRENT_DESKTOP] = XInternAtom (dpy, "_NET_CURRENT_DESKTOP", False);
+  XChangeProperty (dpy, root, XInternAtom (dpy, "_NET_SUPPORTED", False),
+		   XA_ATOM, 32, PropModeReplace, (unsigned char *) net_atoms,
+		   NET_ATOM_COUNT);
 }
 
 long
@@ -201,6 +240,26 @@ setGnomeHint (Display * dpy, Window w, Atom a, long value)
 }
 
 void
+getEWMHState (Display * dpy, Window w, long *value)
+{
+  unsigned long *data;
+  unsigned long items = 0;
+  unsigned long i;
+
+  data = getPropData (dpy, w, net_atoms[NET_WM_STATE], XA_ATOM, &items);
+  if (data)
+    {
+      for (i = 0; i < items; i++)
+	{
+	  if (equals
+	      (XGetAtomName (dpy, data[i]),
+	       XGetAtomName (dpy, net_atoms[NET_WM_STATE_STICKY])))
+	    *value |= WIN_STATE_STICKY;
+	}
+    }
+}
+
+void
 getGnomeDesktopMargins (Display * dpy, CARD32 * margins)
 {
   Atom real_type;
@@ -235,14 +294,27 @@ getGnomeDesktopMargins (Display * dpy, CARD32 * margins)
 int
 typeDesktop (Display * dpy, Window w)
 {
+  return typeEWMH (dpy, w, "_NET_WM_WINDOW_TYPE_DESKTOP");
+}
+
+int
+typeDock (Display * dpy, Window w)
+{
+  return typeEWMH (dpy, w, "_NET_WM_WINDOW_TYPE_DOCK");
+}
+
+int
+typeEWMH (Display * dpy, Window w, char *type)
+{
   unsigned long *data;
+  unsigned long items = 0;
   int ret = 0;
 
 #ifdef DEBUG
-  printf ("entering typeDesktop\n");
+  printf ("entering typeEWMH\n");
 #endif
 
-  data = getPropData (dpy, w, net_wm_window_type, XA_ATOM);
+  data = getPropData (dpy, w, net_atoms[NET_WM_WINDOW_TYPE], XA_ATOM, &items);
   if (data)
     {
       char *name;
@@ -250,20 +322,19 @@ typeDesktop (Display * dpy, Window w)
 #ifdef DEBUG
       printf ("%s\n", name);
 #endif
-      if (name && strcmp (name, "_NET_WM_WINDOW_TYPE_DESKTOP") == 0)
-	ret = 1;
+      ret = equals (name, type);
       XFree (data);
     }
 
   return ret;
 }
 
-void *
-getPropData (Display * dpy, Window win, Atom prop, Atom type)
+void
+*getPropData (Display * dpy, Window win, Atom prop, Atom type,
+	     unsigned long *items_ret)
 {
   Atom type_ret;
   int format_ret;
-  unsigned long items_ret;
   unsigned long after_ret;
   unsigned char *prop_data;
 
@@ -273,8 +344,17 @@ getPropData (Display * dpy, Window win, Atom prop, Atom type)
   prop_data = 0;
 
   XGetWindowProperty (dpy, win, prop, 0, 0x7fffffff, False,
-		      type, &type_ret, &format_ret, &items_ret,
+		      type, &type_ret, &format_ret, items_ret,
 		      &after_ret, &prop_data);
 
   return prop_data;
+}
+
+int
+equals (char *left, char *right)
+{
+  if (left && right && (strcmp (left, right) == 0))
+    return 1;
+  else
+    return 0;
 }

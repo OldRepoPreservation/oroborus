@@ -49,6 +49,7 @@ workspaceSwitch (int new_ws, Client * c2)
     }
 
   setGnomeHint (dpy, root, win_workspace, new_ws);
+  setGnomeHint (dpy, root, net_atoms[NET_CURRENT_DESKTOP], new_ws);
   workspace = new_ws;
   for (c = clients, i = 0; i < client_count; c = c->next, i++)
     {
@@ -91,6 +92,7 @@ workspaceSetCount (int count)
     return;
 
   setGnomeHint (dpy, root, win_workspace_count, count);
+  setGnomeHint (dpy, root, net_atoms[NET_NUMBER_OF_DESKTOPS], count);
   workspace_count = count;
 
   for (c = clients, i = 0; i < client_count; c = c->next, i++)

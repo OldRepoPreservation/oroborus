@@ -46,6 +46,36 @@
 #define WIN_LAYER_ONTOP			6
 #define WIN_LAYER_DOCK			8
 
+enum
+{
+  NET_CLIENT_LIST,
+  NET_CLIENT_LIST_STACKING,
+  NET_WM_WINDOW_TYPE,
+  NET_WM_WINDOW_TYPE_DESKTOP,
+  NET_WM_WINDOW_TYPE_DOCK,
+  NET_WM_WINDOW_TYPE_TOOLBAR,
+  NET_WM_WINDOW_TYPE_MENU,
+  NET_WM_WINDOW_TYPE_UTILITY,
+  NET_WM_WINDOW_TYPE_SPLASH,
+  NET_WM_WINDOW_TYPE_DIALOG,
+  NET_WM_WINDOW_TYPE_NORMAL,
+  NET_WM_STATE,
+  NET_WM_STATE_MODAL,
+  NET_WM_STATE_STICKY,
+  NET_WM_STATE_MAXIMIZED_VERT,
+  NET_WM_STATE_MAXIMIZED_HORZ,
+  NET_WM_STATE_SHADED,
+  NET_WM_STATE_SKIP_TASKBAR,
+  NET_WM_STATE_SKIP_PAGER,
+  NET_WM_STATE_HIDDEN,
+  NET_WM_STATE_FULLSCREEN,
+  NET_WM_NAME,
+  NET_NUMBER_OF_DESKTOPS,
+  NET_CURRENT_DESKTOP
+};
+
+#define NET_ATOM_COUNT 24
+
 typedef struct
 {
   CARD32 flags;
@@ -61,8 +91,7 @@ extern Atom motif_wm_hints;
 extern Atom win_hints, win_state, win_client_list, win_layer, win_workspace,
   win_workspace_count, win_desktop_button_proxy, win_supporting_wm_check,
   gnome_panel_desktop_area;
-extern Atom net_wm_window_type, net_client_list, net_client_list_stacking,
-  net_supported[2];
+extern Atom net_atoms[NET_ATOM_COUNT];
 
 void initICCCMHints (Display *);
 void initNETHints (Display * dpy);
@@ -74,7 +103,11 @@ void initGnomeHints (Display *);
 int getGnomeHint (Display *, Window, Atom, long *);
 void setGnomeHint (Display *, Window, Atom, long);
 void getGnomeDesktopMargins (Display *, CARD32 *);
-int typeDesktop (Display * dpy, Window w);
-void *getPropData (Display * dpy, Window win, Atom prop, Atom type);
+int typeDesktop (Display *, Window);
+int typeDock (Display *, Window);
+int typeEWMH (Display *, Window, char *);
+void *getPropData (Display *, Window, Atom, Atom, unsigned long *);
+void getEWMHState (Display *, Window, long *);
+int equals (char *left, char *right);
 
 #endif /* __HINTS_H */
