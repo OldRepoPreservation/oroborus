@@ -25,7 +25,9 @@
 #include <X11/Xmd.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include "hints.h"
+#include "xmalloc.h"
 
 Atom wm_state, wm_change_state, wm_delete_window, wm_protocols;
 Atom motif_wm_hints;
@@ -33,9 +35,20 @@ Atom win_hints, win_state, win_client_list, win_layer, win_workspace,
   win_workspace_count, win_desktop_button_proxy, win_supporting_wm_check,
   gnome_panel_desktop_area;
 Atom net_atoms[NET_ATOM_COUNT];
+Display *dpy;
 
 void
-initICCCMHints (Display * dpy)
+initHints (Display * d)
+{
+  dpy = d;
+  initICCCMHints ();
+  initMotifHints ();
+  initGnomeHints ();
+  initNETHints ();
+}
+
+void
+initICCCMHints ()
 {
 #ifdef DEBUG
   printf ("entering initICCCMHints\n");
@@ -48,7 +61,7 @@ initICCCMHints (Display * dpy)
 }
 
 void
-initNETHints (Display * dpy)
+initNETHints ()
 {
   Window root;
 #ifdef DEBUG
@@ -98,54 +111,17 @@ initNETHints (Display * dpy)
   net_atoms[NET_WM_STATE_FULLSCREEN] =
     XInternAtom (dpy, "_NET_WM_STATE_FULLSCREEN", False);
   net_atoms[NET_WM_NAME] = XInternAtom (dpy, "_NET_WM_NAME", False);
-  net_atoms[NET_NUMBER_OF_DESKTOPS] = XInternAtom (dpy, "_NET_NUMBER_OF_DESKTOPS", False);
-  net_atoms[NET_CURRENT_DESKTOP] = XInternAtom (dpy, "_NET_CURRENT_DESKTOP", False);
+  net_atoms[NET_NUMBER_OF_DESKTOPS] =
+    XInternAtom (dpy, "_NET_NUMBER_OF_DESKTOPS", False);
+  net_atoms[NET_CURRENT_DESKTOP] =
+    XInternAtom (dpy, "_NET_CURRENT_DESKTOP", False);
   XChangeProperty (dpy, root, XInternAtom (dpy, "_NET_SUPPORTED", False),
 		   XA_ATOM, 32, PropModeReplace, (unsigned char *) net_atoms,
 		   NET_ATOM_COUNT);
 }
 
-long
-getWMState (Display * dpy, Window w)
-{
-  Atom real_type;
-  int real_format;
-  unsigned long items_read, items_left;
-  long *data = NULL, state = WithdrawnState;
-
-#ifdef DEBUG
-  printf ("entering getWmState\n");
-#endif
-
-  if (XGetWindowProperty
-      (dpy, w, wm_state, 0L, 2L, False, wm_state, &real_type, &real_format,
-       &items_read, &items_left, (unsigned char **) &data) == Success &&
-      items_read)
-    {
-      state = *data;
-      XFree (data);
-    }
-  return state;
-}
-
 void
-setWMState (Display * dpy, Window w, long state)
-{
-  CARD32 data[2];
-
-#ifdef DEBUG
-  printf ("entering setWmState\n");
-#endif
-
-  data[0] = state;
-  data[1] = None;
-
-  XChangeProperty (dpy, w, wm_state, wm_state, 32, PropModeReplace,
-		   (unsigned char *) data, 2);
-}
-
-void
-initMotifHints (Display * dpy)
+initMotifHints ()
 {
 #ifdef DEBUG
   printf ("entering initMotifHints\n");
@@ -154,29 +130,8 @@ initMotifHints (Display * dpy)
   motif_wm_hints = XInternAtom (dpy, "_MOTIF_WM_HINTS", False);
 }
 
-PropMwmHints *
-getMotifHints (Display * dpy, Window w)
-{
-  Atom real_type;
-  int real_format;
-  unsigned long items_read, items_left;
-  PropMwmHints *data = NULL;
-
-#ifdef DEBUG
-  printf ("entering getMotifHints\n");
-#endif
-
-  if (XGetWindowProperty
-      (dpy, w, motif_wm_hints, 0L, 20L, False, motif_wm_hints, &real_type,
-       &real_format, &items_read, &items_left,
-       (unsigned char **) &data) == Success && items_read)
-    return data;
-  else
-    return NULL;
-}
-
 void
-initGnomeHints (Display * dpy)
+initGnomeHints ()
 {
   Window root;
 
@@ -199,12 +154,54 @@ initGnomeHints (Display * dpy)
     XInternAtom (dpy, "GNOME_PANEL_DESKTOP_AREA", False);
 }
 
-int
-getGnomeHint (Display * dpy, Window w, Atom a, long *value)
+long
+getWMState (Window w)
 {
-  Atom real_type;
-  int real_format, success = False;
-  unsigned long items_read, items_left;
+  unsigned long *data = NULL, state = WithdrawnState;
+
+#ifdef DEBUG
+  printf ("entering getWmState\n");
+#endif
+
+  data = getPropData (w, wm_state, wm_state, NULL);
+  if (data)
+    {
+      state = *data;
+      XFree (data);
+    }
+  return state;
+}
+
+void
+setWMState (Window w, long state)
+{
+  CARD32 data[2];
+
+#ifdef DEBUG
+  printf ("entering setWmState\n");
+#endif
+
+  data[0] = state;
+  data[1] = None;
+
+  XChangeProperty (dpy, w, wm_state, wm_state, 32, PropModeReplace,
+		   (unsigned char *) data, 2);
+}
+
+PropMwmHints *
+getMotifHints (Window w)
+{
+#ifdef DEBUG
+  printf ("entering getMotifHints\n");
+#endif
+
+  return getPropData (w, motif_wm_hints, motif_wm_hints, NULL);
+}
+
+int
+getGnomeHint (Window w, Atom a, long *value)
+{
+  int success = False;
   long *data = NULL;
 
 #ifdef DEBUG
@@ -216,10 +213,8 @@ getGnomeHint (Display * dpy, Window w, Atom a, long *value)
   else
     *value = 0;
 
-  if (XGetWindowProperty
-      (dpy, w, a, 0L, 1L, False, XA_CARDINAL, &real_type, &real_format,
-       &items_read, &items_left, (unsigned char **) &data) == Success &&
-      items_read)
+  data = getPropData (w, a, XA_CARDINAL, NULL);
+  if (data)
     {
       *value = *data;
       success = True;
@@ -229,7 +224,7 @@ getGnomeHint (Display * dpy, Window w, Atom a, long *value)
 }
 
 void
-setGnomeHint (Display * dpy, Window w, Atom a, long value)
+setGnomeHint (Window w, Atom a, long value)
 {
 #ifdef DEBUG
   printf ("entering setGnomeHint\n");
@@ -240,13 +235,13 @@ setGnomeHint (Display * dpy, Window w, Atom a, long value)
 }
 
 void
-getEWMHState (Display * dpy, Window w, long *value)
+getEWMHState (Window w, long *value)
 {
   unsigned long *data;
   unsigned long items = 0;
   unsigned long i;
 
-  data = getPropData (dpy, w, net_atoms[NET_WM_STATE], XA_ATOM, &items);
+  data = getPropData (w, net_atoms[NET_WM_STATE], XA_ATOM, &items);
   if (data)
     {
       for (i = 0; i < items; i++)
@@ -256,25 +251,24 @@ getEWMHState (Display * dpy, Window w, long *value)
 	       XGetAtomName (dpy, net_atoms[NET_WM_STATE_STICKY])))
 	    *value |= WIN_STATE_STICKY;
 	}
+      XFree (data);
     }
 }
 
 void
-getGnomeDesktopMargins (Display * dpy, CARD32 * margins)
+getGnomeDesktopMargins (CARD32 * margins)
 {
-  Atom real_type;
-  int real_format;
-  unsigned long items_read, items_left;
+  unsigned long items_read;
   CARD32 *data = NULL;
 
 #ifdef DEBUG
   printf ("entering getGnomeDesktopMargins\n");
 #endif
 
-  if (XGetWindowProperty
-      (dpy, XDefaultRootWindow (dpy), gnome_panel_desktop_area, 0L, 4L, False,
-       XA_CARDINAL, &real_type, &real_format, &items_read, &items_left,
-       (unsigned char **) &data) == Success && items_read >= 4)
+  data =
+    getPropData (XDefaultRootWindow (dpy), gnome_panel_desktop_area,
+		 XA_CARDINAL, &items_read);
+  if (data && items_read >= 4)
     {
       margins[0] = data[0];
       margins[1] = data[1];
@@ -292,19 +286,19 @@ getGnomeDesktopMargins (Display * dpy, CARD32 * margins)
 }
 
 int
-typeDesktop (Display * dpy, Window w)
+typeDesktop (Window w)
 {
-  return typeEWMH (dpy, w, "_NET_WM_WINDOW_TYPE_DESKTOP");
+  return typeEWMH (w, "_NET_WM_WINDOW_TYPE_DESKTOP");
 }
 
 int
-typeDock (Display * dpy, Window w)
+typeDock (Window w)
 {
-  return typeEWMH (dpy, w, "_NET_WM_WINDOW_TYPE_DOCK");
+  return typeEWMH (w, "_NET_WM_WINDOW_TYPE_DOCK");
 }
 
 int
-typeEWMH (Display * dpy, Window w, char *type)
+typeEWMH (Window w, char *type)
 {
   unsigned long *data;
   unsigned long items = 0;
@@ -314,7 +308,7 @@ typeEWMH (Display * dpy, Window w, char *type)
   printf ("entering typeEWMH\n");
 #endif
 
-  data = getPropData (dpy, w, net_atoms[NET_WM_WINDOW_TYPE], XA_ATOM, &items);
+  data = getPropData (w, net_atoms[NET_WM_WINDOW_TYPE], XA_ATOM, &items);
   if (data)
     {
       char *name;
@@ -329,9 +323,8 @@ typeEWMH (Display * dpy, Window w, char *type)
   return ret;
 }
 
-void
-*getPropData (Display * dpy, Window win, Atom prop, Atom type,
-	     unsigned long *items_ret)
+void *
+getPropData (Window w, Atom prop, Atom type, unsigned long *items_ret)
 {
   Atom type_ret;
   int format_ret;
@@ -341,13 +334,19 @@ void
 #ifdef DEBUG
   printf ("entering getPropData\n");
 #endif
+  if (items_ret == NULL)
+    items_ret = (unsigned long *) xmalloc (sizeof (unsigned long));
+
   prop_data = 0;
 
-  XGetWindowProperty (dpy, win, prop, 0, 0x7fffffff, False,
+  XGetWindowProperty (dpy, w, prop, 0, 0x7fffffff, False,
 		      type, &type_ret, &format_ret, items_ret,
 		      &after_ret, &prop_data);
 
-  return prop_data;
+  if (prop_data && *items_ret)
+    return prop_data;
+  else
+    return NULL;
 }
 
 int

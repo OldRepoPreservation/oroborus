@@ -93,21 +93,23 @@ extern Atom win_hints, win_state, win_client_list, win_layer, win_workspace,
   gnome_panel_desktop_area;
 extern Atom net_atoms[NET_ATOM_COUNT];
 
-void initICCCMHints (Display *);
-void initNETHints (Display * dpy);
-long getWMState (Display *, Window);
-void setWMState (Display *, Window, long state);
-void initMotifHints (Display *);
-PropMwmHints *getMotifHints (Display *, Window);
-void initGnomeHints (Display *);
-int getGnomeHint (Display *, Window, Atom, long *);
-void setGnomeHint (Display *, Window, Atom, long);
-void getGnomeDesktopMargins (Display *, CARD32 *);
-int typeDesktop (Display *, Window);
-int typeDock (Display *, Window);
-int typeEWMH (Display *, Window, char *);
-void *getPropData (Display *, Window, Atom, Atom, unsigned long *);
-void getEWMHState (Display *, Window, long *);
+void initHints (Display *);
+void initICCCMHints ();
+void initGnomeHints ();
+void initNETHints ();
+
+long getWMState (Window);
+void setWMState (Window, long state);
+void initMotifHints ();
+PropMwmHints *getMotifHints (Window);
+int getGnomeHint (Window, Atom, long *);
+void setGnomeHint (Window, Atom, long);
+void getGnomeDesktopMargins (CARD32 *);
+int typeDesktop (Window);
+int typeDock (Window);
+int typeEWMH (Window, char *);
+void *getPropData (Window, Atom, Atom, unsigned long *);
+void getEWMHState (Window, long *);
 int equals (char *left, char *right);
 
 #endif /* __HINTS_H */

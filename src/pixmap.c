@@ -25,6 +25,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "pixmap.h"
+#include "xmalloc.h"
 
 int
 loadPixmap (Display * dpy, MyPixmap * pm, char *dir, char *file,

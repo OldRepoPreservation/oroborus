@@ -26,6 +26,7 @@
 #endif
 
 #include <sys/types.h>
+#include <string.h>
 
 #if STDC_HEADERS
 # include <stdlib.h>

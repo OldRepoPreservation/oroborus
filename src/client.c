@@ -433,21 +433,21 @@ clientFrame (Window w)
   c->border_width = attr.border_width;
   for (i = 0; i < BUTTON_COUNT; i++)
     c->button_pressed[i] = False;
-  if (!getGnomeHint (dpy, w, win_hints, &c->win_hints))
+  if (!getGnomeHint (w, win_hints, &c->win_hints))
     c->win_hints = 0;
-  if (!getGnomeHint (dpy, w, win_state, &c->win_state))
+  if (!getGnomeHint (w, win_state, &c->win_state))
     c->win_state = 0;
-  getEWMHState (dpy, w, &c->win_state);
-  if (!getGnomeHint (dpy, w, win_layer, &c->win_layer))
+  getEWMHState (w, &c->win_state);
+  if (!getGnomeHint (w, win_layer, &c->win_layer))
     c->win_layer = WIN_LAYER_NORMAL;
-  if (!getGnomeHint (dpy, w, win_workspace, &c->win_workspace))
+  if (!getGnomeHint (w, win_workspace, &c->win_workspace))
     {
-      setGnomeHint (dpy, w, win_workspace, workspace);
+      setGnomeHint (w, win_workspace, workspace);
       c->win_workspace = workspace;
     }
   if (c->win_workspace > workspace_count - 1)
     {
-      setGnomeHint (dpy, w, win_workspace, workspace_count - 1);
+      setGnomeHint (w, win_workspace, workspace_count - 1);
       c->win_workspace = workspace_count - 1;
     }
 
@@ -457,7 +457,7 @@ clientFrame (Window w)
   else
     c->has_border = True;
 
-  if (typeDesktop (dpy, c->window))
+  if (typeDesktop (c->window))
     {
       c->win_hints = c->win_hints | WIN_HINTS_SKIP_FOCUS;
       c->win_state = c->win_state | WIN_STATE_STICKY;
@@ -465,7 +465,7 @@ clientFrame (Window w)
       c->win_layer = WIN_LAYER_DESKTOP;
     }
 
-  if (typeDock (dpy, c->window))
+  if (typeDock (c->window))
     {
       c->win_hints = c->win_hints | WIN_HINTS_SKIP_FOCUS;
     }
@@ -474,7 +474,7 @@ clientFrame (Window w)
   c->focus = False;
   getWindowName (dpy, c->window, &c->name);
 
-  mwm_hints = getMotifHints (dpy, c->window);
+  mwm_hints = getMotifHints (c->window);
   if (mwm_hints)
     {
       if (mwm_hints->flags & MWM_HINTS_DECORATIONS &&
@@ -551,7 +551,7 @@ clientFrame (Window w)
   wc.stack_mode = Above;
   clientConfigure (c, &wc, CWX | CWY | CWHeight | CWWidth | CWStackMode);
 
-  if (getWMState (dpy, c->window) != IconicState)
+  if (getWMState (c->window) != IconicState)
     {
       clientShow (c, True);
       if (focus_new && !(c->win_hints & WIN_HINTS_SKIP_FOCUS))
@@ -560,7 +560,7 @@ clientFrame (Window w)
 	}
     }
   else
-    setWMState (dpy, c->window, IconicState);
+    setWMState (c->window, IconicState);
 
 #ifdef DEBUG
   printf ("client_count=%d\n", client_count);
@@ -582,7 +582,7 @@ clientUnframe (Client * c, int remap)
   if (remap)
     XMapWindow (dpy, c->window);
   else
-    setWMState (dpy, c->window, WithdrawnState);
+    setWMState (c->window, WithdrawnState);
   XDestroyWindow (dpy, c->frame);
 
   clientRemoveFromList (c);
@@ -691,7 +691,7 @@ clientShow (Client * c, int change_state)
       XMapWindow (dpy, c->frame);
     }
   if (change_state)
-    setWMState (dpy, c->window, NormalState);
+    setWMState (c->window, NormalState);
 }
 
 void
@@ -705,7 +705,7 @@ clientHide (Client * c, int change_state)
   XUnmapWindow (dpy, c->window);
   XUnmapWindow (dpy, c->frame);
   if (change_state)
-    setWMState (dpy, c->window, IconicState);
+    setWMState (c->window, IconicState);
   c->ignore_unmap++;
 }
 
@@ -788,7 +788,7 @@ clientSetLayer (Client * c, int l)
   if (l == old_layer)
     return;
 
-  setGnomeHint (dpy, c->window, win_layer, l);
+  setGnomeHint (c->window, win_layer, l);
   c->win_layer = l;
   if (l > old_layer)
     clientRaise (c);
@@ -807,9 +807,9 @@ clientSetWorkspace (Client * c, int ws)
   if (c->win_workspace == ws)
     return;
 
-  setGnomeHint (dpy, c->window, win_workspace, ws);
+  setGnomeHint (c->window, win_workspace, ws);
   c->win_workspace = ws;
-  if (getWMState (dpy, c->window) != IconicState)
+  if (getWMState (c->window) != IconicState)
     {
       if (c->win_state & WIN_STATE_STICKY)
 	clientShow (c, False);
@@ -834,7 +834,7 @@ clientSetState (Client * c, CARD32 mask, CARD32 value)
 #endif
 
   c->win_state = (c->win_state & ~mask) | value;
-  setGnomeHint (dpy, c->window, win_state, c->win_state);
+  setGnomeHint (c->window, win_state, c->win_state);
   if (mask & ~WIN_STATE_STICKY)
     {
       wc.width = c->width;
@@ -854,7 +854,7 @@ clientToggleShaded (Client * c)
 #endif
 
   c->win_state = c->win_state ^ WIN_STATE_SHADED;
-  setGnomeHint (dpy, c->window, win_state, c->win_state);
+  setGnomeHint (c->window, win_state, c->win_state);
   wc.width = c->width;
   wc.height = c->height;
   clientConfigure (c, &wc, CWWidth | CWHeight);
@@ -869,7 +869,7 @@ clientToggleSticky (Client * c)
 #endif
 
   c->win_state = c->win_state ^ WIN_STATE_STICKY;
-  setGnomeHint (dpy, c->window, win_state, c->win_state);
+  setGnomeHint (c->window, win_state, c->win_state);
   clientSetWorkspace (c, workspace);
 }
 
@@ -933,7 +933,7 @@ clientToggleMaximized (Client * c, int mode)
 	}
 
     }
-  setGnomeHint (dpy, c->window, win_state, c->win_state);
+  setGnomeHint (c->window, win_state, c->win_state);
   clientConfigure (c, &wc, CWX | CWY | CWWidth | CWHeight);
   clientWarpMouse (c);
 }
@@ -1500,7 +1500,7 @@ clientGetNext (Client * c, int mask)
 	  if (c2->win_hints & WIN_HINTS_SKIP_FOCUS &&
 	      !(mask & INCLUDE_SKIP_FOCUS))
 	    okay = False;
-	  if (getWMState (dpy, c2->window) == IconicState &&
+	  if (getWMState (c2->window) == IconicState &&
 	      !(mask & INCLUDE_HIDDEN))
 	    okay = False;
 	  if (c2->win_workspace != workspace &&
@@ -1562,7 +1562,7 @@ clientCycle (Client * c)
 	{
 	  if (ev.xkey.keycode == keys[KEY_CYCLE_WINDOWS].keycode)
 	    {
-	      if (getWMState (dpy, c2->window) == IconicState)
+	      if (getWMState (c2->window) == IconicState)
 		clientHide (c2, False);
 	      c2 = clientGetNext (c2, INCLUDE_HIDDEN);
 	      if (!c2)

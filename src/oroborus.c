@@ -109,7 +109,7 @@ Options:\n\
   -v, --verbose              print more information\n\
   -h, --help                 display this help and exit\n\
   -V, --version              output version information and exit\n\
-  --display                  use an alternative display instead of,
+  --display                  use an alternative display instead of,\n\
                              $DISPLAY\n\
 "));
   exit (status);
@@ -121,9 +121,9 @@ decode_switches (int argc, char **argv)
   int c;
 
   while ((c = getopt_long (argc, argv, "v"	/* verbose */
-			   "h"		/* help */
-			   "V"		/* version */
-			   "f:"		/* file */
+			   "h"	/* help */
+			   "V"	/* version */
+			   "f:"	/* file */
 			   "d:",	/* display */
 			   long_options, (int *) 0)) != EOF)
     {
@@ -163,7 +163,7 @@ initialize (int argc, char **argv)
 
   progname = argv[0];
 
-  decode_switches(argc, argv);
+  decode_switches (argc, argv);
 
   printf
     ("\nOroborus\n(c) 2001 Ken Lynch\n(c) 2002 Stefan Pfetzing\nDistributed under the terms and conditions of the GPL\n\n");
@@ -181,22 +181,28 @@ initialize (int argc, char **argv)
   dpy = XOpenDisplay (display);
   if (!dpy)
     {
-      fprintf (stderr, "%s: failed to open display %s!\n", progname, display ? display : ":0" );
+      fprintf (stderr, "%s: failed to open display %s!\n", progname,
+	       display ? display : getenv ("DISPLAY"));
       exit (1);
     }
 
   act.sa_handler = handleSignal;
   act.sa_flags = 0;
   if (sigaction (SIGINT, &act, NULL))
-    fprintf (stderr, "%s: Warning, could not install SIGINT Handler!\n", progname);
+    fprintf (stderr, "%s: Warning, could not install SIGINT Handler!\n",
+	     progname);
   if (sigaction (SIGTERM, &act, NULL))
-    fprintf (stderr, "%s: Warning, could not install SIGTERM Handler!\n", progname);
+    fprintf (stderr, "%s: Warning, could not install SIGTERM Handler!\n",
+	     progname);
   if (sigaction (SIGHUP, &act, NULL))
-    fprintf (stderr, "%s: Warning, could not install SIGHUP Handler!\n", progname);
+    fprintf (stderr, "%s: Warning, could not install SIGHUP Handler!\n",
+	     progname);
   if (sigaction (SIGSEGV, &act, NULL))
-    fprintf (stderr, "%s: Warning, could not install SIGSEGV Handler!\n", progname);
+    fprintf (stderr, "%s: Warning, could not install SIGSEGV Handler!\n",
+	     progname);
   if (sigaction (SIGCHLD, &act, NULL))
-    fprintf (stderr, "%s: Warning, could not install SIGCHLD Handler!\n", progname);
+    fprintf (stderr, "%s: Warning, could not install SIGCHLD Handler!\n",
+	     progname);
 
   root = XDefaultRootWindow (dpy);
   screen = XDefaultScreen (dpy);
@@ -211,17 +217,14 @@ initialize (int argc, char **argv)
 
   shape = XShapeQueryExtension (dpy, &shape_event, &dummy);
 
-  initICCCMHints (dpy);
-  initNETHints (dpy);
-  initMotifHints (dpy);
-  initGnomeHints (dpy);
+  initHints (dpy);
   gnome_win = XCreateSimpleWindow (dpy, root, -1000, -1000, 5, 5, 0, 0, 0);
-  setGnomeHint (dpy, root, win_supporting_wm_check, gnome_win);
-  setGnomeHint (dpy, gnome_win, win_supporting_wm_check, gnome_win);
-  setGnomeHint (dpy, root, win_desktop_button_proxy, gnome_win);
-  setGnomeHint (dpy, gnome_win, win_desktop_button_proxy, gnome_win);
-  getGnomeHint (dpy, root, win_workspace, &workspace);
-  getGnomeDesktopMargins (dpy, margins);
+  setGnomeHint (root, win_supporting_wm_check, gnome_win);
+  setGnomeHint (gnome_win, win_supporting_wm_check, gnome_win);
+  setGnomeHint (root, win_desktop_button_proxy, gnome_win);
+  setGnomeHint (gnome_win, win_desktop_button_proxy, gnome_win);
+  getGnomeHint (root, win_workspace, &workspace);
+  getGnomeDesktopMargins (margins);
 
   root_cursor = XCreateFontCursor (dpy, XC_left_ptr);
   move_cursor = XCreateFontCursor (dpy, XC_fleur);
@@ -235,7 +238,7 @@ initialize (int argc, char **argv)
     XCreateFontCursor (dpy, XC_bottom_right_corner);
   XDefineCursor (dpy, root, root_cursor);
 
-  init_keyboard(dpy);
+  init_keyboard (dpy);
 
   loadSettings ();
   clientFrameAll ();

@@ -44,12 +44,12 @@ workspaceSwitch (int new_ws, Client * c2)
 
   if (c2)
     {
-      setGnomeHint (dpy, c2->window, win_workspace, new_ws);
+      setGnomeHint (c2->window, win_workspace, new_ws);
       c2->win_workspace = new_ws;
     }
 
-  setGnomeHint (dpy, root, win_workspace, new_ws);
-  setGnomeHint (dpy, root, net_atoms[NET_CURRENT_DESKTOP], new_ws);
+  setGnomeHint (root, win_workspace, new_ws);
+  setGnomeHint (root, net_atoms[NET_CURRENT_DESKTOP], new_ws);
   workspace = new_ws;
   for (c = clients, i = 0; i < client_count; c = c->next, i++)
     {
@@ -58,7 +58,7 @@ workspaceSwitch (int new_ws, Client * c2)
       else
 	{
 	  if (c->win_workspace == new_ws &&
-	      getWMState (dpy, c->window) != IconicState)
+	      getWMState (c->window) != IconicState)
 	    {
 	      clientShow (c, False);
 	      if (c->focus)
@@ -69,7 +69,7 @@ workspaceSwitch (int new_ws, Client * c2)
 	    clientHide (c, False);
 	}
     }
-  setGnomeHint (dpy, root, win_workspace, new_ws);
+  setGnomeHint (root, win_workspace, new_ws);
 
   if (c2)
     f = c2;
@@ -91,8 +91,8 @@ workspaceSetCount (int count)
   if (count == workspace_count)
     return;
 
-  setGnomeHint (dpy, root, win_workspace_count, count);
-  setGnomeHint (dpy, root, net_atoms[NET_NUMBER_OF_DESKTOPS], count);
+  setGnomeHint (root, win_workspace_count, count);
+  setGnomeHint (root, net_atoms[NET_NUMBER_OF_DESKTOPS], count);
   workspace_count = count;
 
   for (c = clients, i = 0; i < client_count; c = c->next, i++)

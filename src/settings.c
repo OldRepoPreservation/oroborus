@@ -280,7 +280,7 @@ loadSettings ()
   focus_new = !strcmp ("true", getValue ("focus_new", rc));
   raise_on_focus = !strcmp ("true", getValue ("raise_on_focus", rc));
   raise_delay = abs (atoi (getValue ("raise_delay", rc)));
-  raise_on_click = !strcmp ("true", getValue("raise_on_click", rc));
+  raise_on_click = !strcmp ("true", getValue ("raise_on_click", rc));
 
   if (!strcmp ("center_root", getValue ("window_placement", rc)))
     window_placement = PLACEMENT_ROOT;
@@ -302,7 +302,7 @@ loadSettings ()
   if (workspace_count < 0)
     {
       workspace_count = abs (atoi (getValue ("workspace_count", rc)));
-      setGnomeHint (dpy, root, win_workspace_count, workspace_count);
+      setGnomeHint (root, win_workspace_count, workspace_count);
     }
   wrap_workspaces = !strcmp ("true", getValue ("wrap_workspaces", rc));
 

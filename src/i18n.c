@@ -27,6 +27,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "i18n.h"
+#include "xmalloc.h"
 
 int use_fontset;
 

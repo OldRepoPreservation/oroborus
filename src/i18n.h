@@ -42,10 +42,4 @@ void drawString (Display *, Drawable, MyFont *, GC, int, int, char *);
 int getTextWidth (char *, MyFont *);
 void getWindowName (Display *, Window, char **);
 
-/* XMALLOC */
-extern void *xmalloc (size_t n);
-extern void *xcalloc (size_t n, size_t s);
-extern void *xrealloc (void * p, size_t n);
-extern char *xstrdup (char *p);
-
 #endif /* __I18N_H */

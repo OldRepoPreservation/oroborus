@@ -127,11 +127,11 @@ handleKeyPress (XKeyEvent * ev)
 	  break;
 	case KEY_NEXT_WORKSPACE:
 	  workspaceSwitch (workspace + 1, NULL);
-	  clientWarpMouse (clientGetFocus());
+	  clientWarpMouse (clientGetFocus ());
 	  break;
 	case KEY_PREV_WORKSPACE:
 	  workspaceSwitch (workspace - 1, NULL);
-	  clientWarpMouse (clientGetFocus());
+	  clientWarpMouse (clientGetFocus ());
 	  break;
 	case KEY_ADD_WORKSPACE:
 	  workspaceSetCount (workspace_count + 1);
@@ -144,83 +144,83 @@ handleKeyPress (XKeyEvent * ev)
 	  break;
 	case KEY_WORKSPACE_1:
 	  workspaceSwitch (0, NULL);
-	  clientWarpMouse (clientGetFocus());
+	  clientWarpMouse (clientGetFocus ());
 	  break;
 	case KEY_WORKSPACE_2:
 	  workspaceSwitch (1, NULL);
-	  clientWarpMouse (clientGetFocus());
+	  clientWarpMouse (clientGetFocus ());
 	  break;
 	case KEY_WORKSPACE_3:
 	  workspaceSwitch (2, NULL);
-	  clientWarpMouse (clientGetFocus());
+	  clientWarpMouse (clientGetFocus ());
 	  break;
 	case KEY_WORKSPACE_4:
 	  workspaceSwitch (3, NULL);
-	  clientWarpMouse (clientGetFocus());
+	  clientWarpMouse (clientGetFocus ());
 	  break;
 	case KEY_WORKSPACE_5:
 	  workspaceSwitch (4, NULL);
-	  clientWarpMouse (clientGetFocus());
+	  clientWarpMouse (clientGetFocus ());
 	  break;
 	case KEY_WORKSPACE_6:
 	  workspaceSwitch (5, NULL);
-	  clientWarpMouse (clientGetFocus());
+	  clientWarpMouse (clientGetFocus ());
 	  break;
 	case KEY_WORKSPACE_7:
 	  workspaceSwitch (6, NULL);
-	  clientWarpMouse (clientGetFocus());
+	  clientWarpMouse (clientGetFocus ());
 	  break;
 	case KEY_WORKSPACE_8:
 	  workspaceSwitch (7, NULL);
-	  clientWarpMouse (clientGetFocus());
+	  clientWarpMouse (clientGetFocus ());
 	  break;
 	case KEY_WORKSPACE_9:
 	  workspaceSwitch (8, NULL);
-	  clientWarpMouse (clientGetFocus());
+	  clientWarpMouse (clientGetFocus ());
 	  break;
 	case KEY_MOVE_NEXT_WORKSPACE:
 	  workspaceSwitch (workspace + 1, c);
-	  clientWarpMouse (clientGetFocus());
+	  clientWarpMouse (clientGetFocus ());
 	  break;
 	case KEY_MOVE_PREV_WORKSPACE:
 	  workspaceSwitch (workspace - 1, c);
-	  clientWarpMouse (clientGetFocus());
+	  clientWarpMouse (clientGetFocus ());
 	  break;
 	case KEY_MOVE_WORKSPACE_1:
 	  workspaceSwitch (0, c);
-	  clientWarpMouse (clientGetFocus());
+	  clientWarpMouse (clientGetFocus ());
 	  break;
 	case KEY_MOVE_WORKSPACE_2:
 	  workspaceSwitch (1, c);
-	  clientWarpMouse (clientGetFocus());
+	  clientWarpMouse (clientGetFocus ());
 	  break;
 	case KEY_MOVE_WORKSPACE_3:
 	  workspaceSwitch (2, c);
-	  clientWarpMouse (clientGetFocus());
+	  clientWarpMouse (clientGetFocus ());
 	  break;
 	case KEY_MOVE_WORKSPACE_4:
 	  workspaceSwitch (3, c);
-	  clientWarpMouse (clientGetFocus());
+	  clientWarpMouse (clientGetFocus ());
 	  break;
 	case KEY_MOVE_WORKSPACE_5:
 	  workspaceSwitch (4, c);
-	  clientWarpMouse (clientGetFocus());
+	  clientWarpMouse (clientGetFocus ());
 	  break;
 	case KEY_MOVE_WORKSPACE_6:
 	  workspaceSwitch (5, c);
-	  clientWarpMouse (clientGetFocus());
+	  clientWarpMouse (clientGetFocus ());
 	  break;
 	case KEY_MOVE_WORKSPACE_7:
 	  workspaceSwitch (6, c);
-	  clientWarpMouse (clientGetFocus());
+	  clientWarpMouse (clientGetFocus ());
 	  break;
 	case KEY_MOVE_WORKSPACE_8:
 	  workspaceSwitch (7, c);
-	  clientWarpMouse (clientGetFocus());
+	  clientWarpMouse (clientGetFocus ());
 	  break;
 	case KEY_MOVE_WORKSPACE_9:
 	  workspaceSwitch (8, c);
-	  clientWarpMouse (clientGetFocus());
+	  clientWarpMouse (clientGetFocus ());
 	  break;
 	}
     }
@@ -237,11 +237,11 @@ handleKeyPress (XKeyEvent * ev)
 	  break;
 	case KEY_NEXT_WORKSPACE:
 	  workspaceSwitch (workspace + 1, NULL);
-	  clientWarpMouse (clientGetFocus());
+	  clientWarpMouse (clientGetFocus ());
 	  break;
 	case KEY_PREV_WORKSPACE:
 	  workspaceSwitch (workspace - 1, NULL);
-	  clientWarpMouse (clientGetFocus());
+	  clientWarpMouse (clientGetFocus ());
 	  break;
 	case KEY_ADD_WORKSPACE:
 	  workspaceSetCount (workspace_count + 1);
@@ -251,39 +251,39 @@ handleKeyPress (XKeyEvent * ev)
 	  break;
 	case KEY_WORKSPACE_1:
 	  workspaceSwitch (0, NULL);
-	  clientWarpMouse (clientGetFocus());
+	  clientWarpMouse (clientGetFocus ());
 	  break;
 	case KEY_WORKSPACE_2:
 	  workspaceSwitch (1, NULL);
-	  clientWarpMouse (clientGetFocus());
+	  clientWarpMouse (clientGetFocus ());
 	  break;
 	case KEY_WORKSPACE_3:
 	  workspaceSwitch (2, NULL);
-	  clientWarpMouse (clientGetFocus());
+	  clientWarpMouse (clientGetFocus ());
 	  break;
 	case KEY_WORKSPACE_4:
 	  workspaceSwitch (3, NULL);
-	  clientWarpMouse (clientGetFocus());
+	  clientWarpMouse (clientGetFocus ());
 	  break;
 	case KEY_WORKSPACE_5:
 	  workspaceSwitch (4, NULL);
-	  clientWarpMouse (clientGetFocus());
+	  clientWarpMouse (clientGetFocus ());
 	  break;
 	case KEY_WORKSPACE_6:
 	  workspaceSwitch (5, NULL);
-	  clientWarpMouse (clientGetFocus());
+	  clientWarpMouse (clientGetFocus ());
 	  break;
 	case KEY_WORKSPACE_7:
 	  workspaceSwitch (6, NULL);
-	  clientWarpMouse (clientGetFocus());
+	  clientWarpMouse (clientGetFocus ());
 	  break;
 	case KEY_WORKSPACE_8:
 	  workspaceSwitch (7, NULL);
-	  clientWarpMouse (clientGetFocus());
+	  clientWarpMouse (clientGetFocus ());
 	  break;
 	case KEY_WORKSPACE_9:
 	  workspaceSwitch (8, NULL);
-	  clientWarpMouse (clientGetFocus());
+	  clientWarpMouse (clientGetFocus ());
 	  break;
 	}
     }
@@ -575,15 +575,15 @@ handlePropertyNotify (XPropertyEvent * ev)
 	  frameDraw (c);
 	}
       else if (ev->atom == win_hints)
-	getGnomeHint (dpy, c->window, win_hints, &c->win_hints);
+	getGnomeHint (c->window, win_hints, &c->win_hints);
       else if (ev->atom == win_layer)
 	{
-	  getGnomeHint (dpy, c->window, win_layer, &dummy);
+	  getGnomeHint (c->window, win_layer, &dummy);
 	  clientSetLayer (c, dummy);
 	}
       else if (ev->atom == win_workspace)
 	{
-	  getGnomeHint (dpy, c->window, win_workspace, &dummy);
+	  getGnomeHint (c->window, win_workspace, &dummy);
 	  clientSetWorkspace (c, dummy);
 	}
     }
@@ -591,11 +591,11 @@ handlePropertyNotify (XPropertyEvent * ev)
     {
       if (ev->atom == win_workspace_count)
 	{
-	  getGnomeHint (dpy, root, win_workspace_count, &dummy);
+	  getGnomeHint (root, win_workspace_count, &dummy);
 	  workspaceSetCount (dummy);
 	}
       else if (ev->atom == gnome_panel_desktop_area)
-	getGnomeDesktopMargins (dpy, margins);
+	getGnomeDesktopMargins (margins);
     }
 }
 
@@ -616,7 +616,7 @@ handleClientMessage (XClientMessageEvent * ev)
 	clientHide (c, True);
       else if (ev->message_type == win_layer && ev->format == 32)
 	{
-	  setGnomeHint (dpy, c->window, ev->data.l[0], win_hints);
+	  setGnomeHint (c->window, ev->data.l[0], win_hints);
 	  clientRaise (c);
 	}
       else if (ev->message_type == win_state && ev->format == 32)

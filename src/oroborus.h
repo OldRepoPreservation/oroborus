@@ -41,6 +41,7 @@
 #include "pixmap.h"
 #include "parserc.h"
 #include "system.h"
+#include "xmalloc.h"
 
 /*
  *
@@ -266,7 +267,8 @@ extern MyPixmap sides[3][2], corners[4][2], buttons[4][3], title[5][2];
 extern char button_layout[6];
 extern int double_click_action;
 extern int box_move, box_resize;
-extern int click_to_focus, focus_new, raise_on_focus, raise_delay, raise_on_click;
+extern int click_to_focus, focus_new, raise_on_focus, raise_delay,
+  raise_on_click;
 extern int window_placement, snap_to_border, snap_to_windows, snap_width;
 extern int workspace_count, wrap_workspaces;
 extern int button_state[4];
@@ -330,11 +332,5 @@ void reloadSettings ();
 
 void workspaceSwitch (int, Client *);
 void workspaceSetCount (int);
-
-/* XMALLOC */
-extern void *xmalloc (size_t n);
-extern void *xcalloc (size_t n, size_t s);
-extern void *xrealloc (void * p, size_t n);
-extern char *xstrdup (char *p);
 
 #endif /* __OROBORUS_H */
