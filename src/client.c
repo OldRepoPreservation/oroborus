@@ -270,7 +270,7 @@ clientSetHeight (Client * c, int h1)
 }
 
 Client *
-clientGetTopMost (int layer)
+clientGetTopMost (int layer, int real)
 {
 	Window w1, w2, *wins;
 	unsigned int i, count;
@@ -286,12 +286,25 @@ clientGetTopMost (int layer)
 		{
 			XGetWindowAttributes (dpy, wins[i], &attr);
 			c = clientGetFromWindow (wins[i], FRAME);
-			if (c && attr.map_state == IsViewable && !typeDock(c->window))
+			if (real)
 				{
-					if (c->win_layer <= layer)
-						top = c;
-					else
-						break;
+					if (c && attr.map_state == IsViewable)
+						{
+							if (c->win_layer <= layer)
+								top = c;
+							else
+								break;
+						}
+				}
+			else
+				{
+					if (c && attr.map_state == IsViewable && !typeDock(c->window))
+						{
+							if (c->win_layer <= layer)
+								top = c;
+							else
+								break;
+						}
 				}
 		}
 	if (wins)
@@ -354,7 +367,10 @@ clientConfigure (Client * c, XWindowChanges * wc, int mask)
 			switch (wc->stack_mode)
 				{
 				case Above:
-					sibling = clientGetTopMost (c->win_layer);
+					if (strcmp (c->name,"MPlayer") == 0)
+						sibling = clientGetTopMost (c->win_layer, 1); // get the real top
+					else
+						sibling = clientGetTopMost (c->win_layer, 0);
 					if (!sibling)
 						wc->stack_mode = Below;
 					break;
