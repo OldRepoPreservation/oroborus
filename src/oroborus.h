@@ -45,6 +45,7 @@
 #include "system.h"
 #include "session.h"
 #include "xmalloc.h"
+#include "config.h"
 
 /*
  *

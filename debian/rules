@@ -9,7 +9,7 @@ configure-stamp:
 	# Add here commands to configure the package.
 	# first check if the configure already exists, if not generate it.
 	test -f configure || $(MAKE) -f Makefile.cvs
-	# then run it
+	# then run the configure script
 	./configure --prefix=/usr --mandir=/usr/share/man
 	touch configure-stamp
 
@@ -46,7 +46,6 @@ binary-arch: build install
 	dh_installdocs
 	dh_installexamples
 	dh_installmenu
-#	dh_installman $(CURDIR)/debian/oroborus.1
 	dh_installchangelogs
 	dh_strip
 	dh_link

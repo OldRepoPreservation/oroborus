@@ -164,7 +164,8 @@ initialize (int argc, char **argv)
 #endif
 
 	progname = argv[0];
-	progname = strrchr(progname, '/') + sizeof(char);
+	if (strrchr(progname, '/'))
+		progname = strrchr(progname, '/') + sizeof(char);
 
 	decode_switches (argc, argv);
 
