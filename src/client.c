@@ -628,6 +628,8 @@ clientFrame (Window w)
 #ifdef DEBUG
   printf ("client_count=%d\n", client_count);
 #endif
+  if (c->above)
+    clientSetFocus (c, 0);
 }
 
 void
