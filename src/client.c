@@ -1315,7 +1315,7 @@ clientResize (Client * c, XEvent * e)
 #endif
 
   if ((c->win_state & WIN_STATE_SHADED) ||
-      (c->win_state & WIN_STATE_MAXIMIZED == WIN_STATE_MAXIMIZED))
+      (c->win_state & WIN_STATE_MAXIMIZED))
     return;
 
   getMouseXY (dpy, c->frame, &mx, &my);
