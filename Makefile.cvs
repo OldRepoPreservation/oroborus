@@ -1,6 +1,7 @@
 default: all
 clean:
-	find . -name Makefile.in | xargs rm
+	test "$(find . -name Makefile.in)" && find . -name Makefile.in | xargs rm || true
+	rm -rf autom4te.cache
 	rm -f configure
 	rm -f aclocal.m4
 	rm -f src/stamp-h.in
