@@ -111,6 +111,7 @@ int typeDock (Window);
 int typeEWMH (Window, char *);
 void *getPropData (Window, Atom, Atom, unsigned long *);
 void getEWMHState (Window, long *);
+void setFocusHint (Window);
 int equals (char *left, char *right);
 
 #endif /* __HINTS_H */

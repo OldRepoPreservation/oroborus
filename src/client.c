@@ -986,8 +986,7 @@ Client *
 clientGetFocus ()
 {
   Window w;
-  int dummy, i;
-  Client *c;
+  int dummy;
 
 #ifdef DEBUG
   printf ("entering clientGetFocus\n");
