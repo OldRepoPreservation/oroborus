@@ -2,11 +2,7 @@ Things to do
 ============
 
 * Write new documentation.
-  Write a Manpage -> DONE
-  Example file needs update.
   Doxygen needs to be written.
-
-* Reimplement Xinerama support
 
 * Make transient windows stay stacked above their parents
   *** FIXED ***

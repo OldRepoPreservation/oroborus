@@ -1,1 +1,1 @@
-SUBDIRS=cruxish next oroborus platinum slimline windows coldsteel agua Platinum2 QNX aubergine brushed-metal e017 metal_clasp pillage
+SUBDIRS=cruxish next oroborus platinum slimline windows agua QNX e017 pillage
