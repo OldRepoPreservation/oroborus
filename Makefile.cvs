@@ -1,15 +1,15 @@
 default: all
 clean:
-	find -name Makefile.in | xargs rm
-	rm configure
-	rm aclocal.m4
-	rm src/stamp-h.in
+	find . -name Makefile.in | xargs rm
+	rm -f configure
+	rm -f aclocal.m4
+	rm -f src/stamp-h.in
 
 all:
 	aclocal
 	autoconf
 	autoheader
-	automake-1.4
+	automake -a
 
 generate-tags:
 	find -iname '*.c' -print0 -o -iname '*.h' -print0 | xargs -0 ctags -f functions
