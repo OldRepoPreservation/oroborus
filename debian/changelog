@@ -1,3 +1,16 @@
+oroborus (2.0.10-2) unstable; urgency=low
+
+  * Some small changes to the c code, mostly vim modeline changes. 
+
+ -- Stefan Pfetzing <dreamind@dreamind.de>  Sat, 28 Dec 2002 11:46:08 +0100
+
+oroborus (2.0.10-1) unstable; urgency=low
+
+  * Added the missing parsing of *rcfile, so now --file and -r *really*
+    works.
+
+ -- Stefan Pfetzing <dreamind@dreamind.de>  Thu,  5 Sep 2002 10:23:42 +0200
+
 oroborus (2.0.9-1) unstable; urgency=low
 
   * Whoops, wrong parameter in the getopt string.
