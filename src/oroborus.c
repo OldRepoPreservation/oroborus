@@ -102,16 +102,15 @@ usage (int status)
   printf (_("%s - \
 lightweight themeable window manager for X.\n"), progname);
   printf (_("Usage: %s [OPTION]... \n"), progname);
-  printf (_("\
-Options:\n\
-  -r, --file=FILE            use an alternative rcfile\n\
-                             instead of $HOME/.oroborusrc\n\
-  -v, --verbose              print more information\n\
-  -h, --help                 display this help and exit\n\
-  -V, --version              output version information and exit\n\
-  --display                  use an alternative display instead of,\n\
-                             $DISPLAY\n\
-"));
+  printf (_("Options:\n"
+"  -r, --file=FILE            use an alternative rcfile\n"
+"                             instead of $HOME/.oroborusrc\n"
+"  -v, --verbose              print more information\n"
+"  -h, --help                 display this help and exit\n"
+"  -V, --version              output version information and exit\n"
+"  --display                  use an alternative display instead of,\n"
+"                             $DISPLAY\n"
+));
   exit (status);
 }
 
