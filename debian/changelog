@@ -1,3 +1,11 @@
+oroborus (2.0.5-1) unstable; urgency=low
+
+  * Fixed the themes. 
+  * Fixed handling of transient windows.
+  * Fixed the example file.
+
+ -- Stefan Pfetzing <dreamind@dreamind.de>  Mon, 27 May 2002 04:57:43 +0200
+
 oroborus (2.0.4-17) unstable; urgency=low
 
   * Fixed the wrong snapping of windows to desktop icons.

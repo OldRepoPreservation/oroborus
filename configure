@@ -695,7 +695,7 @@ fi
 
 PACKAGE=oroborus
 
-VERSION=2.0.4
+VERSION=2.0.5
 
 if test "`cd $srcdir && pwd`" != "`pwd`" && test -f $srcdir/config.status; then
   { echo "configure: error: source directory already configured; run "make distclean" there first" 1>&2; exit 1; }
@@ -2436,7 +2436,7 @@ done
 ac_given_srcdir=$srcdir
 ac_given_INSTALL="$INSTALL"
 
-trap 'rm -fr `echo "Makefile src/Makefile defaults/defaults defaults/Makefile schemes/Makefile themes/Makefile themes/cruxish/Makefile themes/next/Makefile themes/oroborus/Makefile themes/platinum/Makefile themes/slimline/Makefile themes/windows/Makefile themes/coldsteel/Makefile themes/agua/Makefile themes/Platinum2/Makefile themes/QNX/Makefile themes/aubergine/Makefile themes/brushed-metal/Makefile themes/e017/Makefile themes/metal_clasp/Makefile themes/pillage/Makefile" | sed "s/:[^ ]*//g"` conftest*; exit 1' 1 2 15
+trap 'rm -fr `echo "Makefile src/Makefile defaults/defaults defaults/Makefile schemes/Makefile themes/Makefile themes/cruxish/Makefile themes/next/Makefile themes/oroborus/Makefile themes/platinum/Makefile themes/slimline/Makefile themes/windows/Makefile themes/agua/Makefile themes/QNX/Makefile themes/e017/Makefile themes/pillage/Makefile" | sed "s/:[^ ]*//g"` conftest*; exit 1' 1 2 15
 EOF
 cat >> $CONFIG_STATUS <<EOF
 
@@ -2526,7 +2526,7 @@ EOF
 
 cat >> $CONFIG_STATUS <<EOF
 
-CONFIG_FILES=\${CONFIG_FILES-"Makefile src/Makefile defaults/defaults defaults/Makefile schemes/Makefile themes/Makefile themes/cruxish/Makefile themes/next/Makefile themes/oroborus/Makefile themes/platinum/Makefile themes/slimline/Makefile themes/windows/Makefile themes/coldsteel/Makefile themes/agua/Makefile themes/Platinum2/Makefile themes/QNX/Makefile themes/aubergine/Makefile themes/brushed-metal/Makefile themes/e017/Makefile themes/metal_clasp/Makefile themes/pillage/Makefile"}
+CONFIG_FILES=\${CONFIG_FILES-"Makefile src/Makefile defaults/defaults defaults/Makefile schemes/Makefile themes/Makefile themes/cruxish/Makefile themes/next/Makefile themes/oroborus/Makefile themes/platinum/Makefile themes/slimline/Makefile themes/windows/Makefile themes/agua/Makefile themes/QNX/Makefile themes/e017/Makefile themes/pillage/Makefile"}
 EOF
 cat >> $CONFIG_STATUS <<\EOF
 for ac_file in .. $CONFIG_FILES; do if test "x$ac_file" != x..; then

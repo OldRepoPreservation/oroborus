@@ -62,7 +62,7 @@ MAKEINFO = @MAKEINFO@
 PACKAGE = @PACKAGE@
 VERSION = @VERSION@
 
-SUBDIRS = cruxish next oroborus platinum slimline windows coldsteel agua Platinum2 QNX aubergine brushed-metal e017 metal_clasp pillage
+SUBDIRS = cruxish next oroborus platinum slimline windows agua QNX e017 pillage
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_CLEAN_FILES = 
 DIST_COMMON =  Makefile.am Makefile.in
