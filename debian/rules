@@ -6,7 +6,11 @@ export DH_COMPAT=2
 configure: configure-stamp
 configure-stamp:
 	dh_testdir
-	CC=gcc-3.2 ./configure --prefix=/usr --mandir=/usr/share/man
+	# Add here commands to configure the package.
+	# first check if the configure already exists, if not generate it.
+	test -f configure || $(MAKE) -f Makefile.cvs
+	# then run it
+	./configure --prefix=/usr --mandir=/usr/share/man
 	touch configure-stamp
 
 build: configure-stamp build-stamp

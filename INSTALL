@@ -7,6 +7,9 @@ CVS Instructions
 run `make -f Makefile.cvs'. (autoconf, automake autoheader and aclocal are
 needed for this.) After generating these files, you can continue as usual.
 
+   This is now also done if you run dpkg-buildpackage or something similar
+to generate a debian package.
+
    If you want to generate a patch for oroborus, you can use this makefile
 to remove everyting not neccessary after doing a `make clean' simply do an
 `make -f makefile.cvs clean', which will remove anything not necessary.
