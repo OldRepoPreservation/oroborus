@@ -4,8 +4,16 @@ clean:
 	rm configure
 	rm aclocal.m4
 	rm src/stamp-h.in
+
 all:
 	aclocal
 	autoconf
 	autoheader
 	automake
+
+generate-tags:
+	find -iname '*.c' -print0 -o -iname '*.h' -print0 | xargs -0 ctags -f functions
+	find -iname '*.c' -print0 -o -iname '*.h' -print0 | xargs -0 ctags
+
+remove-tags:
+	find -iname 'tags' -print0 -o -iname 'functions' -print0 | xargs -0 rm

@@ -738,6 +738,9 @@ clientRaise (Client * c)
 	printf ("entering clientRaise\n");
 #endif
 
+	if(!c)
+		return;
+	
 	if (c->win_hints & WIN_HINTS_SKIP_FOCUS)
 		{
 #ifdef DEBUG
