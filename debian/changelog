@@ -1,3 +1,10 @@
+oroborus (2.0.11-2) unstable; urgency=low
+
+  * *argh* corrected configure.in, seems I have to finally do some script
+    for this, so this won't happen again.
+
+ -- Stefan Pfetzing <dreamind@dreamind.de>  Fri, 17 Jan 2003 23:59:03 +0100
+
 oroborus (2.0.11-1) unstable; urgency=low
 
   * Fixed the "supported" hints so most fullscreen using applications
@@ -5,7 +12,7 @@ oroborus (2.0.11-1) unstable; urgency=low
   * Some further minor code cleanups.
   * Removed the CC=gcc-3.2 stuff since debian unstable is on gcc-3.2.
 
- -- Stefan Pfetzing <dreamind@dreamind.de>  Fri, 10 Jan 2003 20:57:47 +0100
+ -- Stefan Pfetzing <dreamind@dreamind.de>  Fri, 17 Jan 2003 23:59:01 +0100
 
 oroborus (2.0.10-2) unstable; urgency=low
 
