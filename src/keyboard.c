@@ -82,6 +82,9 @@ grabKey (Display * dpy, MyKey * key, Window w)
 		GrabModeAsync, GrabModeAsync);
       XGrabKey (dpy, key->keycode, key->modifier | ScrollLockMask, w, False,
 		GrabModeAsync, GrabModeAsync);
+      XGrabKey (dpy, key->keycode,
+		key->modifier | CapsLockMask | ScrollLockMask, w, False,
+		GrabModeAsync, GrabModeAsync);
       XGrabKey (dpy, key->keycode, key->modifier | NumLockMask | CapsLockMask,
 		w, False, GrabModeAsync, GrabModeAsync);
       XGrabKey (dpy, key->keycode,
@@ -104,7 +107,7 @@ ungrabKeys (Display * dpy, Window w)
 }
 
 void
-init_keyboard (Display *dpy)
+init_keyboard (Display * dpy)
 {
   XModifierKeymap *xmk = NULL;
   KeyCode *map;
