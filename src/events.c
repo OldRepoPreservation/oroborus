@@ -704,6 +704,9 @@ handleClientMessage (XClientMessageEvent * ev)
 	      if (ev->data.l[1] == net_atoms[NET_WM_STATE_ABOVE]
 		  || ev->data.l[2] == net_atoms[NET_WM_STATE_ABOVE])
 		clientToggleAbove (c);
+	      if (ev->data.l[1] == net_atoms[NET_WM_STATE_FULLSCREEN]
+		  || ev->data.l[2] == net_atoms[NET_WM_STATE_FULLSCREEN])
+		clientToggleFullscreen(c);
 	      break;
 	    }
 	}

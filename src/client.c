@@ -967,6 +967,50 @@ clientToggleSticky (Client * c)
 }
 
 void
+clientToggleFullscreen (Client * c)
+{
+  XWindowChanges wc;
+
+#ifdef DEBUG
+  printf ("entering clientToggleFullscreen\n");
+  printf ("fullscreening/unfullscreening client (%#lx)\n", c->window);
+#endif
+
+  // check if the window is already at its maximum size.
+  if (c->size->flags & (PMinSize | PMaxSize) &&
+      c->size->min_width == c->size->max_width &&
+      c->size->min_height == c->size->max_height)
+    return;
+
+  
+  if (c->win_state & WIN_STATE_FULLSCREEN)
+    {
+      wc.width = c->fs_width;
+      wc.height = c->fs_height;
+      wc.x = c->fs_x;
+      wc.y = c->fs_y;
+      c->win_state &= ~WIN_STATE_FULLSCREEN;
+      clientSetLayer(c, c->fs_win_layer);
+    }
+  else
+    {
+      c->fs_x = c->x;
+      c->fs_y = c->y;
+      c->fs_width = c->width;
+      c->fs_height = c->height;
+      c->win_state |= WIN_STATE_FULLSCREEN;
+      c->fs_win_layer = c->win_layer;
+      clientSetLayer(c, WIN_LAYER_FULLSCREEN);
+      wc.x = 0;
+      wc.y = 0;
+      wc.width = XDisplayWidth (dpy, screen);
+      wc.height = XDisplayHeight (dpy, screen);
+    }
+
+  clientConfigure (c, &wc, CWX | CWY | CWWidth | CWHeight);
+}
+
+void
 clientToggleMaximized (Client * c, int mode)
 {
   XWindowChanges wc;
@@ -980,6 +1024,12 @@ clientToggleMaximized (Client * c, int mode)
       c->size->min_width == c->size->max_width &&
       c->size->min_height == c->size->max_height)
     return;
+
+  if (c->win_state & WIN_STATE_FULLSCREEN)
+    {
+      clientToggleFullscreen(c);
+      return;
+    }
 
   if (c->win_state & WIN_STATE_MAXIMIZED)
     {

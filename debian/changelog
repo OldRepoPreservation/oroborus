@@ -7,11 +7,12 @@ oroborus (2.0.13-1) unstable; urgency=low
     compliant way!) Everybody who is interested may contact me for a fixed
     xine debian package.
   * Fixed some window placing problems after fullscreen mode.
-  * Added a new config option "cycle_workspaces". 
+  * Added a new config option "cycle_workspaces".
   * Corrected some theme configs.
     Note: No theme config should contain keybindings!
+  * Added correct fullscreen support. 
 
- -- Stefan Pfetzing <dreamind@dreamind.de>  Sun, 30 Mar 2003 20:45:06 +0200
+ -- Stefan Pfetzing <dreamind@dreamind.de>  Mon, 19 May 2003 02:09:22 +0200
 
 oroborus (2.0.12-1) unstable; urgency=low
 

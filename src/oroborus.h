@@ -203,6 +203,11 @@ struct _Client
   	old_y,		/**< remember the old position (when maximizing). */
   	old_width,	/**< remember the old dimensions (when maximizing). */
 	old_height;	/**< remember the old dimensions (when maximizing). */
+  int 	fs_x,		/**< remember the old position (when switching to fullscreen). */
+  	fs_y,		/**< remember the old position (when switching to fullscreen). */
+  	fs_width,	/**< remember the old dimensions (when switching to fullscreen). */
+	fs_height,	/**< remember the old dimensions (when switching to fullscreen). */
+	fs_win_layer;	/**< remember the old layer (when switching to fullscreen). */
   CARD32 margins[4];	/**< the space, the client wants to "reserve" at the desktop border,
 			  for example the gnome panel does this. */
   int button_pressed[BUTTON_COUNT];
