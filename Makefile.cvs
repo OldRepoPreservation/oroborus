@@ -5,6 +5,7 @@ clean:
 	rm -f configure
 	rm -f aclocal.m4
 	rm -f src/stamp-h.in
+	rm -f src/config.h.in
 
 all:
 	aclocal
