@@ -21,7 +21,7 @@
 
 #define __OROBORUS_C__
 
-/* some includes {{{1 */
+/* some includes ««« */
 #include "oroborus.h"
 #include <unistd.h>
 #include <stdlib.h>
@@ -30,7 +30,7 @@
 #include <signal.h>
 #include <sys/wait.h>
 #include <sys/types.h>
-/* }}}1 */
+/*»»»*/
 
 int
 handleXError (Display * dpy, XErrorEvent * err)
