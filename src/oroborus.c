@@ -164,6 +164,7 @@ initialize (int argc, char **argv)
 #endif
 
 	progname = argv[0];
+	progname = strrchr(progname, '/') + sizeof(char);
 
 	decode_switches (argc, argv);
 
@@ -188,7 +189,7 @@ initialize (int argc, char **argv)
 			exit (1);
 		}
 
-	session_init (argv[0], sm_client_id);
+	session_init (progname, sm_client_id);
 	act.sa_handler = handleSignal;
 	act.sa_flags = 0;
 	if (sigaction (SIGINT, &act, NULL))
@@ -226,6 +227,7 @@ initialize (int argc, char **argv)
 	setGnomeHint (gnome_win, win_supporting_wm_check, gnome_win);
 	setSupportingWmCheck (root, gnome_win);
 	setSupportingWmCheck (gnome_win, gnome_win);
+	setNetWmName(gnome_win, net_atoms[NET_WM_NAME],"oroborus");
 	setGnomeHint (root, win_desktop_button_proxy, gnome_win);
 	setGnomeHint (gnome_win, win_desktop_button_proxy, gnome_win);
 	getGnomeHint (root, win_workspace, &workspace);

@@ -53,7 +53,9 @@ static char *command = NULL;
 static void
 callback_die (SmcConn smc_conn, SmPointer client_data)
 {
+#ifdef DEBUG
 	printf("exiting\n");
+#endif
 	SmcCloseConnection (smc_conn, 0, NULL);
 
 	/* this graceful closedown stuff needs to be kept in sync: */
@@ -228,7 +230,9 @@ session_init (char *argv0, char *id)
 
 			/* Not really needed... */
 			fcntl (ice_fd, F_SETFD, fcntl (ice_fd, F_GETFD, 0) | FD_CLOEXEC);
+#ifdef DEBUG
 			printf("Connection established!\n");
+#endif
 		}
 }
 
@@ -247,7 +251,9 @@ poll_ice_msgs (void)
 
 			if (select (ice_fd + 1, &rd_fds, NULL, NULL, &timeout))
 				{
+#ifdef DEBUG
 					printf("polling\n");
+#endif
 					process_ice_msgs ();
 				}
 		}

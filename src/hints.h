@@ -111,6 +111,7 @@ void initMotifHints ();
 PropMwmHints *getMotifHints (Window);
 int getGnomeHint (Window, Atom, long *);
 void setGnomeHint (Window, Atom, long);
+void setNetWmName (Window, Atom, char *);
 void setSupportingWmCheck (Window, Window);
 void getGnomeDesktopMargins (CARD32 *);
 void getNetWMStrut (Window, CARD32*, CARD32*);

@@ -244,6 +244,17 @@ setGnomeHint (Window w, Atom a, long value)
 }
 
 void
+setNetWmName (Window w, Atom a, char *value)
+{
+#ifdef DEBUG
+	printf ("entering setNetWmName\n");
+#endif
+
+	XChangeProperty (dpy, w, a, XA_STRING, 8, PropModeReplace,
+									 (unsigned char *) value, strlen(value));
+}
+
+void
 setSupportingWmCheck (Window w, Window w2)
 {
 #ifdef DEBUG
