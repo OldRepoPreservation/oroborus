@@ -270,7 +270,7 @@ clientSetHeight (Client * c, int h1)
 }
 
 Client *
-clientGetTopMost (int layer, int real)
+clientGetTopMost (int layer)
 {
 	Window w1, w2, *wins;
 	unsigned int i, count;
@@ -290,25 +290,12 @@ clientGetTopMost (int layer, int real)
 		{
 			XGetWindowAttributes (dpy, wins[i], &attr);
 			c = clientGetFromWindow (wins[i], FRAME);
-			if (real)
+			if (c && attr.map_state == IsViewable)
 				{
-					if (c && attr.map_state == IsViewable)
-						{
-							if (c->win_layer <= layer)
-								top = c;
-							else
-								break;
-						}
-				}
-			else
-				{
-					if (c && attr.map_state == IsViewable) //&& !typeDock(c->window))
-						{
-							if (c->win_layer <= layer)
-								top = c;
-							else
-								break;
-						}
+					if (c->win_layer <= layer)
+						top = c;
+					else
+						break;
 				}
 		}
 	if (wins)
@@ -334,7 +321,7 @@ clientGetBottomMost (int layer)
 			XGetWindowAttributes (dpy, wins[i], &attr);
 			c = clientGetFromWindow (wins[i], FRAME);
 			if (c && attr.map_state == IsViewable
-					&& !((c->win_hints & WIN_HINTS_SKIP_FOCUS))) //&! typeDock(c->window)))
+					&& !((c->win_hints & WIN_HINTS_SKIP_FOCUS)))
 				{
 					if (c->win_layer >= layer)
 						break;
@@ -371,10 +358,7 @@ clientConfigure (Client * c, XWindowChanges * wc, int mask)
 			switch (wc->stack_mode)
 				{
 				case Above:
-					if (c->above)
-						sibling = clientGetTopMost (c->win_layer, 1); // get the real top
-					else
-						sibling = clientGetTopMost (c->win_layer, 0);
+					sibling = clientGetTopMost (c->win_layer);
 					if (!sibling)
 						wc->stack_mode = Below;
 					break;
@@ -910,6 +894,7 @@ clientToggleAbove (Client * c)
 #endif
 
 	(c->above) ? (c->above = False) : (c->above = True);
+	c->win_layer = WIN_LAYER_ONTOP;
 }
 
 void
