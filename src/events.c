@@ -29,6 +29,7 @@ handleKeyPress (XKeyEvent * ev)
   Client *c;
   int state, key;
   XEvent e;
+  XWindowChanges wc;
 
 #ifdef DEBUG
   printf ("entering handleKeyEvent\n");
@@ -56,6 +57,38 @@ handleKeyPress (XKeyEvent * ev)
 	    XWarpPointer (dpy, None, c->window, 0, 0, 0, 0,
 			  frameWidth (c) / 2, frameHeight (c) / 2);
 	  break;
+	    case KEY_TOP_LEFT:
+		wc.x = frameLeft(c) + margins[MARGIN_LEFT];
+		wc.y = frameTop(c) + margins[MARGIN_TOP];
+		clientConfigure (c, &wc, CWX | CWY);
+		if (!click_to_focus)
+		    XWarpPointer (dpy, None, c->window, 0, 0, 0, 0,
+				  frameWidth (c) / 2, frameHeight (c) / 2);
+		break;
+	    case KEY_TOP_RIGHT:
+		wc.x = XDisplayWidth(dpy, screen) - c->width - frameRight(c) - margins[MARGIN_RIGHT];
+		wc.y = frameTop(c) + margins[MARGIN_TOP];
+		clientConfigure (c, &wc, CWX | CWY);
+		if (!click_to_focus)
+		    XWarpPointer (dpy, None, c->window, 0, 0, 0, 0,
+				  frameWidth (c) / 2, frameHeight (c) / 2);
+		break;
+	    case KEY_BOTTOM_LEFT:
+		wc.x = frameLeft(c) + margins[MARGIN_LEFT];
+		wc.y = XDisplayHeight(dpy, screen) - c->height - frameBottom(c) - margins[MARGIN_BOTTOM];
+		clientConfigure (c, &wc, CWX | CWY);
+		if (!click_to_focus)
+		    XWarpPointer (dpy, None, c->window, 0, 0, 0, 0,
+				  frameWidth (c) / 2, frameHeight (c) / 2);
+		break;
+	    case KEY_BOTTOM_RIGHT:
+		wc.x = XDisplayWidth(dpy, screen) - c->width - frameRight(c) - margins[MARGIN_RIGHT];
+		wc.y = XDisplayHeight(dpy, screen) - c->height - frameBottom(c) - margins[MARGIN_BOTTOM];
+		clientConfigure (c, &wc, CWX | CWY);
+		if (!click_to_focus)
+		    XWarpPointer (dpy, None, c->window, 0, 0, 0, 0,
+				  frameWidth (c) / 2, frameHeight (c) / 2);
+		break;
 	case KEY_RESIZE_UP:
 	case KEY_RESIZE_DOWN:
 	case KEY_RESIZE_LEFT:

@@ -105,6 +105,10 @@ loadSettings ()
     {"move_window_workspace_7_key", NULL},
     {"move_window_workspace_8_key", NULL},
     {"move_window_workspace_9_key", NULL},
+	{"move_top_left_key", NULL},
+	{"move_top_right_key", NULL},
+	{"move_bottom_left_key", NULL},
+	{"move_bottom_right_key", NULL},
     {"quit_key", NULL},
     {NULL, NULL}
   };
@@ -384,6 +388,14 @@ loadSettings ()
 		  getValue ("move_window_workspace_8_key", rc));
   parseKeyString (dpy, &keys[KEY_MOVE_WORKSPACE_9],
 		  getValue ("move_window_workspace_9_key", rc));
+  parseKeyString (dpy, &keys[KEY_TOP_LEFT],
+		  getValue ("move_top_left_key", rc));
+  parseKeyString (dpy, &keys[KEY_TOP_RIGHT],
+		  getValue ("move_top_right_key", rc));
+  parseKeyString (dpy, &keys[KEY_BOTTOM_LEFT],
+		  getValue ("move_bottom_left_key", rc));
+  parseKeyString (dpy, &keys[KEY_BOTTOM_RIGHT],
+		  getValue ("move_bottom_right_key", rc));
   parseKeyString (dpy, &keys[KEY_QUIT], getValue ("quit_key", rc));
   ungrabKeys (dpy, gnome_win);
   grabKey (dpy, &keys[KEY_CYCLE_WINDOWS], gnome_win);

@@ -73,6 +73,10 @@ clientGrabKeys (Client * c)
   grabKey (dpy, &keys[KEY_MOVE_DOWN], c->window);
   grabKey (dpy, &keys[KEY_MOVE_LEFT], c->window);
   grabKey (dpy, &keys[KEY_MOVE_RIGHT], c->window);
+  grabKey (dpy, &keys[KEY_TOP_LEFT], c->window);
+  grabKey (dpy, &keys[KEY_TOP_RIGHT], c->window);
+  grabKey (dpy, &keys[KEY_BOTTOM_LEFT], c->window);
+  grabKey (dpy, &keys[KEY_BOTTOM_RIGHT], c->window);
   grabKey (dpy, &keys[KEY_RESIZE_UP], c->window);
   grabKey (dpy, &keys[KEY_RESIZE_DOWN], c->window);
   grabKey (dpy, &keys[KEY_RESIZE_LEFT], c->window);

@@ -130,8 +130,12 @@
 #define KEY_MOVE_WORKSPACE_7        	39
 #define KEY_MOVE_WORKSPACE_8        	40
 #define KEY_MOVE_WORKSPACE_9        	41
-#define KEY_QUIT			42
-#define KEY_COUNT			43
+#define KEY_TOP_LEFT        42
+#define KEY_TOP_RIGHT       43
+#define KEY_BOTTOM_LEFT     44
+#define KEY_BOTTOM_RIGHT    45
+#define KEY_QUIT			46
+#define KEY_COUNT			47
 
 #define ALIGN_LEFT			0
 #define ALIGN_RIGHT			1
