@@ -416,7 +416,6 @@ typeEWMH (Window w, char *type)
 #endif
 
 	data = getPropData (w, net_atoms[NET_WM_WINDOW_TYPE], XA_ATOM, &items);
-	printf("items: %d\n",items);
 	while (data && items && item < items && !ret)
 		{
 			char *name;
