@@ -973,9 +973,13 @@ clientSetFocus (Client * c, int sort)
 	}
 
       XSetInputFocus (dpy, c->window, RevertToNone, CurrentTime);
+      setFocusHint (c->window);
     }
   else
-    XSetInputFocus (dpy, gnome_win, RevertToNone, CurrentTime);
+    {
+      XSetInputFocus (dpy, gnome_win, RevertToNone, CurrentTime);
+      setFocusHint (NULL);
+    }
 }
 
 Client *
@@ -990,13 +994,7 @@ clientGetFocus ()
 #endif
 
   XGetInputFocus (dpy, &w, &dummy);
-  for (c = clients, i = 0; i < client_count; c = c->next, i++)
-    if (c->window == w)
-      return c;
-#ifdef DEBUG
-  printf ("exiting clientGetFocus\n");
-#endif
-  return NULL;
+  return clientGetFromWindow(w, WINDOW);
 }
 
 void

@@ -115,6 +115,8 @@ initNETHints ()
     XInternAtom (dpy, "_NET_NUMBER_OF_DESKTOPS", False);
   net_atoms[NET_CURRENT_DESKTOP] =
     XInternAtom (dpy, "_NET_CURRENT_DESKTOP", False);
+  net_atoms[NET_ACTIVE_WINDOW] =
+    XInternAtom (dpy, "_NET_ACTIVE_WINDOW", False);
   XChangeProperty (dpy, root, XInternAtom (dpy, "_NET_SUPPORTED", False),
 		   XA_ATOM, 32, PropModeReplace, (unsigned char *) net_atoms,
 		   NET_ATOM_COUNT);
@@ -347,6 +349,17 @@ getPropData (Window w, Atom prop, Atom type, unsigned long *items_ret)
     return prop_data;
   else
     return NULL;
+}
+
+void
+setFocusHint (Window w)
+{
+#ifdef DEBUG
+  printf ("entering setFocusHint\n");
+#endif
+
+  XChangeProperty (dpy, XDefaultRootWindow(dpy), net_atoms[NET_ACTIVE_WINDOW], XA_WINDOW, 32, PropModeReplace,
+		   (unsigned char *) &w, 1);
 }
 
 int
