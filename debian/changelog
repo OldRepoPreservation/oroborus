@@ -1,3 +1,14 @@
+oroborus (2.0.13-1) unstable; urgency=low
+
+  * New Release.
+  * Fix some MPlayer fullscreen problems.
+    Xine is somehow still broken, it sends a wrong message to Oroborus for
+    raising the window. This will hopefully soon be fixed. (to a standards
+    compliant way!) Everybody who is interested may contact me for a fixed
+    xine debian package.
+
+ -- Stefan Pfetzing <dreamind@dreamind.de>  Thu, 13 Mar 2003 03:33:04 +0100
+
 oroborus (2.0.12-1) unstable; urgency=low
 
   * *argh* corrected configure.in, this won't happen again, configure.in

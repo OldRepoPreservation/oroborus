@@ -939,6 +939,7 @@ clientToggleAbove (Client * c)
     {
       c->above = True;
       c->win_layer = WIN_LAYER_ONTOP;
+      clientSetFocus(c, 0);
     }
   setGnomeHint(c->window, win_layer, c->win_layer);
 }
