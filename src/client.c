@@ -850,7 +850,7 @@ clientSetWorkspace (Client * c, int ws)
 {
 #ifdef DEBUG
 	printf ("entering clientSetWorkspace\n");
-	printf ("setting client (%#lx) to workspace %d\n", c, ws);
+	printf ("setting client (%#lx) to workspace %d\n", c->window, ws);
 #endif
 
 	if (c->win_workspace == ws)
