@@ -1,5 +1,6 @@
 AC_INIT(src/oroborus.c)
-AM_INIT_AUTOMAKE(oroborus, 2.0.11)
+dnl Grab the package and version from the top debian/changelog entry.
+AM_INIT_AUTOMAKE(`sed 's/ .*$//; q' debian/changelog`, `sed 's/^.*(\(.*\)-.*).*$/\1/; q' debian/changelog`)
 
 dnl create a src/config.h file (Automake will add -DHAVE_CONFIG_H)
 AM_CONFIG_HEADER(src/config.h)
