@@ -1,0 +1,182 @@
+oroborus (2.0.4-17) unstable; urgency=low
+
+  * Fixed the wrong snapping of windows to desktop icons.
+  * Added a menu entry.
+  * Corrected the sources, now including a GPL notice everywhere.
+
+ -- Stefan Pfetzing <dreamind@dreamind.de>  Mon, 13 May 2002 00:11:43 +0200
+
+oroborus (2.0.4-16) unstable; urgency=low
+
+  * Fixed the missing action for the Quit Key.
+  * Fixed the wrong example. (wrong path)
+  * Fixed the title of the Manpage (no this is not MCFMT).
+  * Changed the default font to helvetica.
+  * Removed the Makefile*'s from the theme directory in the .deb
+  * Oroborus is now automagicaly restartet on upgrade.
+
+ -- Stefan Pfetzing <dreamind@dreamind.de>  Wed,  8 May 2002 13:50:59 +0200
+
+oroborus (2.0.4-15) unstable; urgency=low
+
+  * Small fix from execve to execvp.
+
+ -- Stefan Pfetzing <dreamind@dreamind.de>  Tue,  7 May 2002 03:17:23 +0200
+
+oroborus (2.0.4-14) unstable; urgency=low
+
+  * Added a Quit Key, defaults to Control + Mod1 + Q.
+  * Fixed the priority of ~/.oroborusrc, now has a higher prio than everyting
+    else.
+
+ -- Stefan Pfetzing <dreamind@dreamind.de>  Tue,  7 May 2002 02:56:45 +0200
+
+oroborus (2.0.4-13) unstable; urgency=low
+
+  * Correctly implemented the exec call (not in the sighandler! *d'oh*).
+  * Added a manpage.
+
+ -- Stefan Pfetzing <dreamind@dreamind.de>  Tue,  7 May 2002 01:53:39 +0200
+
+oroborus (2.0.4-12) unstable; urgency=low
+
+  * Moved the typeDesktop checking code where it belongs, in hints.c.
+
+ -- Stefan Pfetzing <dreamind@dreamind.de>  Mon,  6 May 2002 22:19:26 +0200
+
+oroborus (2.0.4-11) unstable; urgency=high
+
+  * D'oh silly small bug (please don't ask me *grin*) 
+
+ -- Stefan Pfetzing <dreamind@dreamind.de>  Mon,  6 May 2002 21:27:22 +0200
+
+oroborus (2.0.4-10) unstable; urgency=low
+
+  * Changed some signal handlers, now Oroborus exec's itself when
+    catching a SIGHUP. It also correctly waits for children. (no
+    more "defunct" processes.) (So you can now use Oroborus as your
+    "pseudo-session-manager", at the end of your ~/.xsession)
+  * Fixed handling of NET_WM_WINDOW_TYPE_DESKTOP. Now Oroborus 
+    never raises icons on the Desktop (for example with ROX-Filer)
+    and it also doesnt move Windows behind these Icons.
+
+ -- Stefan Pfetzing <dreamind@dreamind.de>  Mon,  6 May 2002 19:26:26 +0200
+
+oroborus (2.0.4-9) unstable; urgency=low
+
+  * Fixed (hopefully now) segfaults when using libXpm. 
+
+ -- Stefan Pfetzing <dreamind@dreamind.de>  Fri,  3 May 2002 15:07:06 +0200
+
+oroborus (2.0.4-8) unstable; urgency=low
+
+  * Fixed segfaults when no client was active.
+  * Fixed segfaults (again *shrug*) when resizing an XPM.
+
+ -- Stefan Pfetzing <dreamind@dreamind.de>  Fri,  3 May 2002 14:29:09 +0200
+
+oroborus (2.0.4-7) unstable; urgency=low
+
+  * Fixed some segfaults when the window name was empty.
+
+ -- Stefan Pfetzing <dreamind@dreamind.de>  Tue,  2 Apr 2002 01:40:40 +0200
+
+oroborus (2.0.4-6) unstable; urgency=low
+
+  * Fixed some lintian issues. 
+
+ -- Stefan Pfetzing <dreamind@dreamind.de>  Tue, 12 Mar 2002 21:37:06 +0100
+
+oroborus (2.0.4-5) unstable; urgency=low
+
+  * Fixed mouse warping, now the mouse is only warped when not using
+    click_to_focus eg. when using focus follows mouse.
+  * Fixed some segfaults in oroborus while scaling xpms.
+  * Added special ignore for ROX-Filer's Icons.
+
+ -- Stefan Pfetzing <dreamind@dreamind.de>  Sun, 24 Feb 2002 06:47:33 +0100
+
+oroborus (2.0.4-4) unstable; urgency=low
+
+  * Fix some issues with gnome-panel
+
+ -- Stefan Pfetzing <dreamind@dreamind.de>  Tue, 29 Jan 2002 10:17:13 +0100
+
+oroborus (2.0.4-3) unstable; urgency=low
+
+  * Now the mouse warps to the middle of a window
+  * Window moving also now warps the mouse to the middle
+    of a Window.
+
+ -- Stefan Pfetzing <dreamind@dreamind.de>  Thu, 10 Jan 2002 02:57:45 +0100
+
+oroborus (2.0.4-2) unstable; urgency=low
+
+  * add warp mouse patch.
+  * add middle-mouse-resize patch.
+  * added several themes.
+  * included my oroborusrc-file as default.
+
+ -- Stefan Pfetzing <dreamind@dreamind.de>  Thu,  6 Dec 2001 1:58:44 +0100
+
+oroborus (2.0.4-1) unstable; urgency=low
+
+  * newest version
+
+ -- Stefan Pfetzing <dreamind@dreamind.de>  Thu,  3 Dec 2001 21:58:53 +0100
+
+oroborus (1.14.0-6) unstable; urgency=low
+
+  * Fixed a path problem in the RCFILE.
+    Closes: #112303
+
+ -- Brandon L. Griffith <brandon@debian.org>  Sat, 22 Sep 2001 19:31:26 -0400
+
+oroborus (1.14.0-5) unstable; urgency=low
+
+  * Arto Jantunen <viiru@debian.org> grabbed me on irc and pointed out
+    that oroborus 1.14.0-4 would not start. After looking into his error
+    message I saw that the makefile was not producing the correct
+    arguments for creating the oroborusrc. There was no bug filed against
+    this since he was the only one to report it and it was fixed
+    immediately.
+    I now am supplying a working copy of the oroborusrc file for
+    /usr/share/oroborus and am going to contact the upstream author about
+    making an /etc/oroborusrc file.
+
+ -- Brandon L. Griffith <brandon@debian.org>  Mon, 27 Aug 2001 11:31:41 -0400
+
+oroborus (1.14.0-4) unstable; urgency=low
+
+  * Fixed a pixmap path issue. Now the example_rc is the same as the system
+    wide rc.file
+    Closes: #109424
+
+ -- Brandon L. Griffith <brandon@debian.org>  Sat, 25 Aug 2001 22:05:24 -0400
+
+oroborus (1.14.0-3) unstable; urgency=low
+
+  * Fixed a formatting issue in the control file
+    Closes: #109120
+
+ -- Brandon L. Griffith <brandon@debian.org>  Tue, 21 Aug 2001 08:59:58 -0400
+
+oroborus (1.14.0-2) unstable; urgency=low
+
+  * Failed to add Build Depends to the control file
+    Closes: #108967
+
+ -- Brandon L. Griffith <brandon@debian.org>  Fri, 17 Aug 2001 08:17:24 -0400
+
+oroborus (1.14.0-1) unstable; urgency=low
+
+  * Initial Release.
+  * Plese please please please read README.Debian in /usr/share/doc/oroborus
+  * Closed the wnpp bug filed for package creation.
+    Closes: #108613
+
+ -- Brandon L. Griffith <brandon@debian.org>  Tue, 14 Aug 2001 23:54:57 -0400
+
+Local variables:
+mode: debian-changelog
+End:

@@ -1,0 +1,11 @@
+Things to do
+============
+
+* Write new documentation
+* Reimplement Xinerama support
+* Make transient windows stay stacked above their parents
+  (half way fixed, at least oroborus now correctpy handles
+   NET_WM_WINDOW_TYPE_DESKTOP)
+* implement a popup funtion to warn the user
+* implement a remote controlling application
+  (like esh from enlightenment)

@@ -1,0 +1,9 @@
+#
+button_layout=HM|C
+inactive_text_color=#dddddd
+active_text_color=#ffffff
+font=-b&h-lucida-bold-r-normal-*-*-100-*-*-p-*-iso8859-1
+title_alignment=left
+button_offset=1
+button_spacing=-2
+full_width_title=true
