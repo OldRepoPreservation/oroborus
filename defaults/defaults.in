@@ -24,6 +24,7 @@ inactive_shadow_2=#999999
 inactive_hilight_2=#ffffff
 hide_window_key=Mod1+Control+Down
 close_window_key=Mod1+Control+x
+toggle_fullscreen_window_key=Mod1+Control+Shift+f
 maximize_window_key=Mod1+Control+y
 shade_window_key=Control+Mod1+Up
 cycle_windows_key=Mod1+Tab

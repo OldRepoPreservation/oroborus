@@ -66,6 +66,7 @@ loadSettings ()
     {"cycle_workspaces", NULL},
     {"close_window_key", NULL},
     {"hide_window_key", NULL},
+    {"toggle_fullscreen_window_key", NULL},
     {"maximize_window_key", NULL},
     {"maximize_vert_key", NULL},
     {"maximize_horiz_key", NULL},
@@ -339,6 +340,8 @@ loadSettings ()
 		  getValue ("close_window_key", rc));
   parseKeyString (dpy, &keys[KEY_HIDE_WINDOW],
 		  getValue ("hide_window_key", rc));
+  parseKeyString (dpy, &keys[KEY_TOGGLE_FULLSCREEN_WINDOW],
+		  getValue ("toggle_fullscreen_window_key", rc));
   parseKeyString (dpy, &keys[KEY_MAXIMIZE_WINDOW],
 		  getValue ("maximize_window_key", rc));
   parseKeyString (dpy, &keys[KEY_MAXIMIZE_VERT],

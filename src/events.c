@@ -107,6 +107,9 @@ handleKeyPress (XKeyEvent * ev)
 	case KEY_HIDE_WINDOW:
 	  clientHide (c, True);
 	  break;
+	case KEY_TOGGLE_FULLSCREEN_WINDOW:
+	  clientToggleFullscreen (c);
+	  break;
 	case KEY_MAXIMIZE_WINDOW:
 	  clientToggleMaximized (c, WIN_STATE_MAXIMIZED);
 	  clientWarpMouse (c);
