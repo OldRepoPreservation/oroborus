@@ -31,7 +31,7 @@ clientInitPosition (Client * c)
 #endif
 
 	clientGravitate (c, APPLY);
-	if (typeDock(c->window))
+	if (typeDock(c->window) || typeDesktop(c->window))
 		{
 			min_x = 0;
 			min_y = 0;
