@@ -16,7 +16,7 @@ configure-stamp:
 build: configure-stamp build-stamp
 build-stamp:
 	dh_testdir
-	$(MAKE) CC=gcc-3.2
+	$(MAKE)
 	touch build-stamp
 
 clean:
