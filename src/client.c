@@ -31,12 +31,10 @@ clientInitPosition (Client * c)
 #endif
 
   clientGravitate (c, APPLY);
-  min_x = frameLeft (c) + margins[MARGIN_LEFT];
-  min_y = frameTop (c) + margins[MARGIN_TOP];
-  max_x =
-    XDisplayWidth (dpy, screen) - frameRight (c) - margins[MARGIN_RIGHT];
-  max_y =
-    XDisplayHeight (dpy, screen) - frameBottom (c) - margins[MARGIN_BOTTOM];
+  min_x = margins[MARGIN_LEFT];
+  min_y = margins[MARGIN_TOP];
+  max_x = XDisplayWidth (dpy, screen) - margins[MARGIN_RIGHT];
+  max_y = XDisplayHeight (dpy, screen) - margins[MARGIN_BOTTOM];
 
   if (!(c->size->flags & (PPosition | USPosition)))
     {
@@ -51,14 +49,14 @@ clientInitPosition (Client * c)
 	}
     }
 
-  if (c->x > max_x - frameWidth (c))
-    c->x = max_x - frameWidth (c);
-  if (c->y > max_y - frameHeight (c))
-    c->y = max_y - frameHeight (c);
-  if (c->x < min_x)
-    c->x = min_x;
-  if (c->y < min_y)
-    c->y = min_y;
+  if (c->x > max_x - frameWidth (c) + frameLeft (c))
+    c->x = max_x - frameWidth (c) + frameLeft (c);
+  if (c->y > max_y - frameHeight (c) + frameTop (c))
+    c->y = max_y - frameHeight (c) + frameTop (c);
+  if (c->x < min_x + frameLeft (c))
+    c->x = min_x + frameLeft (c);
+  if (c->y < min_y + frameTop (c))
+    c->y = min_y + frameTop (c);
 }
 
 void
