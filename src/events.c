@@ -834,6 +834,7 @@ eventLoop ()
 						clientRaise (clientGetFocus ());
 					raise_counter = -1;
 				}
+			poll_ice_msgs();
 			usleep (1000);
 		}
 

@@ -108,8 +108,9 @@ lightweight themeable window manager for X.\n"), progname);
 						"  -v, --verbose              print more information\n"
 						"  -h, --help                 display this help and exit\n"
 						"  -V, --version              output version information and exit\n"
-						"  --display=DISPLAY          use an alternative display instead of,\n"
-						"                             $DISPLAY\n"));
+						"  -d, --display=DISPLAY      use an alternative display instead of,\n"
+						"                             $DISPLAY\n"
+						"  --sm-client-id             use the specified session management id.\n"));
 	exit (status);
 }
 
@@ -135,6 +136,9 @@ decode_switches (int argc, char **argv)
 					break;
 				case 'r':							/* --file */
 					rcfile = optarg;
+					break;
+				case 130:							/* --file */
+					sm_client_id = optarg;
 					break;
 				case 'V':
 					printf ("%s %s\n", PACKAGE, VERSION);
@@ -184,6 +188,7 @@ initialize (int argc, char **argv)
 			exit (1);
 		}
 
+	session_init (argv[0], sm_client_id);
 	act.sa_handler = handleSignal;
 	act.sa_flags = 0;
 	if (sigaction (SIGINT, &act, NULL))

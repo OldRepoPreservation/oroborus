@@ -27,6 +27,7 @@ AC_CHECK_FUNC(mknod)
 
 AC_CHECK_LIB(X11, main,, AC_MSG_ERROR([libX11 is missing from your system: Make sure you have both the  X Window System libraries and development headers correctly installed]), $X_CFLAGS $X_PRE_LIBS $X_EXTRA_LIBS $X_LIBS)
 AC_CHECK_LIB(Xext, main,, AC_MSG_ERROR([The X Window System installed on this machine does not support the shape extension]), $X_CFLAGS $X_PRE_LIBS $X_EXTRA_LIBS $X_LIBS)
+AC_CHECK_LIB(SM, main,AC_DEFINE(HAVE_X11_SM_SMLIB_H, 1), AC_MSG_ERROR([The X Window System installed on this machine does not support the session management extension]), $X_CFLAGS $X_PRE_LIBS $X_EXTRA_LIBS $X_LIBS)
 AC_CHECK_LIB(Xpm, main,, AC_MSG_ERROR([libXpm is missing from your system: Make sure you have both the Xpm libraries and development headers correctly installed]), $X_CFLAGS $X_PRE_LIBS $X_EXTRA_LIBS $X_LIBS)
 
 AC_CHECK_FUNCS(malloc setlocale strchr strdup strrchr strstr)

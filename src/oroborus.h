@@ -34,6 +34,8 @@
 #include <unistd.h>
 #include <getopt.h>
 #include <locale.h>
+#include <sys/time.h>
+#include <time.h>
 #include "misc.h"
 #include "hints.h"
 #include "keyboard.h"
@@ -41,6 +43,7 @@
 #include "pixmap.h"
 #include "parserc.h"
 #include "system.h"
+#include "session.h"
 #include "xmalloc.h"
 
 /*
@@ -191,6 +194,13 @@ struct _Client
 	Client *transientFor;
 };
 
+/* getopt_long return codes {{{1 */
+enum
+{ DUMMY_CODE = 129,
+	SM_ID = 130,
+};
+/* }}}1 */
+
 /* the structure of all long options for getopt */
 static struct option const long_options[] = {
 	{"verbose", no_argument, 0, 'v'},
@@ -198,6 +208,7 @@ static struct option const long_options[] = {
 	{"version", no_argument, 0, 'V'},
 	{"file", required_argument, 0, 'r'},
 	{"display", required_argument, 0, 'd'},
+	{"sm-client-id", required_argument, 0, SM_ID},
 	{NULL, 0, NULL, 0}
 };
 
@@ -206,12 +217,6 @@ static struct option const long_options[] = {
  * Global variables
  *
  */
-
-/* getopt_long return codes {{{1 */
-enum
-{ DUMMY_CODE = 129
-};
-/* }}}1 */
 
 #ifdef __OROBORUS_C__
 char *progname;
@@ -229,6 +234,7 @@ Cursor resize_cursor[4], move_cursor, root_cursor;
 
 int want_verbose = 0;
 char *rcfile = NULL;
+char *sm_client_id = NULL;
 
 Client *clients = NULL;
 CARD32 *client_list = NULL;
