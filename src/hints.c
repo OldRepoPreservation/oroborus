@@ -243,14 +243,14 @@ setGnomeHint (Window w, Atom a, long value)
 }
 
 void
-setSupportingWmCheck(Window w, Window w2)
+setSupportingWmCheck (Window w, Window w2)
 {
 #ifdef DEBUG
   printf ("entering setSupportingWmCheck\n");
 #endif
 
-  XChangeProperty (dpy, w, net_atoms[NET_SUPPORTING_WM_CHECK], XA_WINDOW, 32, PropModeReplace,
-		   (unsigned char *) &w2, 1);
+  XChangeProperty (dpy, w, net_atoms[NET_SUPPORTING_WM_CHECK], XA_WINDOW, 32,
+		   PropModeReplace, (unsigned char *) &w2, 1);
 }
 
 void
@@ -308,9 +308,10 @@ void
 setNetWorkarea (CARD32 * margins, int workspaces)
 {
   struct workarea
-    {
-      CARD32 left,top,right,bottom;
-    } *workarea;
+  {
+    CARD32 left, top, right, bottom;
+  }
+   *workarea;
   int i;
 
   if (workspaces <= 0)
@@ -322,8 +323,10 @@ setNetWorkarea (CARD32 * margins, int workspaces)
     {
       workarea[i].left = margins[0];
       workarea[i].top = margins[1];
-      workarea[i].right = XDisplayWidth (dpy, XDefaultScreen (dpy)) - margins[1];
-      workarea[i].bottom = XDisplayHeight (dpy, XDefaultScreen (dpy)) - margins[3];
+      workarea[i].right =
+	XDisplayWidth (dpy, XDefaultScreen (dpy)) - margins[1];
+      workarea[i].bottom =
+	XDisplayHeight (dpy, XDefaultScreen (dpy)) - margins[3];
     }
 
   XChangeProperty (dpy, XDefaultRootWindow (dpy),
@@ -333,7 +336,7 @@ setNetWorkarea (CARD32 * margins, int workspaces)
   XChangeProperty (dpy, XDefaultRootWindow (dpy), net_atoms[NET_WM_WORKAREA],
 		   XA_CARDINAL, 32, PropModeReplace,
 		   (unsigned char *) workarea, 4 * workspaces);
-  free(workarea);
+  free (workarea);
 }
 
 int
@@ -420,3 +423,9 @@ equals (char *left, char *right)
   else
     return 0;
 }
+
+/**This must remain at the end of the file.**********
+ * vim600:set sw=2 ts=8:                            *
+ * vim600:set cindent cinoptions={1s,>2s,^-1s,n-1s: *
+ * vim600:set foldmethod=marker:                    *
+ ****************************************************/

@@ -386,3 +386,9 @@ char *alloca ();
 #endif
 
 #define STREQ(a,b) (strcmp((a), (b)) == 0)
+
+/**This must remain at the end of the file.**********
+ * vim600:set sw=2 ts=8:                            *
+ * vim600:set cindent cinoptions={1s,>2s,^-1s,n-1s: *
+ * vim600:set foldmethod=marker:                    *
+ ****************************************************/

@@ -41,20 +41,20 @@ clientInitPosition (Client * c)
   if (!(c->size->flags & (PPosition | USPosition)))
     {
       getMouseXY (dpy, root, &mx, &my);
-      c->x = mx - (frameWidth(c) / 2);
-      c->y = my - (frameHeight(c) / 2);
+      c->x = mx - (frameWidth (c) / 2);
+      c->y = my - (frameHeight (c) / 2);
 
       if (window_placement == PLACEMENT_ROOT)
 	{
-	  c->x = (max_x - min_x) / 2 - (frameWidth(c) / 2);
-	  c->y = (max_y - min_y) / 2 - (frameHeight(c) / 2);
+	  c->x = (max_x - min_x) / 2 - (frameWidth (c) / 2);
+	  c->y = (max_y - min_y) / 2 - (frameHeight (c) / 2);
 	}
     }
 
-  if (c->x > max_x - frameWidth(c))
-    c->x = max_x - frameWidth(c);
-  if (c->y > max_y - frameHeight(c))
-    c->y = max_y - frameHeight(c);
+  if (c->x > max_x - frameWidth (c))
+    c->x = max_x - frameWidth (c);
+  if (c->y > max_y - frameHeight (c))
+    c->y = max_y - frameHeight (c);
   if (c->x < min_x)
     c->x = min_x;
   if (c->y < min_y)
@@ -412,7 +412,6 @@ clientFrame (Window w)
   PropMwmHints *mwm_hints;
   Window transientWindow;
   int i;
-  XClassHint *class_res;
 
 #ifdef DEBUG
   printf ("entering clientFrame\n");
@@ -420,7 +419,6 @@ clientFrame (Window w)
 #endif
 
   c = xmalloc (sizeof (*c));
-  class_res = xmalloc (sizeof (XClassHint));
 
   c->size = XAllocSizeHints ();
   XGetWMNormalHints (dpy, w, c->size, &dummy);
@@ -449,12 +447,11 @@ clientFrame (Window w)
   if (c->win_workspace > workspace_count - 1)
     {
       setGnomeHint (w, win_workspace, workspace_count - 1);
-      setGnomeHint (w, net_atoms[NET_WM_DESKTOP], workspace_count -1);
+      setGnomeHint (w, net_atoms[NET_WM_DESKTOP], workspace_count - 1);
       c->win_workspace = workspace_count - 1;
     }
 
-  XGetClassHint (dpy, c->window, class_res);
-  if (class_res->res_name && !strcmp (class_res->res_name, "X-Chat"))
+  if (clientInBorderlessList (c))
     c->has_border = False;
   else
     c->has_border = True;
@@ -995,7 +992,7 @@ clientGetFocus ()
 #endif
 
   XGetInputFocus (dpy, &w, &dummy);
-  return clientGetFromWindow(w, WINDOW);
+  return clientGetFromWindow (w, WINDOW);
 }
 
 void
@@ -1025,7 +1022,8 @@ clientMove (Client * c, XEvent * e)
   printf ("moving client (%#lx)\n", c->window);
 #endif
 
-  if ((c->win_state & WIN_STATE_MAXIMIZED) == WIN_STATE_MAXIMIZED || typeDesktop(c->window))
+  if ((c->win_state & WIN_STATE_MAXIMIZED) == WIN_STATE_MAXIMIZED
+      || typeDesktop (c->window))
     return;
 
   g1 = XGrabKeyboard (dpy, c->window, False, GrabModeAsync, GrabModeAsync,
@@ -1707,8 +1705,61 @@ clientWarpMouse (Client * c)
     return;
   else if (!click_to_focus && c->win_state & WIN_STATE_SHADED)
     XWarpPointer (dpy, None, c->window, 0, 0, 0, 0,
-		  (frameWidth(c) / 2), (frameHeight(c)/ 2)*-1);
+		  (frameWidth (c) / 2), (frameHeight (c) / 2) * -1);
   else if (!click_to_focus)
     XWarpPointer (dpy, None, c->window, 0, 0, 0, 0,
-		  (frameWidth(c) / 2), (frameHeight(c)/ 2));
+		  (frameWidth (c) / 2), (frameHeight (c) / 2));
 }
+
+int
+clientInBorderlessList (Client * c)
+{
+  XClassHint *class_res;
+  char *win_class_name;
+  char *tok;
+  char *buf;
+  size_t strSize;
+
+#ifdef DEBUG
+  printf ("entering clientInBorderlessList\n");
+#endif
+
+  class_res = xmalloc (sizeof (XClassHint));
+
+  XGetClassHint (dpy, c->window, class_res);
+
+  if (class_res->res_name)
+    win_class_name = class_res->res_name;
+  else
+    {
+      XFree (class_res);
+      return False;
+    }
+
+  strSize = sizeof (char) * (strlen (borderless_windows) + 1);
+  buf = xmalloc (strSize);
+  snprintf (buf, strSize, "%s", borderless_windows);
+
+  tok = strtok (buf, ";");
+
+  while (tok)
+    {
+      if (strcasecmp (tok, win_class_name) == 0)
+	{
+	  XFree (class_res);
+	  free (buf);
+	  return True;
+	}
+      tok = strtok (NULL, ";");
+    }
+
+  XFree (class_res);
+  free (buf);
+  return False;
+}
+
+/**This must remain at the end of the file.**********
+ * vim600:set sw=2 ts=8:                            *
+ * vim600:set cindent cinoptions={1s,>2s,^-1s,n-1s: *
+ * vim600:set foldmethod=marker:                    *
+ ****************************************************/

@@ -127,3 +127,9 @@ scalePixmap (Display * dpy, MyPixmap * src, MyPixmap * dst, int width,
   free (xi_dst.data);
   XpmFreeXpmImage (&xi_src);
 }
+
+/**This must remain at the end of the file.**********
+ * vim600:set sw=2 ts=8:                            *
+ * vim600:set cindent cinoptions={1s,>2s,^-1s,n-1s: *
+ * vim600:set foldmethod=marker:                    *
+ ****************************************************/

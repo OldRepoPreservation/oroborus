@@ -244,6 +244,7 @@ int click_to_focus, focus_new, raise_on_focus, raise_delay, raise_on_click;
 int window_placement, snap_to_border, snap_to_windows, snap_width;
 int workspace_count = -1, wrap_workspaces;
 int button_state[4];
+char *borderless_windows = NULL;
 #else
 extern char *progname;
 extern char *display;
@@ -278,6 +279,7 @@ extern int click_to_focus, focus_new, raise_on_focus, raise_delay,
 extern int window_placement, snap_to_border, snap_to_windows, snap_width;
 extern int workspace_count, wrap_workspaces;
 extern int button_state[4];
+extern char *borderless_windows;
 #endif
 
 char **stat_argv;
@@ -318,6 +320,7 @@ Client *clientGetNext (Client *, int);
 void clientCycle (Client *);
 void clientButtonPress (Client *, Window, XButtonEvent *);
 void clientWarpMouse (Client *);
+int clientInBorderlessList (Client *);
 
 void handleEvent (XEvent *);
 void eventLoop ();
@@ -340,3 +343,9 @@ void workspaceSwitch (int, Client *);
 void workspaceSetCount (int);
 
 #endif /* __OROBORUS_H */
+
+/**This must remain at the end of the file.**********
+ * vim600:set sw=2 ts=8:                            *
+ * vim600:set cindent cinoptions={1s,>2s,^-1s,n-1s: *
+ * vim600:set foldmethod=marker:                    *
+ ****************************************************/

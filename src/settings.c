@@ -111,6 +111,7 @@ loadSettings ()
     {"move_bottom_right_key", NULL},
     {"window_ops_modifiers", NULL},
     {"quit_key", NULL},
+    {"borderless_windows", NULL},
     {NULL, NULL}
   };
   char *theme, *scheme;
@@ -402,6 +403,14 @@ loadSettings ()
   parseKeyString (dpy, &keys[KEY_BOTTOM_RIGHT],
 		  getValue ("move_bottom_right_key", rc));
   parseKeyString (dpy, &keys[KEY_QUIT], getValue ("quit_key", rc));
+
+  borderless_windows =
+    malloc (sizeof (char) *
+	    (strlen (getValue ("borderless_windows", rc)) + 1));
+  snprintf (borderless_windows,
+	    sizeof (char) * (strlen (getValue ("borderless_windows", rc)) +
+			     1), "%s", getValue ("borderless_windows", rc));
+
   ungrabKeys (dpy, gnome_win);
   grabKey (dpy, &keys[KEY_CYCLE_WINDOWS], gnome_win);
   grabKey (dpy, &keys[KEY_NEXT_WORKSPACE], gnome_win);
@@ -478,3 +487,9 @@ reloadSettings ()
       clientGrabKeys (c);
     }
 }
+
+/**This must remain at the end of the file.**********
+ * vim600:set sw=2 ts=8:                            *
+ * vim600:set cindent cinoptions={1s,>2s,^-1s,n-1s: *
+ * vim600:set foldmethod=marker:                    *
+ ****************************************************/

@@ -103,14 +103,13 @@ usage (int status)
 lightweight themeable window manager for X.\n"), progname);
   printf (_("Usage: %s [OPTION]... \n"), progname);
   printf (_("Options:\n"
-"  -r, --file=FILE            use an alternative rcfile\n"
-"                             instead of $HOME/.oroborusrc\n"
-"  -v, --verbose              print more information\n"
-"  -h, --help                 display this help and exit\n"
-"  -V, --version              output version information and exit\n"
-"  --display                  use an alternative display instead of,\n"
-"                             $DISPLAY\n"
-));
+	    "  -r, --file=FILE            use an alternative rcfile\n"
+	    "                             instead of $HOME/.oroborusrc\n"
+	    "  -v, --verbose              print more information\n"
+	    "  -h, --help                 display this help and exit\n"
+	    "  -V, --version              output version information and exit\n"
+	    "  --display                  use an alternative display instead of,\n"
+	    "                             $DISPLAY\n"));
   exit (status);
 }
 
@@ -243,7 +242,7 @@ initialize (int argc, char **argv)
 
   loadSettings ();
 
-  setNetWorkarea (margins, workspace_count); 
+  setNetWorkarea (margins, workspace_count);
 
   clientFrameAll ();
 
@@ -261,3 +260,9 @@ main (int argc, char **argv)
 }
 
 /* vim600:set foldmarker={{{,}}} foldmethod=marker: */
+
+/**This must remain at the end of the file.**********
+ * vim600:set sw=2 ts=8:                            *
+ * vim600:set cindent cinoptions={1s,>2s,^-1s,n-1s: *
+ * vim600:set foldmethod=marker:                    *
+ ****************************************************/

@@ -145,3 +145,8 @@ wrap_workspaces=true
 
 # raise_on_click=true/false
 raise_on_click=true
+
+# define a list of borderless window class names
+# seperated by semicolons.
+borderless_windows=X-Chat
+

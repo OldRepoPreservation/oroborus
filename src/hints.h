@@ -115,10 +115,16 @@ void getGnomeDesktopMargins (CARD32 *);
 int typeDesktop (Window);
 int typeDock (Window);
 int typeEWMH (Window, char *);
-void setNetWorkarea(CARD32 *, int);
+void setNetWorkarea (CARD32 *, int);
 void *getPropData (Window, Atom, Atom, unsigned long *);
 void getEWMHState (Window, long *);
 void setFocusHint (Window);
 int equals (char *left, char *right);
 
 #endif /* __HINTS_H */
+
+/**This must remain at the end of the file.**********
+ * vim600:set sw=2 ts=8:                            *
+ * vim600:set cindent cinoptions={1s,>2s,^-1s,n-1s: *
+ * vim600:set foldmethod=marker:                    *
+ ****************************************************/
