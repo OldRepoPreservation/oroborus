@@ -3,19 +3,30 @@ Things to do
 
 * Write new documentation.
   Doxygen needs to be written.
+  *started*
 
 * Switch to XRestackWindows for raising/lowering.
+  *not started yet*
 
 * Implement *all* needed things from EWMH, mostly for Gnome2.
+  *started*
 
 * implement a remote controlling application
   (like esh from enlightenment)
+  *not started yet*
 
 * Add OTC to the Package (Oroborus Theme Changer)
   (Or maybe something similar, like the config util from Martin Hedenfalk)
+  *not started yet*
 
 * Add a Gui application for configuring Oroborus more comfortable.
+  *not started yet*
 
 * Add a plugin interface.
+  *not started yet*
 
 * implement a popup funtion to warn the user
+  *not started yet*
+
+* Cleanup *all* of Oroborus to make it more flexible.
+  *started*

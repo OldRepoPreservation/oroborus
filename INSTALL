@@ -1,3 +1,16 @@
+CVS Instructions
+================
+
+   THIS PART IS ONLY FOR THE CVS VERSION OF OROBORUS.
+
+   To first generate neccessary files out of the CVS Version of Oroborus,
+run `make -f Makefile.cvs'. (autoconf, automake autoheader and aclocal are
+needed for this.) After generating these files, you can continue as usual.
+
+   If you want to generate a patch for oroborus, you can use this makefile
+to remove everyting not neccessary after doing a `make clean' simply do an
+`make -f makefile.cvs clean', which will remove anything not necessary.
+
 Basic Installation
 ==================
 
