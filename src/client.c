@@ -978,7 +978,7 @@ clientSetFocus (Client * c, int sort)
   else
     {
       XSetInputFocus (dpy, gnome_win, RevertToNone, CurrentTime);
-      setFocusHint (NULL);
+      setFocusHint (None);
     }
 }
 
