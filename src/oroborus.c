@@ -75,7 +75,7 @@ handleSignal (int sig)
     case SIGSEGV:
       fprintf (stderr, "%s: Segmentation fault\n", progname);
       cleanUp ();
-      exit (1);
+      abort ();
       break;
     case SIGHUP:
       reload = True;
@@ -119,7 +119,7 @@ decode_switches (int argc, char **argv)
     {
       switch (c)
 	{
-	case 'd':		/* --quit-menu */
+	case 'd':		/* --display */
 	  display = optarg;
 	  break;
 	case 'v':		/* --verbose */
