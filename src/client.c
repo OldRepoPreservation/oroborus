@@ -935,7 +935,6 @@ clientToggleMaximized (Client * c, int mode)
     }
   setGnomeHint (c->window, win_state, c->win_state);
   clientConfigure (c, &wc, CWX | CWY | CWWidth | CWHeight);
-  clientWarpMouse (c);
 }
 
 void

@@ -109,12 +109,15 @@ handleKeyPress (XKeyEvent * ev)
 	  break;
 	case KEY_MAXIMIZE_WINDOW:
 	  clientToggleMaximized (c, WIN_STATE_MAXIMIZED);
+	  clientWarpMouse (c);
 	  break;
 	case KEY_MAXIMIZE_VERT:
 	  clientToggleMaximized (c, WIN_STATE_MAXIMIZED_VERT);
+	  clientWarpMouse (c);
 	  break;
 	case KEY_MAXIMIZE_HORIZ:
 	  clientToggleMaximized (c, WIN_STATE_MAXIMIZED_HORIZ);
+	  clientWarpMouse (c);
 	  break;
 	case KEY_SHADE_WINDOW:
 	  clientToggleShaded (c);
