@@ -128,7 +128,7 @@ void initialize(int argc, char **argv)
     progname = argv[0];
 
     printf
-        ("\n\nOroborus (c) 2001 Ken Lynch\nDistributed under the terms and conditions of the GPL\n\n");
+        ("\n\nOroborus\n(c) 2001 Ken Lynch\n(c) 2002 Stefan Pfetzing\nDistributed under the terms and conditions of the GPL\n\n");
 
     locale = setlocale(LC_ALL, "");
 

@@ -1,34 +1,10 @@
 oroborus for Debian
 -------------------
 
-UPDATE: Oroborus no longer has a current maintainer upstream. There is a beta
-version available that is decently stable and has more features. I am_not
-going to create any official packages of this new version. However there
-is an unofficial package at http://people.debian.org/~brandon/
-
-The author of Oroborus was kind enuf to create somewhat of a users guide. This
-came in the origonal source and was packaged with oroborus. You can find it in
-/usr/share/doc/oroborus/doc.
+UPDATE: Oroborus is now maintained by Stefan Pfetzing <dreamind@dreamind.de>.
 
 Oroborus does not have a menu of any kind. This is why I suggest you install
 the package 'deskmenu'. It allows for a root menu at the click of a mouse and
 is fairly configureable. Sometimes a menu is useful ;)
 
-Oroborus does not configure a mouse cursor other than the default 'X'. For
-those of you who do not know how to change your mouse cursor add these lines in
-your .xinitrc file before the line that starts oroborus
-
-# this sets the root cursor image
-bitmaps="/usr/include/X11/bitmaps"
-xsetroot -cursor $bitmaps/left_ptr $bitmaps/left_ptrmsk &
-
-Alternatively if you are planning on using gnome-session to run Oroborus then
-let Gnome handle the cursor bitmap for you :)
-
-The theme converter script written by the same auther as oroborus is located in
-/usr/share/doc/oroborus/examples. This should be used to convert old-style
-themes to the newer style.
-
-Did I forget anything?
-
- -- Brandon L. Griffith <brandon@debian.org>, Tue,  7 Aug 2001 23:20:57 -0400
+ -- Stefan Pfetzing <dreamind@dreamind.de>, Fri, 24 May 2002 00:00:53 +0200
