@@ -1,9 +1,4 @@
 /* src/config.h.in.  Generated from configure.in by autoheader.  */
-/* Set to 1 if you want to debug Oroborus */
-#undef DEBUG
-
-/* Have X11 SM lib ? */
-#undef HAVE_X11_SM_SMLIB_H
 
 /* Define to 1 if the `closedir' function returns void instead of `int'. */
 #undef CLOSEDIR_VOID
@@ -15,6 +10,9 @@
 
 /* Define to 1 if using `alloca.c'. */
 #undef C_ALLOCA
+
+/* use this option if you want to debug Oroborus */
+#undef DEBUG
 
 /* Define to 1 if you have `alloca', as a function or macro. */
 #undef HAVE_ALLOCA
@@ -122,6 +120,9 @@
 
 /* Define to 1 if you have the <unistd.h> header file. */
 #undef HAVE_UNISTD_H
+
+/* Have X11 SM lib ? */
+#undef HAVE_X11_SM_SMLIB_H
 
 /* Define to 1 if `major', `minor', and `makedev' are declared in <mkdev.h>.
    */
