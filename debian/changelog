@@ -9,7 +9,8 @@ oroborus (2.0.6-1) unstable; urgency=low
     Closes: #150406
   * Fixed some of the mouse warping.
   * Fixed Icon handling of Rox, Gmc and possibly Nautilus.
-  * Added getopt. 
+  * Added getopt.
+  * Added some parts from EWMH for Gnome2 support.
 
  -- Stefan Pfetzing <dreamind@dreamind.de>  Sat, 29 Jun 2002 18:35:24 +0200
 
