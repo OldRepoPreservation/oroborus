@@ -625,6 +625,8 @@ handleClientMessage (XClientMessageEvent * ev)
 	clientSetLayer (c, ev->data.l[0]);
       else if (ev->message_type == win_workspace && ev->format == 32)
 	clientSetWorkspace (c, ev->data.l[0]);
+      else if (ev->message_type == net_atoms[NET_ACTIVE_WINDOW] && ev->format == 32)
+	clientSetFocus(c, True);
     }
   else
     {
@@ -632,8 +634,6 @@ handleClientMessage (XClientMessageEvent * ev)
 	workspaceSwitch (ev->data.l[0], NULL);
       else if (ev->message_type == win_workspace_count && ev->format == 32)
 	workspaceSetCount (ev->data.l[0]);
-      else if (ev->message_type == net_atoms[NET_ACTIVE_WINDOW] && ev->format == 32)
-	clientSetFocus(clientGetFromWindow(ev->data.l[0], WINDOW), True);
     }
 }
 
