@@ -1103,6 +1103,9 @@ clientMove (Client * c, XEvent * e)
 				}
 			else if (ev.type == MotionNotify)
 				{
+					int new_ws = 0;
+					int switch_ws = 0;
+
 					while (XCheckTypedEvent (dpy, MotionNotify, &ev));
 
 					if (!grab && box_move)
@@ -1121,19 +1124,19 @@ clientMove (Client * c, XEvent * e)
 							getMouseXY (dpy, root, &msx, &msy);
 							if (msx == 0 && !(workspace == 0 && !wrap_workspaces))
 								{
-									workspaceSwitch (workspace - 1, c);
-									if (!click_to_focus)
-										XWarpPointer (dpy, None, root, 0, 0, 0, 0,
-																	XDisplayWidth (dpy, screen) - 11, msy);
+									new_ws = workspace - 1;
+									switch_ws = 1;
+									XWarpPointer (dpy, None, root, 0, 0, 0, 0,
+												  XDisplayWidth (dpy, screen) - 11, msy);
 									ev.xmotion.x_root = XDisplayWidth (dpy, screen) - 11;
 								}
 							else if (msx == XDisplayWidth (dpy, screen) - 1 &&
 											 !(workspace == workspace_count - 1
 												 && !wrap_workspaces))
 								{
-									workspaceSwitch (workspace + 1, c);
-									if (!click_to_focus)
-										XWarpPointer (dpy, None, root, 0, 0, 0, 0, 10, msy);
+									new_ws = workspace + 1;
+									switch_ws = 1;
+									XWarpPointer (dpy, None, root, 0, 0, 0, 0, 10, msy);
 									ev.xmotion.x_root = 10;
 								}
 						}
@@ -1264,6 +1267,10 @@ clientMove (Client * c, XEvent * e)
 							wc.y = c->y;
 							clientConfigure (c, &wc, CWX | CWY);
 						}
+					if(switch_ws) {
+						workspaceSwitch (new_ws, c);
+						clientRaise(c);
+					}
 				}
 			else if (!use_keys && ev.type == ButtonRelease)
 				moving = False;
