@@ -369,20 +369,23 @@ handleButtonPress (XButtonEvent * ev)
 					clientRaise (c);
 					clientResize (c, (XEvent *) ev);
 				}
-			else if (win != c->window && ev->button == Button2 && state == 0)
+			else if (win != c->window && ev->button == Button2 && state == 0
+							 && !typeDesktop (c->window))
 				{
 					clientRaise (c);
 					clientToggleSticky (c);
 				}
 			else if (ev->button == Button2
-							 && state == keys[KEY_WINDOW_OPS].modifier)
+							 && state == keys[KEY_WINDOW_OPS].modifier
+							 && !typeDesktop (c->window))
 				{
 					clientRaise (c);
 					clientResize (c, (XEvent *) ev);
 				}
-			else if ((win != c->window && ev->button == Button3 && state == 0) ||
+			else if (((win != c->window && ev->button == Button3 && state == 0) ||
 							 (ev->button == Button3
 								&& state == keys[KEY_WINDOW_OPS].modifier))
+							 && !typeDesktop (c->window))
 				clientLower (c);
 			else if (win != c->window && ev->button == Button1 && state == Mod1Mask)
 				clientSetLayer (c, c->win_layer + 1);
