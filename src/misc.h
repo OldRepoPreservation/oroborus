@@ -23,9 +23,9 @@
 #ifndef __MISC_H
 #define __MISC_H
 
-void getMouseXY(Display *, Window, int *, int *);
-Window getMouseWindow(Display *, Window);
-GC createGC(Display *, Colormap, char *, int, XFontStruct *, int);
-void sendClientMessage(Display *, Window, Atom, long, int);
+void getMouseXY (Display *, Window, int *, int *);
+Window getMouseWindow (Display *, Window);
+GC createGC (Display *, Colormap, char *, int, XFontStruct *, int);
+void sendClientMessage (Display *, Window, Atom, long, int);
 
 #endif /* __MISC_H */

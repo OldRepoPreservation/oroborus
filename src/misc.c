@@ -27,75 +27,79 @@
 #include <unistd.h>
 #include "misc.h"
 
-void getMouseXY(Display * dpy, Window w, int *x2, int *y2)
+void
+getMouseXY (Display * dpy, Window w, int *x2, int *y2)
 {
-    Window w1, w2;
-    int x1, y1, m;
+  Window w1, w2;
+  int x1, y1, m;
 
 #ifdef DEBUG
-    printf("entering getMouseXY\n");
+  printf ("entering getMouseXY\n");
 #endif
 
-    XQueryPointer(dpy, w, &w1, &w2, &x1, &y1, x2, y2, &m);
+  XQueryPointer (dpy, w, &w1, &w2, &x1, &y1, x2, y2, &m);
 }
 
-Window getMouseWindow(Display * dpy, Window w)
+Window
+getMouseWindow (Display * dpy, Window w)
 {
-    Window w1, w2;
-    int x1, y1, x2, y2, m;
+  Window w1, w2;
+  int x1, y1, x2, y2, m;
 
 #ifdef DEBUG
-    printf("entering getMouseWindow\n");
+  printf ("entering getMouseWindow\n");
 #endif
 
-    XQueryPointer(dpy, w, &w1, &w2, &x1, &y1, &x2, &y2, &m);
-    return w2;
+  XQueryPointer (dpy, w, &w1, &w2, &x1, &y1, &x2, &y2, &m);
+  return w2;
 }
 
-GC createGC(Display * dpy, Colormap cmap, char *col, int func,
-            XFontStruct * font, int inc_sw)
+GC
+createGC (Display * dpy, Colormap cmap, char *col, int func,
+	  XFontStruct * font, int inc_sw)
 {
-    XGCValues gv;
-    XColor xc1, xc2;
-    GC gc;
-    int mask;
+  XGCValues gv;
+  XColor xc1, xc2;
+  GC gc;
+  int mask;
 
 #ifdef DEBUG
-    printf("entering createGC\n");
-    printf("color=%s\n", col);
+  printf ("entering createGC\n");
+  printf ("color=%s\n", col);
 #endif
 
-    mask = GCForeground | GCFunction;
-    XAllocNamedColor(dpy, cmap, col, &xc1, &xc2);
-    gv.foreground = xc2.pixel;
-    gv.function = func;
-    if(font)
+  mask = GCForeground | GCFunction;
+  XAllocNamedColor (dpy, cmap, col, &xc1, &xc2);
+  gv.foreground = xc2.pixel;
+  gv.function = func;
+  if (font)
     {
-        gv.font = font->fid;
-        mask = mask | GCFont;
+      gv.font = font->fid;
+      mask = mask | GCFont;
     }
-    if(inc_sw)
+  if (inc_sw)
     {
-        gv.subwindow_mode = IncludeInferiors;
-        mask = mask | GCSubwindowMode;
+      gv.subwindow_mode = IncludeInferiors;
+      mask = mask | GCSubwindowMode;
     }
-    gc = XCreateGC(dpy, XDefaultRootWindow(dpy), mask, &gv);
-    return gc;
+  gc = XCreateGC (dpy, XDefaultRootWindow (dpy), mask, &gv);
+  return gc;
 }
 
-void sendClientMessage(Display * dpy, Window w, Atom a, long x, int mask)
+void
+sendClientMessage (Display * dpy, Window w, Atom a, long x, int mask)
 {
-    XEvent ev;
+  XEvent ev;
 
 #ifdef DEBUG
-    printf("entering sendClientMessage\n");
+  printf ("entering sendClientMessage\n");
 #endif
 
-    ev.type = ClientMessage;
-    ev.xclient.window = w;
-    ev.xclient.message_type = a;
-    ev.xclient.format = 32;
-    ev.xclient.data.l[0] = x;
-    ev.xclient.data.l[1] = CurrentTime;
-    XSendEvent(dpy, w, False, mask, &ev);
+  ev.type = ClientMessage;
+  ev.xclient.window = w;
+  ev.xclient.message_type = a;
+  ev.xclient.format = 32;
+  ev.xclient.data.l[0] = x;
+  ev.xclient.data.l[1] = CurrentTime;
+  XSendEvent (dpy, w, False, mask, &ev);
 }

@@ -30,199 +30,208 @@
 Atom wm_state, wm_change_state, wm_delete_window, wm_protocols;
 Atom motif_wm_hints;
 Atom win_hints, win_state, win_client_list, win_layer, win_workspace,
-    win_workspace_count, win_desktop_button_proxy, win_supporting_wm_check,
-    gnome_panel_desktop_area;
+  win_workspace_count, win_desktop_button_proxy, win_supporting_wm_check,
+  gnome_panel_desktop_area;
 
-void initICCCMHints(Display * dpy)
+void
+initICCCMHints (Display * dpy)
 {
 #ifdef DEBUG
-    printf("entering initICCCMHints\n");
+  printf ("entering initICCCMHints\n");
 #endif
 
-    wm_state = XInternAtom(dpy, "WM_STATE", False);
-    wm_change_state = XInternAtom(dpy, "WM_CHANGE_STATE", False);
-    wm_delete_window = XInternAtom(dpy, "WM_DELETE_WINDOW", False);
-    wm_protocols = XInternAtom(dpy, "WM_PROTOCOLS", False);
-    wm_window_type = XInternAtom (dpy, "_NET_WM_WINDOW_TYPE", False);
+  wm_state = XInternAtom (dpy, "WM_STATE", False);
+  wm_change_state = XInternAtom (dpy, "WM_CHANGE_STATE", False);
+  wm_delete_window = XInternAtom (dpy, "WM_DELETE_WINDOW", False);
+  wm_protocols = XInternAtom (dpy, "WM_PROTOCOLS", False);
+  wm_window_type = XInternAtom (dpy, "_NET_WM_WINDOW_TYPE", False);
 }
 
-long getWMState(Display * dpy, Window w)
+long
+getWMState (Display * dpy, Window w)
 {
-    Atom real_type;
-    int real_format;
-    unsigned long items_read, items_left;
-    long *data = NULL, state = WithdrawnState;
+  Atom real_type;
+  int real_format;
+  unsigned long items_read, items_left;
+  long *data = NULL, state = WithdrawnState;
 
 #ifdef DEBUG
-    printf("entering getWmState\n");
+  printf ("entering getWmState\n");
 #endif
 
-    if(XGetWindowProperty
-       (dpy, w, wm_state, 0L, 2L, False, wm_state, &real_type, &real_format,
-        &items_read, &items_left, (unsigned char **)&data) == Success &&
-       items_read)
+  if (XGetWindowProperty
+      (dpy, w, wm_state, 0L, 2L, False, wm_state, &real_type, &real_format,
+       &items_read, &items_left, (unsigned char **) &data) == Success &&
+      items_read)
     {
-        state = *data;
-        XFree(data);
+      state = *data;
+      XFree (data);
     }
-    return state;
+  return state;
 }
 
-void setWMState(Display * dpy, Window w, long state)
+void
+setWMState (Display * dpy, Window w, long state)
 {
-    CARD32 data[2];
+  CARD32 data[2];
 
 #ifdef DEBUG
-    printf("entering setWmState\n");
+  printf ("entering setWmState\n");
 #endif
 
-    data[0] = state;
-    data[1] = None;
+  data[0] = state;
+  data[1] = None;
 
-    XChangeProperty(dpy, w, wm_state, wm_state, 32, PropModeReplace,
-                    (unsigned char *)data, 2);
+  XChangeProperty (dpy, w, wm_state, wm_state, 32, PropModeReplace,
+		   (unsigned char *) data, 2);
 }
 
-void initMotifHints(Display * dpy)
+void
+initMotifHints (Display * dpy)
 {
 #ifdef DEBUG
-    printf("entering initMotifHints\n");
+  printf ("entering initMotifHints\n");
 #endif
 
-    motif_wm_hints = XInternAtom(dpy, "_MOTIF_WM_HINTS", False);
+  motif_wm_hints = XInternAtom (dpy, "_MOTIF_WM_HINTS", False);
 }
 
-PropMwmHints *getMotifHints(Display * dpy, Window w)
+PropMwmHints *
+getMotifHints (Display * dpy, Window w)
 {
-    Atom real_type;
-    int real_format;
-    unsigned long items_read, items_left;
-    PropMwmHints *data = NULL;
+  Atom real_type;
+  int real_format;
+  unsigned long items_read, items_left;
+  PropMwmHints *data = NULL;
 
 #ifdef DEBUG
-    printf("entering getMotifHints\n");
+  printf ("entering getMotifHints\n");
 #endif
 
-    if(XGetWindowProperty
-       (dpy, w, motif_wm_hints, 0L, 20L, False, motif_wm_hints, &real_type,
-        &real_format, &items_read, &items_left,
-        (unsigned char **)&data) == Success && items_read)
-        return data;
-    else
-        return NULL;
+  if (XGetWindowProperty
+      (dpy, w, motif_wm_hints, 0L, 20L, False, motif_wm_hints, &real_type,
+       &real_format, &items_read, &items_left,
+       (unsigned char **) &data) == Success && items_read)
+    return data;
+  else
+    return NULL;
 }
 
-void initGnomeHints(Display * dpy)
+void
+initGnomeHints (Display * dpy)
 {
-    Window root;
+  Window root;
 
 #ifdef DEBUG
-    printf("entering initGnomeHints\n");
+  printf ("entering initGnomeHints\n");
 #endif
 
-    root = XDefaultRootWindow(dpy);
-    win_hints = XInternAtom(dpy, "_WIN_HINTS", False);
-    win_state = XInternAtom(dpy, "_WIN_STATE", False);
-    win_client_list = XInternAtom(dpy, "_WIN_CLIENT_LIST", False);
-    win_layer = XInternAtom(dpy, "_WIN_LAYER", False);
-    win_workspace = XInternAtom(dpy, "_WIN_WORKSPACE", False);
-    win_workspace_count = XInternAtom(dpy, "_WIN_WORKSPACE_COUNT", False);
-    win_desktop_button_proxy =
-        XInternAtom(dpy, "_WIN_DESKTOP_BUTTON_PROXY", False);
-    win_supporting_wm_check =
-        XInternAtom(dpy, "_WIN_SUPPORTING_WM_CHECK", False);
-    gnome_panel_desktop_area =
-        XInternAtom(dpy, "GNOME_PANEL_DESKTOP_AREA", False);
+  root = XDefaultRootWindow (dpy);
+  win_hints = XInternAtom (dpy, "_WIN_HINTS", False);
+  win_state = XInternAtom (dpy, "_WIN_STATE", False);
+  win_client_list = XInternAtom (dpy, "_WIN_CLIENT_LIST", False);
+  win_layer = XInternAtom (dpy, "_WIN_LAYER", False);
+  win_workspace = XInternAtom (dpy, "_WIN_WORKSPACE", False);
+  win_workspace_count = XInternAtom (dpy, "_WIN_WORKSPACE_COUNT", False);
+  win_desktop_button_proxy =
+    XInternAtom (dpy, "_WIN_DESKTOP_BUTTON_PROXY", False);
+  win_supporting_wm_check =
+    XInternAtom (dpy, "_WIN_SUPPORTING_WM_CHECK", False);
+  gnome_panel_desktop_area =
+    XInternAtom (dpy, "GNOME_PANEL_DESKTOP_AREA", False);
 }
 
-int getGnomeHint(Display * dpy, Window w, Atom a, long *value)
+int
+getGnomeHint (Display * dpy, Window w, Atom a, long *value)
 {
-    Atom real_type;
-    int real_format, success = False;
-    unsigned long items_read, items_left;
-    long *data = NULL;
+  Atom real_type;
+  int real_format, success = False;
+  unsigned long items_read, items_left;
+  long *data = NULL;
 
 #ifdef DEBUG
-    printf("entering getGnomeHint\n");
+  printf ("entering getGnomeHint\n");
 #endif
 
-    if(a == win_layer)
-        *value = WIN_LAYER_NORMAL;
-    else
-        *value = 0;
+  if (a == win_layer)
+    *value = WIN_LAYER_NORMAL;
+  else
+    *value = 0;
 
-    if(XGetWindowProperty
-       (dpy, w, a, 0L, 1L, False, XA_CARDINAL, &real_type, &real_format,
-        &items_read, &items_left, (unsigned char **)&data) == Success &&
-       items_read)
+  if (XGetWindowProperty
+      (dpy, w, a, 0L, 1L, False, XA_CARDINAL, &real_type, &real_format,
+       &items_read, &items_left, (unsigned char **) &data) == Success &&
+      items_read)
     {
-        *value = *data;
-        success = True;
-        XFree(data);
+      *value = *data;
+      success = True;
+      XFree (data);
     }
-    return success;
+  return success;
 }
 
-void setGnomeHint(Display * dpy, Window w, Atom a, long value)
+void
+setGnomeHint (Display * dpy, Window w, Atom a, long value)
 {
 #ifdef DEBUG
-    printf("entering setGnomeHint\n");
+  printf ("entering setGnomeHint\n");
 #endif
 
-    XChangeProperty(dpy, w, a, XA_CARDINAL, 32, PropModeReplace,
-                    (unsigned char *)&value, 1);
+  XChangeProperty (dpy, w, a, XA_CARDINAL, 32, PropModeReplace,
+		   (unsigned char *) &value, 1);
 }
 
-void getGnomeDesktopMargins(Display * dpy, CARD32 * margins)
+void
+getGnomeDesktopMargins (Display * dpy, CARD32 * margins)
 {
-    Atom real_type;
-    int real_format;
-    unsigned long items_read, items_left;
-    CARD32 *data = NULL;
+  Atom real_type;
+  int real_format;
+  unsigned long items_read, items_left;
+  CARD32 *data = NULL;
 
 #ifdef DEBUG
-    printf("entering getGnomeDesktopMargins\n");
+  printf ("entering getGnomeDesktopMargins\n");
 #endif
 
-    if(XGetWindowProperty
-       (dpy, XDefaultRootWindow(dpy), gnome_panel_desktop_area, 0L, 4L, False,
-        XA_CARDINAL, &real_type, &real_format, &items_read, &items_left,
-        (unsigned char **)&data) == Success && items_read >= 4)
+  if (XGetWindowProperty
+      (dpy, XDefaultRootWindow (dpy), gnome_panel_desktop_area, 0L, 4L, False,
+       XA_CARDINAL, &real_type, &real_format, &items_read, &items_left,
+       (unsigned char **) &data) == Success && items_read >= 4)
     {
-        margins[0] = data[0];
-        margins[1] = data[1];
-        margins[2] = data[2];
-        margins[3] = data[3];
-        XFree(data);
+      margins[0] = data[0];
+      margins[1] = data[1];
+      margins[2] = data[2];
+      margins[3] = data[3];
+      XFree (data);
     }
-    else
+  else
     {
-        margins[0] = 0;
-        margins[1] = 0;
-        margins[2] = 0;
-        margins[3] = 0;
+      margins[0] = 0;
+      margins[1] = 0;
+      margins[2] = 0;
+      margins[3] = 0;
     }
 }
 
 int
-typeDesktop(Display *dpy, Window w)
+typeDesktop (Display * dpy, Window w)
 {
   unsigned long *data;
   int ret = 0;
-  
+
 #ifdef DEBUG
-  printf("entering typeDesktop\n");
+  printf ("entering typeDesktop\n");
 #endif
 
   data = getPropData (dpy, w, wm_window_type, XA_ATOM);
   if (data)
     {
       char *name;
-      name = XGetAtomName(dpy, *data);
+      name = XGetAtomName (dpy, *data);
 #ifdef DEBUG
-      printf("%s\n",name);
+      printf ("%s\n", name);
 #endif
-      if (name && strcmp(name,"_NET_WM_WINDOW_TYPE_DESKTOP") == 0)
+      if (name && strcmp (name, "_NET_WM_WINDOW_TYPE_DESKTOP") == 0)
 	ret = 1;
       XFree (data);
     }
@@ -231,7 +240,7 @@ typeDesktop(Display *dpy, Window w)
 }
 
 void *
-getPropData (Display *dpy,Window win, Atom prop, Atom type)
+getPropData (Display * dpy, Window win, Atom prop, Atom type)
 {
   Atom type_ret;
   int format_ret;
@@ -240,7 +249,7 @@ getPropData (Display *dpy,Window win, Atom prop, Atom type)
   unsigned char *prop_data;
 
 #ifdef DEBUG
-  printf("entering getPropData\n");
+  printf ("entering getPropData\n");
 #endif
   prop_data = 0;
 
@@ -250,4 +259,3 @@ getPropData (Display *dpy,Window win, Atom prop, Atom type)
 
   return prop_data;
 }
-

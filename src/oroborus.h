@@ -152,21 +152,21 @@ typedef struct _Client Client;
 
 struct _Client
 {
-    Window window, frame, title, sides[3], corners[4], buttons[BUTTON_COUNT];
-    int x, y, width, height, border_width;
-    int old_x, old_y, old_width, old_height;
-    int button_pressed[BUTTON_COUNT];
-    char *name;
-    XSizeHints *size;
-    int has_border;
-    long win_hints;
-    long win_state;
-    long win_layer;
-    long win_workspace;
-    int ignore_unmap, focus;
-    Client *next;
-    Client *prev;
-    Client *transientFor;
+  Window window, frame, title, sides[3], corners[4], buttons[BUTTON_COUNT];
+  int x, y, width, height, border_width;
+  int old_x, old_y, old_width, old_height;
+  int button_pressed[BUTTON_COUNT];
+  char *name;
+  XSizeHints *size;
+  int has_border;
+  long win_hints;
+  long win_state;
+  long win_layer;
+  long win_workspace;
+  int ignore_unmap, focus;
+  Client *next;
+  Client *prev;
+  Client *transientFor;
 };
 
 /*
@@ -214,52 +214,52 @@ extern char **environ;
  *
  */
 
-void clientGravitate(Client *, int);
-void clientConfigure(Client *, XWindowChanges *, int);
-void clientFrame(Window);
-void clientUnframe(Client *, int);
-void clientFrameAll();
-void clientUnframeAll();
-void clientGrabKeys(Client *);
-void clientUngrabKeys(Client *);
-Client *clientGetFromWindow(Window, int);
-void clientShow(Client *, int);
-void clientHide(Client *, int);
-void clientClose(Client *);
-void clientRaise(Client *);
-void clientLower(Client *);
-void clientSetLayer(Client *, int);
-void clientSetWorkspace(Client *, int);
-void clientSetState(Client *, CARD32, CARD32);
-void clientToggleShaded(Client *);
-void clientToggleSticky(Client *);
-void clientToggleMaximized(Client *, int);
-void clientSetFocus(Client *, int);
-Client *clientGetFocus();
-void clientMove(Client *, XEvent *);
-void clientResize(Client *, XEvent *);
-Client *clientGetNext(Client *, int);
-void clientCycle(Client *);
-void clientButtonPress(Client *, Window, XButtonEvent *);
+void clientGravitate (Client *, int);
+void clientConfigure (Client *, XWindowChanges *, int);
+void clientFrame (Window);
+void clientUnframe (Client *, int);
+void clientFrameAll ();
+void clientUnframeAll ();
+void clientGrabKeys (Client *);
+void clientUngrabKeys (Client *);
+Client *clientGetFromWindow (Window, int);
+void clientShow (Client *, int);
+void clientHide (Client *, int);
+void clientClose (Client *);
+void clientRaise (Client *);
+void clientLower (Client *);
+void clientSetLayer (Client *, int);
+void clientSetWorkspace (Client *, int);
+void clientSetState (Client *, CARD32, CARD32);
+void clientToggleShaded (Client *);
+void clientToggleSticky (Client *);
+void clientToggleMaximized (Client *, int);
+void clientSetFocus (Client *, int);
+Client *clientGetFocus ();
+void clientMove (Client *, XEvent *);
+void clientResize (Client *, XEvent *);
+Client *clientGetNext (Client *, int);
+void clientCycle (Client *);
+void clientButtonPress (Client *, Window, XButtonEvent *);
 
-void handleEvent(XEvent *);
-void eventLoop();
+void handleEvent (XEvent *);
+void eventLoop ();
 
-int frameLeft(Client *);
-int frameRight(Client *);
-int frameTop(Client *);
-int frameBottom(Client *);
-int frameX(Client *);
-int frameY(Client *);
-int frameWidth(Client *);
-int frameHeight(Client *);
-void frameDraw(Client *);
+int frameLeft (Client *);
+int frameRight (Client *);
+int frameTop (Client *);
+int frameBottom (Client *);
+int frameX (Client *);
+int frameY (Client *);
+int frameWidth (Client *);
+int frameHeight (Client *);
+void frameDraw (Client *);
 
-void loadSettings();
-void unloadSettings();
-void reloadSettings();
+void loadSettings ();
+void unloadSettings ();
+void reloadSettings ();
 
-void workspaceSwitch(int, Client *);
-void workspaceSetCount(int);
+void workspaceSwitch (int, Client *);
+void workspaceSetCount (int);
 
 #endif /* __OROBORUS_H */

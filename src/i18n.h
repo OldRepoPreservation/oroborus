@@ -27,19 +27,19 @@
 
 typedef struct
 {
-    XFontStruct *font;
-    XFontSet fontset;
-    int height;
-    int ascent;
-    int descent;
+  XFontStruct *font;
+  XFontSet fontset;
+  int height;
+  int ascent;
+  int descent;
 }
 MyFont;
 
 extern int use_fontset;
-int getFont(Display *, MyFont *, char *);
-void freeFont(Display *, MyFont *);
-void drawString(Display *, Drawable, MyFont *, GC, int, int, char *);
-int getTextWidth(char *, MyFont *);
-void getWindowName(Display *, Window, char **);
+int getFont (Display *, MyFont *, char *);
+void freeFont (Display *, MyFont *);
+void drawString (Display *, Drawable, MyFont *, GC, int, int, char *);
+int getTextWidth (char *, MyFont *);
+void getWindowName (Display *, Window, char **);
 
 #endif /* __I18N_H */

@@ -26,92 +26,96 @@
 #include <string.h>
 #include "parserc.h"
 
-int parseRc(char *file, char *dir, char *rc[][2])
+int
+parseRc (char *file, char *dir, char *rc[][2])
 {
-    char filename[512], buf[512], *lvalue, *rvalue;
-    FILE *fp;
-    int i;
+  char filename[512], buf[512], *lvalue, *rvalue;
+  FILE *fp;
+  int i;
 
 #ifdef DEBUG
-    printf("entering parseRc\n");
+  printf ("entering parseRc\n");
 #endif
 
-    if(dir)
-        snprintf(filename, sizeof(filename), "%s/%s", dir, file);
-    else
-        strncpy(filename, file, sizeof(filename));
-    fp = fopen(filename, "r");
-    if(!fp)
-        return False;
+  if (dir)
+    snprintf (filename, sizeof (filename), "%s/%s", dir, file);
+  else
+    strncpy (filename, file, sizeof (filename));
+  fp = fopen (filename, "r");
+  if (!fp)
+    return False;
 
-    while(fgets(buf, sizeof(buf), fp))
+  while (fgets (buf, sizeof (buf), fp))
     {
-        lvalue = strtok(buf, "=");
-        if(lvalue)
-        {
-            for(i = 0; rc[i][OPTION]; i++)
-            {
-                if(!strcmp(lvalue, rc[i][OPTION]))
-                {
-                    rvalue = strtok(NULL, "\n");
-                    if(rvalue)
-                    {
-                        if(rc[i][VALUE])
-                            free(rc[i][VALUE]);
-                        rc[i][VALUE] = strdup(rvalue);
+      lvalue = strtok (buf, "=");
+      if (lvalue)
+	{
+	  for (i = 0; rc[i][OPTION]; i++)
+	    {
+	      if (!strcmp (lvalue, rc[i][OPTION]))
+		{
+		  rvalue = strtok (NULL, "\n");
+		  if (rvalue)
+		    {
+		      if (rc[i][VALUE])
+			free (rc[i][VALUE]);
+		      rc[i][VALUE] = strdup (rvalue);
 #ifdef DEBUG
-                        printf("%s=%s\n", rc[i][OPTION], rc[i][VALUE]);
+		      printf ("%s=%s\n", rc[i][OPTION], rc[i][VALUE]);
 #endif
-                    }
-                }
-            }
-        }
+		    }
+		}
+	    }
+	}
     }
-    fclose(fp);
-    return True;
+  fclose (fp);
+  return True;
 }
 
-int checkRc(char *rc[][2])
+int
+checkRc (char *rc[][2])
 {
-    int i, rval = True;
+  int i, rval = True;
 
 #ifdef DEBUG
-    printf("entering checkRc\n");
+  printf ("entering checkRc\n");
 #endif
 
-    for(i = 0; rc[i][OPTION]; i++)
+  for (i = 0; rc[i][OPTION]; i++)
     {
-        if(!rc[i][VALUE])
-        {
-            fprintf(stderr, "missing value for option %s\n", rc[i][OPTION]);
-            rval = False;
-        }
+      if (!rc[i][VALUE])
+	{
+	  fprintf (stderr, "missing value for option %s\n", rc[i][OPTION]);
+	  rval = False;
+	}
     }
-    return rval;
+  return rval;
 }
 
-char *getValue(char *option, char *rc[][2])
+char *
+getValue (char *option, char *rc[][2])
 {
-    int i;
+  int i;
 
 #ifdef DEBUG
-    printf("entering getValue\n");
+  printf ("entering getValue\n");
 #endif
 
-    for(i = 0; rc[i][OPTION]; i++)
-        if(!strcmp(option, rc[i][OPTION]))
-            break;
-    return rc[i][VALUE];
+  for (i = 0; rc[i][OPTION]; i++)
+    if (!strcmp (option, rc[i][OPTION]))
+      break;
+  return rc[i][VALUE];
 }
 
-void freeRc(char *rc[][2])
+void
+freeRc (char *rc[][2])
 {
-    int i;
+  int i;
 
 #ifdef DEBUG
-    printf("entering freeRc\n");
+  printf ("entering freeRc\n");
 #endif
 
-    for(i = 0; rc[i][OPTION]; i++)
-        free(rc[i][VALUE]);
+  for (i = 0; rc[i][OPTION]; i++)
+    free (rc[i][VALUE]);
 }

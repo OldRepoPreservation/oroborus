@@ -26,9 +26,9 @@
 #define OPTION				0
 #define VALUE				1
 
-int parseRc(char *, char *, char *[][2]);
-int checkRc(char *[][2]);
-char *getValue(char *, char *[][2]);
-void freeRc(char *[][2]);
+int parseRc (char *, char *, char *[][2]);
+int checkRc (char *[][2]);
+char *getValue (char *, char *[][2]);
+void freeRc (char *[][2]);
 
 #endif /* __PARSERC_H */

@@ -48,11 +48,11 @@
 
 typedef struct
 {
-    CARD32 flags;
-    CARD32 functions;
-    CARD32 decorations;
-    INT32 inputMode;
-    CARD32 status;
+  CARD32 flags;
+  CARD32 functions;
+  CARD32 decorations;
+  INT32 inputMode;
+  CARD32 status;
 }
 PropMwmHints;
 
@@ -60,19 +60,19 @@ extern Atom wm_state, wm_change_state, wm_delete_window, wm_protocols;
 Atom wm_window_type;
 extern Atom motif_wm_hints;
 extern Atom win_hints, win_state, win_client_list, win_layer, win_workspace,
-    win_workspace_count, win_desktop_button_proxy, win_supporting_wm_check,
-    gnome_panel_desktop_area;
+  win_workspace_count, win_desktop_button_proxy, win_supporting_wm_check,
+  gnome_panel_desktop_area;
 
-void initICCCMHints(Display *);
-long getWMState(Display *, Window);
-void setWMState(Display *, Window, long state);
-void initMotifHints(Display *);
-PropMwmHints *getMotifHints(Display *, Window);
-void initGnomeHints(Display *);
-int getGnomeHint(Display *, Window, Atom, long *);
-void setGnomeHint(Display *, Window, Atom, long);
-void getGnomeDesktopMargins(Display *, CARD32 *);
-int typeDesktop(Display *dpy, Window w);
-void *getPropData (Display *dpy, Window win, Atom prop, Atom type);
+void initICCCMHints (Display *);
+long getWMState (Display *, Window);
+void setWMState (Display *, Window, long state);
+void initMotifHints (Display *);
+PropMwmHints *getMotifHints (Display *, Window);
+void initGnomeHints (Display *);
+int getGnomeHint (Display *, Window, Atom, long *);
+void setGnomeHint (Display *, Window, Atom, long);
+void getGnomeDesktopMargins (Display *, CARD32 *);
+int typeDesktop (Display * dpy, Window w);
+void *getPropData (Display * dpy, Window win, Atom prop, Atom type);
 
 #endif /* __HINTS_H */

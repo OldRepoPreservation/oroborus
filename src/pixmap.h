@@ -27,13 +27,13 @@
 
 typedef struct
 {
-    Pixmap pixmap, mask;
-    int width, height;
+  Pixmap pixmap, mask;
+  int width, height;
 }
 MyPixmap;
 
-int loadPixmap(Display *, MyPixmap *, char *, char *, XpmColorSymbol *, int);
-void freePixmap(Display *, MyPixmap *);
-void scalePixmap(Display *, MyPixmap *, MyPixmap *, int width, int height);
+int loadPixmap (Display *, MyPixmap *, char *, char *, XpmColorSymbol *, int);
+void freePixmap (Display *, MyPixmap *);
+void scalePixmap (Display *, MyPixmap *, MyPixmap *, int width, int height);
 
 #endif /* __PIXMAP_H */

@@ -79,3 +79,4 @@ resize_window_down_key=Shift+Mod1+Down
 resize_window_left_key=Shift+Mod1+Left
 resize_window_right_key=Shift+Mod1+Right
 quit_key=Control+Mod1+q
+

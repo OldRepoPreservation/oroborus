@@ -27,13 +27,13 @@
 
 typedef struct
 {
-    KeyCode keycode;
-    int modifier;
+  KeyCode keycode;
+  int modifier;
 }
 MyKey;
 
-void parseKeyString(Display *, MyKey *, char *);
-void grabKey(Display *, MyKey *, Window);
-void ungrabKeys(Display *, Window);
+void parseKeyString (Display *, MyKey *, char *);
+void grabKey (Display *, MyKey *, Window);
+void ungrabKeys (Display *, Window);
 
 #endif /* __KEYBOARD_H */
