@@ -4,12 +4,9 @@ Things to do
 * Write new documentation.
   Doxygen needs to be written.
 
-* Make transient windows stay stacked above their parents
-  *** FIXED ***
-  Well I still have to switch to XRestackWindows but currently
-  this is working.
+* Switch to XRestackWindows for raising/lowering.
 
-* implement a popup funtion to warn the user
+* Implement *all* needed things from EWMH, mostly for Gnome2.
 
 * implement a remote controlling application
   (like esh from enlightenment)
@@ -20,3 +17,5 @@ Things to do
 * Add a Gui application for configuring Oroborus more comfortable.
 
 * Add a plugin interface.
+
+* implement a popup funtion to warn the user
